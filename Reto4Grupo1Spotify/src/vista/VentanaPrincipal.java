@@ -4,10 +4,12 @@ package vista;
 import javax.swing.JFrame;
 
 import panel.PanelBienvenida;
+import java.awt.Toolkit;
 
 public class VentanaPrincipal extends JFrame {
 
 	public VentanaPrincipal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("icono/logopequeño.png"));
 		setSize(800, 600);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
