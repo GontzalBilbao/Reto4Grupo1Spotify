@@ -6,14 +6,14 @@ import javax.swing.JPanel;
 
 import vista.VentanaPrincipal;
 
-public class PanelAñadirPodcaster extends JPanel {
+public class PanelMenuAdministrador extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelAñadirPodcaster(VentanaPrincipal v) {
+	public PanelMenuAdministrador(VentanaPrincipal v) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
