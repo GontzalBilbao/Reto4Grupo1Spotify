@@ -12,7 +12,7 @@ public class GestionBD {
 	}
 
 	public void iniciarConexion() {
-		System.out.println("Conectando.........");
+		System.out.println("Conectando..........");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conexion = DriverManager.getConnection("jdbc:mysql://localhost/gestiondecine", "root", "");
