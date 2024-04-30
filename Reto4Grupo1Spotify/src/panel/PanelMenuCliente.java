@@ -1,6 +1,10 @@
 package panel;
 
+import java.awt.Color;
+
 import javax.swing.JPanel;
+
+import vista.VentanaPrincipal;
 
 public class PanelMenuCliente extends JPanel {
 
@@ -9,7 +13,11 @@ public class PanelMenuCliente extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelMenuCliente() {
+	public PanelMenuCliente(VentanaPrincipal v) {
+		setSize(800, 600);
+		setBackground(Color.DARK_GRAY);
+		setLayout(null);
+		
 
 	}
 
