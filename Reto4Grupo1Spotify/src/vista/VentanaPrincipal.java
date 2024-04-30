@@ -18,7 +18,6 @@ public class VentanaPrincipal extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Spotify");
 		
-		
 	}
 
 	public void cambiarDePanel(int i) {
