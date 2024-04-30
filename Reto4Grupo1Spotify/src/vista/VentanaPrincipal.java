@@ -62,6 +62,7 @@ public class VentanaPrincipal extends JFrame {
 			break;
 		case 5:
 			setContentPane(new PanelMusicoAlbume(this));
+			break;
 		case 6:
 			setContentPane(new PanelAlbumCancion(this));
 			break;
