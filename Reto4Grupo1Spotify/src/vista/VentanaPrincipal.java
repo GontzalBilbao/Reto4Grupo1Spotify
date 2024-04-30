@@ -4,6 +4,9 @@ package vista;
 import javax.swing.JFrame;
 
 import panel.PanelBienvenida;
+import panel.PanelLogin;
+import panel.PanelMenuCliente;
+
 import java.awt.Toolkit;
 
 public class VentanaPrincipal extends JFrame {
@@ -25,10 +28,10 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelBienvenida(this));
 			break;
 		case 1:
-			
+			setContentPane(new PanelLogin(this));
 			break;
 		case 2: 
-			
+			setContentPane(new PanelMenuCliente(this));
 			break;
 		case 3:
 			
