@@ -4,6 +4,9 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import controlador.GestionBD;
+import controlador.GestionFicheros;
+import controlador.GestionInformacion;
 import panel.PanelAlbumCancion;
 import panel.PanelAñadirAlbum;
 import panel.PanelAñadirCancion;
@@ -19,14 +22,8 @@ import panel.PanelGestionarCancion;
 import panel.PanelGestionarMusico;
 import panel.PanelGestionarPodcaster;
 import panel.PanelLogin;
-
-
 import panel.PanelMenuAdministrador;
-
 import panel.PanelMenuCliente;
-
-import panel.PanelRegistro;
-
 import panel.PanelMusicoAlbume;
 import panel.PanelPerfil;
 import panel.PanelPlaylist;
@@ -35,9 +32,9 @@ import panel.PanelRegistro;
 import panel.PanelReproductorMusica;
 import panel.PanelReproductorPodcasts;
 
-import java.awt.Toolkit;
-
 public class VentanaPrincipal extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 
 	public VentanaPrincipal() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("icono/logopequeño.png"));
@@ -48,6 +45,10 @@ public class VentanaPrincipal extends JFrame {
 
 	}
 
+	GestionBD gestionBD = new GestionBD();
+	GestionInformacion gestionInfo = new GestionInformacion();
+	GestionFicheros gestionFich = new GestionFicheros();
+	
 	public void cambiarDePanel(int i) {
 
 		switch (i) {
@@ -58,7 +59,7 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelLogin(this));
 			break;
 		case 2:
-			setContentPane(new PanelRegistro(this));
+			setContentPane(new PanelRegistro(this, gestionBD, gestionInfo));
 			break;
 		case 3:
 			setContentPane(new PanelMenuCliente(this));
@@ -127,11 +128,9 @@ public class VentanaPrincipal extends JFrame {
 
 	}
 
-	public static void main(String[] args) {
-		VentanaPrincipal v = new VentanaPrincipal();
-		v.setVisible(true);
-		v.cambiarDePanel(0);
-
+	public void lanzarVentana() {
+		this.cambiarDePanel(2);
+		this.setVisible(true);
 	}
 
 }
