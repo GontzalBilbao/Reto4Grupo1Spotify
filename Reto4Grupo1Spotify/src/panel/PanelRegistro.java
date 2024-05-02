@@ -1,6 +1,10 @@
 package panel;
 
+import java.awt.Color;
+
 import javax.swing.JPanel;
+
+import vista.VentanaPrincipal;
 
 public class PanelRegistro extends JPanel {
 
@@ -9,8 +13,10 @@ public class PanelRegistro extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelRegistro() {
-
+	public PanelRegistro(VentanaPrincipal v) {
+			setSize(800, 600);
+			setBackground(Color.DARK_GRAY);
+			setLayout(null);
 	}
 
 }

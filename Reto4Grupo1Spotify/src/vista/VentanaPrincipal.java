@@ -1,13 +1,15 @@
 package vista;
 
 
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 
 import panel.PanelBienvenida;
 import panel.PanelLogin;
+import panel.PanelMenuAdmin;
 import panel.PanelMenuCliente;
-
-import java.awt.Toolkit;
+import panel.PanelRegistro;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -30,11 +32,18 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelLogin(this));
 			break;
 		case 2: 
-			setContentPane(new PanelMenuCliente(this));
+			setContentPane(new PanelRegistro(this));
 			break;
 		case 3:
-			
+			setContentPane(new PanelMenuCliente(this));
 			break;
+		case 4:
+			setContentPane(new PanelMenuAdmin(this));
+			break;
+			
+			
+			
+			
 			
 			
 			
