@@ -17,6 +17,7 @@ public class PanelRegistro extends JPanel {
 			setSize(800, 600);
 			setBackground(Color.DARK_GRAY);
 			setLayout(null);
+
 	}
 
 }

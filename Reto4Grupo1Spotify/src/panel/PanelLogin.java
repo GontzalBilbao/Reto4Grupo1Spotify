@@ -73,7 +73,7 @@ public class PanelLogin extends JPanel {
 		btnRegistrarse_1 = new JButton("INICIAR SESIÓN");
 		btnRegistrarse_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(2);
+				v.cambiarDePanel(3);
 			}
 		});
 		btnRegistrarse_1.setForeground(Color.BLACK);

@@ -1,6 +1,10 @@
 package panel;
 
+import java.awt.Color;
+
 import javax.swing.JPanel;
+
+import vista.VentanaPrincipal;
 
 public class PanelAñadirPodcast extends JPanel {
 
@@ -9,8 +13,10 @@ public class PanelAñadirPodcast extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelAñadirPodcast() {
-
+	public PanelAñadirPodcast(VentanaPrincipal v) {
+		setSize(800, 600);
+		setBackground(Color.DARK_GRAY);
+		setLayout(null);
 	}
 
 }
