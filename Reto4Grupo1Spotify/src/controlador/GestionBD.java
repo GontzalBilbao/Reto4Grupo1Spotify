@@ -4,10 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
+import java.sql.PreparedStatement;
+
 import modelo.Cliente;
+import vista.VentanaPrincipal;
 
 public class GestionBD {
 	private Connection conexion;
@@ -42,18 +46,23 @@ public class GestionBD {
 		System.out.println("Conexion cerrada");
 	}
 
-	public ArrayList<Cliente> queryClientes() {
+	public ArrayList<Cliente> queryClientes(String usuario, String contrasena, VentanaPrincipal v) {
 		try {
-			Statement consulta = conexion.createStatement();
-			String query = "SELECT * FROM Cliente";
-			ResultSet resultadoConsulta = consulta.executeQuery(query);
 
-			while (resultadoConsulta.next()) {
-				clientes.add(new Cliente(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), resultadoConsulta.getString(4), resultadoConsulta.getString(5),
-						resultadoConsulta.getString(6), resultadoConsulta.getString(7), resultadoConsulta.getString(8),
-						resultadoConsulta.getString(9)));
+			String query = "SELECT usuario, contraseña FROM Cliente Where usuario = ?";
+
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, usuario);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			
+			if (resultadoConsulta.next() && usuario.equals(resultadoConsulta.getString(1))
+					&& contrasena.equals(resultadoConsulta.getString(2))) {
+				JOptionPane.showMessageDialog(null, "Bienvenid@!!!!");
+				v.cambiarDePanel(3);
+			} else {
+				JOptionPane.showMessageDialog(null, "Valores incorrectos!!");
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

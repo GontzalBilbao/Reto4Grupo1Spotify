@@ -56,7 +56,7 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelBienvenida(this));
 			break;
 		case 1:
-			setContentPane(new PanelLogin(this));
+			setContentPane(new PanelLogin(this, this.gestionBD));
 			break;
 		case 2:
 			setContentPane(new PanelRegistro(this, gestionBD, gestionInfo));
@@ -129,7 +129,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	public void lanzarVentana() {
-		this.cambiarDePanel(2);
+		this.cambiarDePanel(1);
 		this.setVisible(true);
 	}
 
