@@ -10,12 +10,17 @@ import javax.swing.JOptionPane;
 
 import java.sql.PreparedStatement;
 
+import modelo.Artista;
 import modelo.Cliente;
+import modelo.Musico;
+import modelo.Podcaster;
 import vista.VentanaPrincipal;
 
 public class GestionBD {
 	private Connection conexion;
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	public ArrayList<Musico> musicos = new ArrayList<Musico>();
+	public ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
 
 	public GestionBD() {
 		iniciarConexion();
@@ -69,7 +74,37 @@ public class GestionBD {
 		return clientes;
 	}
 
-	public ArrayList<Cliente> devolverClientes() {
-		return clientes;
+//	public ArrayList<Cliente> devolverClientes() {
+//		return clientes;
+//	}
+	
+	public ArrayList<Musico> queryMusico(){
+		try {
+			String query = "SELECT * FROM Musico";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()){
+				musicos.add(new Musico(resultadoConsulta.getString(2), resultadoConsulta.getString(2), resultadoConsulta.getString(3),
+							resultadoConsulta.getString(4), resultadoConsulta.getString(5)));
+			}
+			consulta.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}return musicos;
+	}
+	
+	public ArrayList<Podcaster> queryPodcasters(){
+		try {
+			String query = "SELECT * FROM Podcaster";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				podcasters.add(new Podcaster(resultadoConsulta.getString(1), resultadoConsulta.getString(2), resultadoConsulta.getString(3),
+						resultadoConsulta.getString(4), resultadoConsulta.getString(5)));
+			}
+			consulta.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}return podcasters;
 	}
 }

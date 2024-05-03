@@ -1,16 +1,24 @@
 package controlador;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
+import modelo.Artista;
+import modelo.Musico;
+import modelo.Podcaster;
 import vista.VentanaPrincipal;
 
 public class GestionInformacion {
 
-	public GestionInformacion() {
+	private GestionBD gestionBD;
+	private String musico;
+	private String podcaster;
 
+	public GestionInformacion() {
+		gestionBD = new GestionBD();
 	}
 
 	public boolean validarRegistro(VentanaPrincipal vp, String contraseña, String confirmarContraseña) {
@@ -37,4 +45,28 @@ public class GestionInformacion {
 		}
 		return false;
 	}
+
+	public ArrayList<Musico> devolverMusico() {
+		return gestionBD.queryMusico();
+	}
+
+	public void recogerMusico(String nombreMusico) {
+		this.musico = nombreMusico;
+	}
+	public String pasrverMusico() {
+		return musico;
+	}
+	
+	
+	public ArrayList<Podcaster> devolverPodcaster(){
+		return gestionBD.queryPodcasters();
+	}
+	
+	public void recogerPodcaster(String nombrePodcaster) {
+		this.podcaster = nombrePodcaster;
+	}
+	public String pasrverPodcaster() {
+		return podcaster;
+	}
+
 }
