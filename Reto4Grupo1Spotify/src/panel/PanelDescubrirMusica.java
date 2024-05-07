@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import controlador.GestionBD;
+import controlador.GestionInformacion;
 import vista.VentanaPrincipal;
 
 public class PanelDescubrirMusica extends JPanel {
@@ -20,7 +22,7 @@ public class PanelDescubrirMusica extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelDescubrirMusica(VentanaPrincipal v) {
+	public PanelDescubrirMusica(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -40,7 +42,7 @@ public class PanelDescubrirMusica extends JPanel {
 		JButton btnAtras = new JButton("ATRAS");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(3);
+				vp.cambiarDePanel(3);
 			}
 		});
 		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -50,7 +52,7 @@ public class PanelDescubrirMusica extends JPanel {
 		JButton btnPerfil = new JButton("PERFIL");
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(11);
+				vp.cambiarDePanel(11);
 			}
 		});
 		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));

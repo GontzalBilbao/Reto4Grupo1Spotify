@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import controlador.GestionBD;
+import controlador.GestionInformacion;
 import vista.VentanaPrincipal;
 
 public class PanelPodcasterPodcasts extends JPanel {
@@ -13,7 +15,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelPodcasterPodcasts(VentanaPrincipal v) {
+	public PanelPodcasterPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);

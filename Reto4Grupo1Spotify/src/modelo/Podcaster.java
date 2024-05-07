@@ -1,24 +1,20 @@
 package modelo;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import javax.swing.ImageIcon;
 
 public class Podcaster extends Artista {
 
 	private String idPodcaster;
 	private String genero;
-	private ArrayList<Podcast> podcast;
 
 	public Podcaster() {
 
 	}
 
-	public Podcaster(String nombreArtista, String imagen, String descripcion, String idPodcaster, String genero,
-			ArrayList<Podcast> podcast) {
+	public Podcaster(String idPodcaster, String nombreArtista, String genero, ImageIcon imagen, String descripcion) {
 		super(nombreArtista, imagen, descripcion);
 		this.idPodcaster = idPodcaster;
 		this.genero = genero;
-		this.podcast = podcast;
 	}
 
 	public String getIdPodcaster() {
@@ -37,40 +33,48 @@ public class Podcaster extends Artista {
 		this.genero = genero;
 	}
 
-	public ArrayList<Podcast> getPodcast() {
-		return podcast;
-	}
-
-	public void setPodcast(ArrayList<Podcast> podcast) {
-		this.podcast = podcast;
+	@Override
+	public String getNombreArtista() {
+		// TODO Auto-generated method stub
+		return super.getNombreArtista();
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(genero, idPodcaster, podcast);
-		return result;
+	public void setNombreArtista(String nombreArtista) {
+		// TODO Auto-generated method stub
+		super.setNombreArtista(nombreArtista);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Podcaster other = (Podcaster) obj;
-		return Objects.equals(genero, other.genero) && Objects.equals(idPodcaster, other.idPodcaster)
-				&& Objects.equals(podcast, other.podcast);
+	public ImageIcon getImagen() {
+		// TODO Auto-generated method stub
+		return super.getImagen();
+	}
+
+	@Override
+	public void setImagen(ImageIcon imagen) {
+		// TODO Auto-generated method stub
+		super.setImagen(imagen);
+	}
+
+	@Override
+	public String getDescripcion() {
+		// TODO Auto-generated method stub
+		return super.getDescripcion();
+	}
+
+	@Override
+	public void setDescripcion(String descripcion) {
+		// TODO Auto-generated method stub
+		super.setDescripcion(descripcion);
 	}
 
 	@Override
 	public String toString() {
-		return "Podcaster [idPodcaster=" + idPodcaster + ", genero=" + genero + ", podcast=" + podcast
+		return "Podcaster [getIdPodcaster()=" + getIdPodcaster() + ", getGenero()=" + getGenero()
 				+ ", getNombreArtista()=" + getNombreArtista() + ", getImagen()=" + getImagen() + ", getDescripcion()="
 				+ getDescripcion() + "]";
 	}
+
 
 }

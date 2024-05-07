@@ -24,7 +24,7 @@ import panel.PanelGestionarPodcaster;
 import panel.PanelLogin;
 import panel.PanelMenuAdministrador;
 import panel.PanelMenuCliente;
-import panel.PanelMusicoAlbume;
+import panel.PanelMusicoAlbumes;
 import panel.PanelPerfil;
 import panel.PanelPlaylist;
 import panel.PanelPodcasterPodcasts;
@@ -48,7 +48,7 @@ public class VentanaPrincipal extends JFrame {
 	GestionBD gestionBD = new GestionBD();
 	GestionInformacion gestionInfo = new GestionInformacion();
 	GestionFicheros gestionFich = new GestionFicheros();
-	
+
 	public void cambiarDePanel(int i) {
 
 		switch (i) {
@@ -56,7 +56,7 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelBienvenida(this));
 			break;
 		case 1:
-			setContentPane(new PanelLogin(this));
+			setContentPane(new PanelLogin(this, gestionBD, gestionInfo));
 			break;
 		case 2:
 			setContentPane(new PanelRegistro(this, gestionBD, gestionInfo));
@@ -65,25 +65,25 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelMenuCliente(this));
 			break;
 		case 4:
-			setContentPane(new PanelDescubrirMusica(this));
+			setContentPane(new PanelDescubrirMusica(this, gestionBD, gestionInfo));
 			break;
 		case 5:
-			setContentPane(new PanelMusicoAlbume(this));
+			setContentPane(new PanelMusicoAlbumes(this, gestionBD, gestionInfo));
 			break;
 		case 6:
-			setContentPane(new PanelAlbumCancion(this));
+			setContentPane(new PanelAlbumCancion(this, gestionBD, gestionInfo));
 			break;
 		case 7:
-			setContentPane(new PanelReproductorMusica(this));
+			setContentPane(new PanelReproductorMusica(this, gestionBD, gestionInfo));
 			break;
 		case 8:
-			setContentPane(new PanelDescubrirPodcasts(this));
+			setContentPane(new PanelDescubrirPodcasts(this, gestionBD, gestionInfo));
 			break;
 		case 9:
-			setContentPane(new PanelPodcasterPodcasts(this));
+			setContentPane(new PanelPodcasterPodcasts(this, gestionBD, gestionInfo));
 			break;
 		case 10:
-			setContentPane(new PanelReproductorPodcasts(this));
+			setContentPane(new PanelReproductorPodcasts(this, gestionBD, gestionInfo));
 			break;
 		case 11:
 			setContentPane(new PanelPerfil(this));
@@ -129,7 +129,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	public void lanzarVentana() {
-		this.cambiarDePanel(2);
+		this.cambiarDePanel(3);
 		this.setVisible(true);
 	}
 

@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import controlador.GestionBD;
+import controlador.GestionInformacion;
 import vista.VentanaPrincipal;
 
 public class PanelReproductorMusica extends JPanel {
@@ -13,7 +15,7 @@ public class PanelReproductorMusica extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelReproductorMusica(VentanaPrincipal v) {
+	public PanelReproductorMusica(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
