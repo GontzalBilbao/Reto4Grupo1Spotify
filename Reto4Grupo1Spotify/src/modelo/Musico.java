@@ -2,17 +2,20 @@ package modelo;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
 public class Musico extends Artista {
-	
+
 	private String idMusico;
 	private String caracteristica;
 	private ArrayList<Album> album = new ArrayList<Album>();
-	
+
 	public Musico() {
-		
+
 	}
 
-	public Musico(String idMusico, String nombreArtistico, String imagen,  String caracteristica, String descripcion) {
+	public Musico(String idMusico, String nombreArtistico, ImageIcon imagen, String caracteristica,
+			String descripcion) {
 		super(nombreArtistico, imagen, descripcion);
 		this.idMusico = idMusico;
 		this.caracteristica = caracteristica;
@@ -48,13 +51,5 @@ public class Musico extends Artista {
 				+ getNombreArtistico() + ", getImagen()=" + getImagen() + ", getDescripcion()=" + getDescripcion()
 				+ "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

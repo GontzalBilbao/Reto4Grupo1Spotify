@@ -8,18 +8,18 @@ import controlador.GestionBD;
 import controlador.GestionInformacion;
 import vista.VentanaPrincipal;
 
-public class PanelAlbumCancion extends JPanel {
+public class PanelMusicoAlbumes extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelAlbumCancion(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelMusicoAlbumes(VentanaPrincipal v, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
-		
+
 	}
 
 }
