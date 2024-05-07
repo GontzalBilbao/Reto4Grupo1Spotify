@@ -26,7 +26,7 @@ public class GestionBD {
 	public ArrayList<Musico> musicos = new ArrayList<Musico>();
 	public ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
 	public ArrayList<Audio> audios = new ArrayList<Audio>();
-	
+
 	public GestionBD() {
 		iniciarConexion();
 	}
@@ -64,7 +64,7 @@ public class GestionBD {
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			consulta.setString(1, usuario);
 			ResultSet resultadoConsulta = consulta.executeQuery();
-			
+
 			if (resultadoConsulta.next() && usuario.equals(resultadoConsulta.getString(1))
 					&& contrasena.equals(resultadoConsulta.getString(2))) {
 				JOptionPane.showMessageDialog(null, "Bienvenid@!!!!");
@@ -82,56 +82,59 @@ public class GestionBD {
 //	public ArrayList<Cliente> devolverClientes() {
 //		return clientes;
 //	}
-	
-	public ArrayList<Musico> queryMusico(){
+
+	public ArrayList<Musico> queryMusico() {
 		try {
 			String query = "SELECT * FROM Musico";
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			ResultSet resultadoConsulta = consulta.executeQuery();
-			while (resultadoConsulta.next()){
-				musicos.add(new Musico(resultadoConsulta.getString(2), resultadoConsulta.getString(2), resultadoConsulta.getString(3),
-							resultadoConsulta.getString(4), resultadoConsulta.getString(5)));
+			while (resultadoConsulta.next()) {
+				musicos.add(new Musico(resultadoConsulta.getString(2), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4),
+						resultadoConsulta.getString(5)));
 			}
 			consulta.close();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}return musicos;
+		}
+		return musicos;
 	}
-	
-	public ArrayList<Podcaster> queryPodcasters(){
+
+	public ArrayList<Podcaster> queryPodcasters() {
 		try {
 			String query = "SELECT * FROM Podcaster";
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			ResultSet resultadoConsulta = consulta.executeQuery();
 			while (resultadoConsulta.next()) {
-				podcasters.add(new Podcaster(resultadoConsulta.getString(1), resultadoConsulta.getString(2), resultadoConsulta.getString(3),
-						resultadoConsulta.getString(4), resultadoConsulta.getString(5)));
+				podcasters.add(new Podcaster(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4),
+						resultadoConsulta.getString(5)));
 			}
 			consulta.close();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}return podcasters;
+		}
+		return podcasters;
 	}
-	
-	public ArrayList<Audio> lecturaImagenEnBD(){
+
+	public ArrayList<Audio> lecturaImagenEnBD() {
 		ImageIcon imagen = new ImageIcon();
-		ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 		
 		try {
 			String query = "SELECT * FROM audio";
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			ResultSet resultadoConsulta = consulta.executeQuery();
-			while (resultadoConsulta.next()){
+			while (resultadoConsulta.next()) {
 				Blob imagenBlob = resultadoConsulta.getBlob(4);
 				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
 				imagen = new ImageIcon(arrayImagen);
-				audios.add(new Audio(resultadoConsulta.getString(1), resultadoConsulta.getString(2), resultadoConsulta.getInt(3),
-						imagen, resultadoConsulta.getString(5)));
+				audios.add(new Audio(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getInt(3), imagen, resultadoConsulta.getString(5)));
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-	}
-		return musicas;
+		}
+		return audios;
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import controlador.ControladorDeSonido;
+import controlador.GestionBD;
+import modelo.Audio;
 import vista.VentanaPrincipal;
 
 public class PanelReproductorMusica extends JPanel {
@@ -23,23 +26,33 @@ public class PanelReproductorMusica extends JPanel {
 	private boolean random = false;
 	private boolean bucle = false;
 	private boolean aleatorio = false;
+	private JLabel lblReproductor;
+	private JLabel lblIconoGrande;
+	private JLabel lblImagenCancion;
+	private JLabel lblTitulo;
+	private JButton btnPlay;
+	private JButton btnPlayStop;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelReproductorMusica(VentanaPrincipal v) {
+	public PanelReproductorMusica(VentanaPrincipal v, GestionBD gestion) {
+		ArrayList<Audio> cancion = new ArrayList<Audio>();
+		cancion.add(new Audio("PPPPP", "A Little Piece of Heaven", 0, new ImageIcon("imagen/Avenged-Sevenfold.jpg"), "xxx"));
+		controladorDeSonido = new ControladorDeSonido(gestion.lecturaImagenEnBD());
+		
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
-		JLabel lblReproductor = new JLabel("REPRODUCTOR MÚSICA");
+		lblReproductor = new JLabel("REPRODUCTOR MÚSICA");
 		lblReproductor.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReproductor.setForeground(Color.GREEN);
 		lblReproductor.setFont(new Font("Lucida Bright", Font.BOLD, 20));
 		lblReproductor.setBounds(270, 100, 260, 51);
 		add(lblReproductor);
 
-		JLabel lblIconoGrande = new JLabel("");
+		lblIconoGrande = new JLabel("");
 		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));
 		lblIconoGrande.setBounds(0, 0, 100, 100);
 		add(lblIconoGrande);
@@ -73,6 +86,8 @@ public class PanelReproductorMusica extends JPanel {
 				/* Para que vuelba al inicio de reproduccion sin dar erro */
 				if (aleatorio = true)
 					controladorDeSonido.setCancionEnReproduccion(intinerador);
+					lblImagenCancion.setIcon(gestion.lecturaImagenEnBD().get(intinerador).getImagen());
+					lblTitulo.setText("<html>" + gestion.lecturaImagenEnBD().get(intinerador).getNombre() + "</html>");
 					
 			}
 		});
@@ -90,12 +105,15 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionSiguiente.setBounds(480, 475, 70, 30);
 		add(btnCancionSiguiente);
 
-		JButton btnPlay = new JButton("PLAY");
+		btnPlay = new JButton("PLAY");
 		btnPlay.setForeground(Color.WHITE);
 		btnPlay.setBackground(Color.BLACK);
 		btnPlay.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controladorDeSonido.reproducir(0);
+				btnPlay.setVisible(false);
+				btnPlayStop.setVisible(true);
 			}
 		});
 		btnPlay.setBounds(355, 475, 90, 30);
@@ -108,8 +126,28 @@ public class PanelReproductorMusica extends JPanel {
 		btnFavorito.setBounds(570, 475, 80, 30);
 		add(btnFavorito);
 		
-		JLabel lblImagenCancion = new JLabel("");
+		lblImagenCancion = new JLabel();
+		lblImagenCancion.setIcon(gestion.lecturaImagenEnBD().get(intinerador).getImagen());
 		lblImagenCancion.setBounds(275, 200, 250, 250);
 		add(lblImagenCancion);
+		
+		lblTitulo = new JLabel("");
+		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setBounds(275, 170, 250, 20);
+		add(lblTitulo);
+		
+		btnPlayStop = new JButton("STOP");
+		btnPlayStop.setVisible(false);
+		btnPlayStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controladorDeSonido.continuarCancion();
+			}
+		});
+		btnPlayStop.setBackground(Color.BLACK);
+		btnPlayStop.setForeground(Color.WHITE);
+		btnPlayStop.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnPlayStop.setBounds(355, 475, 90, 30);
+		add(btnPlayStop);
 	}
 }

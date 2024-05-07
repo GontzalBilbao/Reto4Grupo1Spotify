@@ -74,7 +74,7 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelAlbumCancion(this));
 			break;
 		case 7:
-			setContentPane(new PanelReproductorMusica(this));
+			setContentPane(new PanelReproductorMusica(this, this.gestionBD));
 			break;
 		case 8:
 			setContentPane(new PanelDescubrirPodcasts(this, this.gestionInfo));

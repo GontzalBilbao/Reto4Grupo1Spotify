@@ -10,6 +10,8 @@ public class Audio {
 	private ImageIcon imagen;
 	private String tipo;
 	
+	private boolean reproduciendo;
+	
 	public Audio() {
 		
 	}
@@ -63,6 +65,14 @@ public class Audio {
 		this.tipo = tipo;
 	}
 
+	public boolean sonando() {
+		if (!reproduciendo) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return "Audio [idAudio=" + idAudio + ", nombre=" + nombre + ", duracion=" + duracion + ", imagen=" + imagen
