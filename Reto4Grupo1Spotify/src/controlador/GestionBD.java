@@ -1,9 +1,5 @@
 package controlador;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,19 +9,26 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import modelo.CancionesFavoritas;
 import modelo.Cliente;
+import modelo.MasEscuchado;
 import modelo.Podcast;
 import modelo.Podcaster;
-import panel.PanelDescubrirPodcasts;
+import modelo.PodcastsFavoritos;
+import modelo.TopPlayList;
 
 public class GestionBD {
 	private Connection conexion;
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	public ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
 	public ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
+	
+	public ArrayList<CancionesFavoritas> cancionesFav = new ArrayList<CancionesFavoritas>();
+	public ArrayList<PodcastsFavoritos> podcastsFav = new ArrayList<PodcastsFavoritos>();
+	public ArrayList<MasEscuchado> masEscuchado = new ArrayList<MasEscuchado>();
+	public ArrayList<TopPlayList> topPlaylist = new ArrayList<TopPlayList>();
 
 	public GestionBD() {
 		iniciarConexion();
@@ -35,7 +38,7 @@ public class GestionBD {
 		System.out.println("Conectando..........");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost/bdreto4", "root", "");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3307/bdreto4", "root", "");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Libreria no encontrada");
 		} catch (SQLException e) {
@@ -149,6 +152,80 @@ public class GestionBD {
 	public ArrayList<Podcast> devolverPodcasts() {
 		return podcasts;
 	}
+	
+	
+	
+	public ArrayList<CancionesFavoritas> topCancionesFavoritas() {
+		
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL CancionesFavoritas();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				cancionesFav.add(new CancionesFavoritas(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cancionesFav;
+	}
+
+	public ArrayList<PodcastsFavoritos> topPodcastsFavoritos() {
+		
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL PodcastsFavoritos();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				podcastsFav.add(new PodcastsFavoritos(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return podcastsFav;
+	}
+	
+	public ArrayList<MasEscuchado> topMasEscuchado() {
+
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL topMasEscuchado();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				masEscuchado.add(new MasEscuchado(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return masEscuchado;
+	}
+	
+	public ArrayList<TopPlayList> topPlayList() {
+		
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL topPlaylist();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				topPlaylist.add(new TopPlayList(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4), resultadoConsulta.getInt(5)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return topPlaylist;
+	}
+	
+	
+	
+	
 
 //	SELECT audio.idAudio, podcast.idPodcaster, audio.nombre, audio.duracion, podcast.colaboradores, podcast.descripcion, audio.imagen, audio.tipo
 //	FROM audio JOIN podcast audio.idAudio = podcast.idAudio
