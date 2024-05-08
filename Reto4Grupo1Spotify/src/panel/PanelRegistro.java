@@ -222,7 +222,7 @@ public class PanelRegistro extends JPanel {
 	}
 
 	private String generarIdCliente(GestionBD gestionBD) {
-		gestionBD.queryClientes();
+		gestionBD.cargarClientes();;
 		clientes = gestionBD.devolverClientes();
 		String idCliente = "C000";
 		int idClientePuro = clientes.size() + 1;

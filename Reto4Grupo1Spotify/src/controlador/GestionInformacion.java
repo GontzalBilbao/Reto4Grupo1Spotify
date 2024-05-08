@@ -10,6 +10,8 @@ import vista.VentanaPrincipal;
 public class GestionInformacion {
 
 	private String artistaSeleccionado = "";
+	private String albumSeleccionado = "";
+
 	public GestionInformacion() {
 
 	}
@@ -46,12 +48,21 @@ public class GestionInformacion {
 		}
 		return vuelta;
 	}
-	
+
 	public void guardarArtistaSeleccionado(String nombreArtista) {
 		this.artistaSeleccionado = nombreArtista;
 	}
-	
+
 	public String devolverArtistaSeleccionado() {
 		return artistaSeleccionado;
+	}
+
+	public void guardarAlbumSeleccionado(String tituloAlbum) {
+		this.albumSeleccionado = tituloAlbum;
+
+	}
+
+	public String devolverAlbumSeleccionado() {
+		return albumSeleccionado;
 	}
 }
