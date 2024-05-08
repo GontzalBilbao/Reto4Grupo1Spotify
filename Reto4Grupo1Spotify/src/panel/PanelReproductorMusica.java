@@ -33,6 +33,8 @@ public class PanelReproductorMusica extends JPanel {
 	private JButton btnPlay;
 	private JButton btnPlayStop;
 
+	
+	
 	/**
 	 * Create the panel.
 	 */
