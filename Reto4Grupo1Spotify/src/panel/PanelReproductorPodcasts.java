@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 
 import controlador.ControladorDeSonido;
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import modelo.Audio;
 import vista.VentanaPrincipal;
 
@@ -39,7 +40,10 @@ public class PanelReproductorPodcasts extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelReproductorPodcasts(VentanaPrincipal v, GestionBD gestion) {
+	public PanelReproductorPodcasts(VentanaPrincipal v, GestionBD gestion, GestionInformacion gestionInfo) {
+		
+		
+		
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);

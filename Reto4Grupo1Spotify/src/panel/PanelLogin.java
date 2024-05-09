@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import modelo.Cliente;
 import vista.VentanaPrincipal;
 
@@ -30,7 +31,7 @@ public class PanelLogin extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelLogin(VentanaPrincipal v, GestionBD gestion) {
+	public PanelLogin(VentanaPrincipal v, GestionBD gestion, GestionInformacion gestionInfo) {
 		clientes = new ArrayList<Cliente>();
 
 		setSize(800, 600);
@@ -82,6 +83,7 @@ public class PanelLogin extends JPanel {
 		btnRegistrarse_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gestion.queryClientes(textFieldUsusario.getText(), textFieldContraseña.getText(), v);
+				gestionInfo.tipoDePerfil(textFieldUsusario.getText());
 			}
 
 		});

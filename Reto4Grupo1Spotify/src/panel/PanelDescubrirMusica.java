@@ -31,6 +31,8 @@ public class PanelDescubrirMusica extends JPanel {
 	 */
 	public PanelDescubrirMusica(VentanaPrincipal v, GestionInformacion gestionInfo) {
 		
+		System.out.println(gestionInfo.devolverTipoDePerfil());
+		
 		musicos = gestionInfo.devolverMusico();
 		
 		setSize(800, 600);

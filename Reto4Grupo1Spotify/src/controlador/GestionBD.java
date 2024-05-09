@@ -78,9 +78,22 @@ public class GestionBD {
 		return clientes;
 	}
 
-//	public ArrayList<Cliente> devolverClientes() {
-//		return clientes;
-//	}
+	public String queryTipoDePerfil(String usuario) {
+		String premiun = null;
+		try {
+			PreparedStatement consulta = conexion.prepareStatement("SELECT tipo FROM cliente WHERE usuario = ?");
+			consulta.setString(1, usuario);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				premiun = resultadoConsulta.getString(1);
+			}
+			consulta.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return premiun;
+	}
 
 	public ArrayList<Musico> queryMusico() {
 		ImageIcon imagen = new ImageIcon();

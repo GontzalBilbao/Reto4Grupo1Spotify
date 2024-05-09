@@ -16,6 +16,7 @@ public class GestionInformacion {
 	private GestionBD gestionBD;
 	private String musico;
 	private String podcaster;
+	private String tipoDePerfil;
 
 	public GestionInformacion() {
 		gestionBD = new GestionBD();
@@ -44,6 +45,14 @@ public class GestionInformacion {
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return false;
+	}
+	
+	public void tipoDePerfil(String usuario) {
+		this.tipoDePerfil = gestionBD.queryTipoDePerfil(usuario);
+	}
+	
+	public String devolverTipoDePerfil() {
+		return tipoDePerfil;
 	}
 
 	public ArrayList<Musico> devolverMusico() {
