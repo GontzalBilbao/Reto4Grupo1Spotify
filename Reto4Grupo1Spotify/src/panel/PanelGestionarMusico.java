@@ -2,17 +2,18 @@ package panel;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
-
-import vista.VentanaPrincipal;
-import javax.swing.JScrollPane;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import controlador.GestionBD;
+import vista.VentanaPrincipal;
 
 public class PanelGestionarMusico extends JPanel {
 
@@ -21,7 +22,7 @@ public class PanelGestionarMusico extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelGestionarMusico(VentanaPrincipal v) {
+	public PanelGestionarMusico(VentanaPrincipal v, GestionBD gestionBD) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);

@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import controlador.GestionBD;
 import vista.VentanaPrincipal;
 
 public class PanelGestionarAlbum extends JPanel {
@@ -13,7 +14,7 @@ public class PanelGestionarAlbum extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelGestionarAlbum(VentanaPrincipal v) {
+	public PanelGestionarAlbum(VentanaPrincipal v, GestionBD gestionBD) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);

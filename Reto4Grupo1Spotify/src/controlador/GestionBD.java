@@ -24,7 +24,7 @@ public class GestionBD {
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	public ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
 	public ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
-	
+
 	public ArrayList<CancionesFavoritas> cancionesFav = new ArrayList<CancionesFavoritas>();
 	public ArrayList<PodcastsFavoritos> podcastsFav = new ArrayList<PodcastsFavoritos>();
 	public ArrayList<MasEscuchado> masEscuchado = new ArrayList<MasEscuchado>();
@@ -142,7 +142,7 @@ public class GestionBD {
 						resultadoConsulta.getString(3), resultadoConsulta.getString(4), resultadoConsulta.getString(5),
 						resultadoConsulta.getString(6), imagen, resultadoConsulta.getString(8)));
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -152,11 +152,11 @@ public class GestionBD {
 	public ArrayList<Podcast> devolverPodcasts() {
 		return podcasts;
 	}
-	
-	
-	
+
+	/* ESTADISTICAS */
+
 	public ArrayList<CancionesFavoritas> topCancionesFavoritas() {
-		
+
 		try {
 			Statement consulta = conexion.createStatement();
 			String query = "CALL CancionesFavoritas();";
@@ -173,7 +173,7 @@ public class GestionBD {
 	}
 
 	public ArrayList<PodcastsFavoritos> topPodcastsFavoritos() {
-		
+
 		try {
 			Statement consulta = conexion.createStatement();
 			String query = "CALL PodcastsFavoritos();";
@@ -188,7 +188,7 @@ public class GestionBD {
 		}
 		return podcastsFav;
 	}
-	
+
 	public ArrayList<MasEscuchado> topMasEscuchado() {
 
 		try {
@@ -205,9 +205,9 @@ public class GestionBD {
 		}
 		return masEscuchado;
 	}
-	
+
 	public ArrayList<TopPlayList> topPlayList() {
-		
+
 		try {
 			Statement consulta = conexion.createStatement();
 			String query = "CALL topPlaylist();";
@@ -222,10 +222,6 @@ public class GestionBD {
 		}
 		return topPlaylist;
 	}
-	
-	
-	
-	
 
 //	SELECT audio.idAudio, podcast.idPodcaster, audio.nombre, audio.duracion, podcast.colaboradores, podcast.descripcion, audio.imagen, audio.tipo
 //	FROM audio JOIN podcast audio.idAudio = podcast.idAudio
