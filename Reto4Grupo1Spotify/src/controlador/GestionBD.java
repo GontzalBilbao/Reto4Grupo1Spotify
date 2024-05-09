@@ -207,7 +207,7 @@ public class GestionBD {
 		ImageIcon imagen = new ImageIcon();
 		ArrayList<Audio> audios = new ArrayList<Audio>();
 		try {
-			String query = "SELECT * FROM audio WHERE tipo = 'podcast'";
+			String query = "SELECT * FROM audio WHERE nombre = ?";
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			ResultSet resultadoConsulta = consulta.executeQuery();
 			while (resultadoConsulta.next()) {

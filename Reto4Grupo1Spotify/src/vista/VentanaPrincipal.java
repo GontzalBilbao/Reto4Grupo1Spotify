@@ -138,7 +138,7 @@ public class VentanaPrincipal extends JFrame {
 
 	public void lanzarVentana() {
 
-		this.cambiarDePanel(3);
+		this.cambiarDePanel(1);
 		this.setVisible(true);
 	}
 
