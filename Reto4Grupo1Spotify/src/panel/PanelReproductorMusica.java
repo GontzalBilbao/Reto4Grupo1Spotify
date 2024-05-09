@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 
 import controlador.ControladorDeSonido;
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import vista.VentanaPrincipal;
 
 public class PanelReproductorMusica extends JPanel {
@@ -36,19 +37,13 @@ public class PanelReproductorMusica extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelReproductorMusica(VentanaPrincipal v, GestionBD gestion) {
-	
 
-		controladorDeSonido = new ControladorDeSonido(gestion.queryAudioCancion());
-
-		for (int i = 0; i < 5; i++) {
-			System.out.println(gestion.queryAudioCancion().get(i).getNombre());
-		}
+	public PanelReproductorMusica(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
-		
+
 		JPopupMenu popupMenu = new JPopupMenu();
 		addPopup(this, popupMenu);
 
@@ -60,7 +55,7 @@ public class PanelReproductorMusica extends JPanel {
 		JButton btnAtras = new JButton("ATRAS");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(1);
+				vp.cambiarDePanel(1);
 			}
 		});
 		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -70,7 +65,7 @@ public class PanelReproductorMusica extends JPanel {
 		JButton btnPerfil = new JButton("PERFIL");
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(11);
+				vp.cambiarDePanel(11);
 			}
 		});
 		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -85,15 +80,15 @@ public class PanelReproductorMusica extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				/* Para que vuelba al inicio de reproduccion sin dar erro */
 				if (aleatorio = true)
-				if (aleatorio = true)
-					if (intinerador == 0) {
-						intinerador = gestion.queryAudioCancion().size() - 1;
-					} else {
-						intinerador = (intinerador - 1) % gestion.queryAudioCancion().size();
-					}
+					if (aleatorio = true)
+						if (intinerador == 0) {
+							intinerador = gestionBD.queryAudioCancion().size() - 1;
+						} else {
+							intinerador = (intinerador - 1) % gestionBD.queryAudioCancion().size();
+						}
 				controladorDeSonido.setCancionEnReproduccion(intinerador);
-				lblImagenCancion.setIcon(gestion.queryAlbum().get(0).getImagen());
-				lblTitulo.setText("<html>" + gestion.queryAudioCancion().get(intinerador).getNombre() + "</html>");
+				lblImagenCancion.setIcon(gestionBD.queryAlbum().get(0).getImagen());
+				lblTitulo.setText("<html>" + gestionBD.queryAudioCancion().get(intinerador).getNombre() + "</html>");
 
 			}
 		});
@@ -104,11 +99,11 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				intinerador = (intinerador + 1) % gestion.queryAudioCancion().size();
+				intinerador = (intinerador + 1) % gestionBD.queryAudioCancion().size();
 
 				controladorDeSonido.setCancionEnReproduccion(intinerador);
-				lblImagenCancion.setIcon(gestion.queryAlbum().get(0).getImagen());
-				lblTitulo.setText("<html>" + gestion.queryAudioCancion().get(intinerador).getNombre() + "</html>");
+				lblImagenCancion.setIcon(gestionBD.queryAlbum().get(0).getImagen());
+				lblTitulo.setText("<html>" + gestionBD.queryAudioCancion().get(intinerador).getNombre() + "</html>");
 				btnPlay.setVisible(true);
 				btnPlayStop.setVisible(false);
 			}
@@ -145,12 +140,12 @@ public class PanelReproductorMusica extends JPanel {
 		add(btnFavorito);
 
 		lblImagenCancion = new JLabel();
-		lblImagenCancion.setIcon(gestion.queryAlbum().get(intinerador).getImagen());
+		lblImagenCancion.setIcon(gestionBD.queryAlbum().get(intinerador).getImagen());
 		lblImagenCancion.setBounds(275, 150, 250, 250);
 		add(lblImagenCancion);
 
 		lblTitulo = new JLabel("");
-		lblTitulo.setText(gestion.queryAudioCancion().get(intinerador).getNombre());
+		lblTitulo.setText(gestionBD.queryAudioCancion().get(intinerador).getNombre());
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -169,7 +164,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnPlayStop.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnPlayStop.setBounds(355, 425, 90, 30);
 		add(btnPlayStop);
-		
+
 		JButton btnmMenu = new JButton("MENU");
 		btnmMenu.setBackground(Color.BLACK);
 		btnmMenu.setForeground(Color.WHITE);
@@ -180,20 +175,21 @@ public class PanelReproductorMusica extends JPanel {
 		});
 		btnmMenu.setBounds(420, 470, 150, 30);
 		add(btnmMenu);
-		
+
 		JPopupMenu popupMenu_1 = new JPopupMenu();
 		addPopup(btnmMenu, popupMenu_1);
-		
+
 		JMenuItem mntmAñadirAPlayList = new JMenuItem("Añadir  a PalyList");
 		mntmAñadirAPlayList.setForeground(Color.WHITE);
 		mntmAñadirAPlayList.setBackground(Color.BLACK);
 		popupMenu_1.add(mntmAñadirAPlayList);
-		
+
 		JMenuItem mntmExportarCancion = new JMenuItem("Exportear Canción");
 		mntmExportarCancion.setBackground(Color.BLACK);
 		mntmExportarCancion.setForeground(Color.WHITE);
 		popupMenu_1.add(mntmExportarCancion);
 	}
+
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -201,11 +197,13 @@ public class PanelReproductorMusica extends JPanel {
 					showMenu(e);
 				}
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					showMenu(e);
 				}
 			}
+
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}

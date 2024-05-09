@@ -1,21 +1,18 @@
 package modelo;
 
-import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 
-public class Musico extends Artista{
+public class Musico extends Artista {
 
 	private String idMusico;
 	private String caracteristica;
-	private ArrayList<Album> album = new ArrayList<Album>();
-	
+
 	public Musico() {
-		
+
 	}
 
-	public Musico(String idMusico, String nombreArtistico, ImageIcon imagen,  String caracteristica, String descripcion) {
-		super(nombreArtistico, imagen, descripcion);
+	public Musico(String idMusico, String nombreArtista, String caracteristica, ImageIcon imagen, String descripcion) {
+		super(nombreArtista, imagen, descripcion);
 		this.idMusico = idMusico;
 		this.caracteristica = caracteristica;
 	}
@@ -36,18 +33,45 @@ public class Musico extends Artista{
 		this.caracteristica = caracteristica;
 	}
 
-	public ArrayList<Album> getAlbum() {
-		return album;
+	public String getNombreArtistico() {
+		// TODO Auto-generated method stub
+		return super.getNombreArtistico();
 	}
 
-	public void setAlbum(ArrayList<Album> album) {
-		this.album = album;
+	public void setNombreArtistico(String nombreArtistico) {
+		// TODO Auto-generated method stub
+		super.setNombreArtistico(nombreArtistico);
+	}
+
+	@Override
+	public ImageIcon getImagen() {
+		// TODO Auto-generated method stub
+		return super.getImagen();
+	}
+
+	@Override
+	public void setImagen(ImageIcon imagen) {
+		// TODO Auto-generated method stub
+		super.setImagen(imagen);
+	}
+
+	@Override
+	public String getDescripcion() {
+		// TODO Auto-generated method stub
+		return super.getDescripcion();
+	}
+
+	@Override
+	public void setDescripcion(String descripcion) {
+		// TODO Auto-generated method stub
+		super.setDescripcion(descripcion);
 	}
 
 	@Override
 	public String toString() {
-		return "Musico [idMusico=" + idMusico + ", caracteristica=" + caracteristica + ", getNombreArtistico()="
-				+ getNombreArtistico() + ", getImagen()=" + getImagen() + ", getDescripcion()=" + getDescripcion()
-				+ "]";
+		return "Musico [getIdMusico()=" + getIdMusico() + ", getCaracteristica()=" + getCaracteristica()
+				+ ", getNombreArtista()=" + getNombreArtistico() + ", getImagen()=" + getImagen() + ", getDescripcion()="
+				+ getDescripcion() + "]";
 	}
+
 }

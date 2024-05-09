@@ -1,22 +1,19 @@
 package modelo;
 
+
+import java.util.Objects;
+
 import javax.swing.ImageIcon;
 
 public class Album {
-	
-	private String idAlbum;
-	private String titulo;
-	private String año;
-	private String genero;
+
+	private String idAlbum, titulo, año, genero;
 	private ImageIcon imagen;
 	private String idMusico;
-	
-	public Album() {
 
-	}
+	
 
 	public Album(String idAlbum, String titulo, String año, String genero, ImageIcon imagen, String idMusico) {
-		super();
 		this.idAlbum = idAlbum;
 		this.titulo = titulo;
 		this.año = año;
@@ -65,6 +62,8 @@ public class Album {
 		this.imagen = imagen;
 	}
 
+	
+	
 	public String getIdMusico() {
 		return idMusico;
 	}
@@ -74,13 +73,29 @@ public class Album {
 	}
 
 	@Override
+	public int hashCode() {
+		return Objects.hash(año, genero, idAlbum, imagen, titulo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Album other = (Album) obj;
+		return Objects.equals(año, other.año) && Objects.equals(genero, other.genero)
+				&& Objects.equals(idAlbum, other.idAlbum) && Objects.equals(imagen, other.imagen)
+				&& Objects.equals(titulo, other.titulo);
+	}
+
+	@Override
 	public String toString() {
 		return "Album [idAlbum=" + idAlbum + ", titulo=" + titulo + ", año=" + año + ", genero=" + genero + ", imagen="
-				+ imagen + ", idMusico=" + idMusico + "]";
+				+ imagen + "]";
 	}
-	
-	
-	
-	
+
 
 }

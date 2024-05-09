@@ -3,21 +3,21 @@ package modelo;
 import javax.swing.ImageIcon;
 
 public class Audio {
-	
+
 	private String idAudio;
 	private String nombre;
-	private int duracion;
+	private String duracion;
 	private ImageIcon imagen;
 	private String tipo;
-	
+
 	private boolean reproduciendo;
-	
+
 	public Audio() {
-		
+
 	}
 
-	public Audio(String idAudio, String nombre, int duracion, ImageIcon imagen, String tipo) {
-		super();
+	public Audio(String idAudio, String nombre, String duracion, ImageIcon imagen, String tipo) {
+
 		this.idAudio = idAudio;
 		this.nombre = nombre;
 		this.duracion = duracion;
@@ -41,11 +41,11 @@ public class Audio {
 		this.nombre = nombre;
 	}
 
-	public int getDuracion() {
+	public String getDuracion() {
 		return duracion;
 	}
 
-	public void setDuracion(int duracion) {
+	public void setDuracion(String duracion) {
 		this.duracion = duracion;
 	}
 
@@ -72,15 +72,11 @@ public class Audio {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Audio [idAudio=" + idAudio + ", nombre=" + nombre + ", duracion=" + duracion + ", imagen=" + imagen
 				+ ", tipo=" + tipo + "]";
 	}
-	
-	
-	
-	
 
 }

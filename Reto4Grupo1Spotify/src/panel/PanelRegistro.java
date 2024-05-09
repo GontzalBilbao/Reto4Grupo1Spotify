@@ -4,13 +4,20 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import controlador.GestionBD;
 import controlador.GestionInformacion;
@@ -21,13 +28,19 @@ public class PanelRegistro extends JPanel {
 
 	public String Suscripciones[] = { "Free", "Premium" };
 	public String Idiomas[] = { "ES", "EU", "EN", "FR", "DE", "CA", "GA", "AR" };
+	private String condicionesContrasena1 = "- Más 8 caracteres - 1 mayúscula";
+	private String condicionesContrasena2 = "- 1 especial - 1 número";
+	private String fechaNac = "";
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtUsuario;
 	private JTextField txtContrasena;
 	private JTextField txtConfContrasena;
 	private JTextField txtFechaNac;
+	private JComboBox comboBoxSuscripcion;
+	private JComboBox comboBoxIdioma;
 	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	private JDateChooser dateChooser;
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,12 +49,11 @@ public class PanelRegistro extends JPanel {
 	 */
 	public PanelRegistro(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 
-//		gestionBD.queryClientes();
-//		clientes = gestionBD.devolverClientes();
+//		generarIdCliente();
 //		for (int i = 0; i < clientes.size(); i++) {
 //			System.out.println(clientes.get(i).getNombre());
 //		}
-		
+
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -59,10 +71,31 @@ public class PanelRegistro extends JPanel {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-//				gestionInfo.validarRegistro(vp);
+
+				validarFechaSeleccionada();
+				boolean campos = validarCamposVacios();
+				boolean contra = gestionInfo.validarContrasena(campos, txtContrasena.getText(),
+						txtConfContrasena.getText());
+				if (campos == false) {
+					JOptionPane.showMessageDialog(null, "Alguno de los campos está vacío", "Error de Registro",
+							JOptionPane.ERROR_MESSAGE);
+				} else if (fechaNac.equals("")) {
+					JOptionPane.showMessageDialog(null, "Introduzca la fecha", "Error de Registro",
+							JOptionPane.ERROR_MESSAGE);
+				} else if (campos == true && contra == true) {
+					String idCliente = generarIdCliente(gestionBD);
+					String fechaRegistro = generarFechaRegistro();
+					gestionBD.agregarCliente(idCliente, txtNombre.getText(), txtApellido.getText(),
+							txtUsuario.getText(), txtContrasena.getText(), fechaNac, fechaRegistro,
+							comboBoxSuscripcion.getSelectedItem().toString(),
+							comboBoxIdioma.getSelectedItem().toString());
+					JOptionPane.showMessageDialog(null, "El Usuario se ha guardado con éxito", "Usuario Guardado",
+							JOptionPane.INFORMATION_MESSAGE);
+					vp.cambiarDePanel(1);
+				}
+
 			}
-			
+
 		});
 		btnGuardar.setBounds(685, 527, 89, 23);
 		add(btnGuardar);
@@ -115,15 +148,20 @@ public class PanelRegistro extends JPanel {
 		txtConfContrasena.setBounds(375, 297, 144, 20);
 		add(txtConfContrasena);
 
-		JComboBox comboBoxSuscripcion = new JComboBox(Suscripciones);
+		comboBoxSuscripcion = new JComboBox(Suscripciones);
 		comboBoxSuscripcion.setBounds(375, 339, 89, 22);
 		add(comboBoxSuscripcion);
 
-		JComboBox comboBoxIdioma = new JComboBox(Idiomas);
+		comboBoxIdioma = new JComboBox(Idiomas);
 		comboBoxIdioma.setBounds(375, 381, 89, 22);
 		add(comboBoxIdioma);
 
 		JButton btnAtras = new JButton("Atrás");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vp.cambiarDePanel(1);
+			}
+		});
 		btnAtras.setBounds(10, 11, 89, 23);
 		add(btnAtras);
 
@@ -131,10 +169,86 @@ public class PanelRegistro extends JPanel {
 		lblFechaNac.setBounds(231, 178, 144, 14);
 		add(lblFechaNac);
 
-		txtFechaNac = new JTextField();
-		txtFechaNac.setColumns(10);
-		txtFechaNac.setBounds(375, 175, 144, 20);
-		add(txtFechaNac);
+		dateChooser = new JDateChooser();
+		dateChooser.setBounds(375, 175, 144, 20);
+		add(dateChooser);
+
+		JLabel lblCondicionesContra1 = new JLabel(
+				"<html>" + condicionesContrasena1.replaceAll("\\n", "<br>") + "</html>");
+		lblCondicionesContra1.setVisible(false);
+		lblCondicionesContra1.setBounds(563, 241, 115, 56);
+		add(lblCondicionesContra1);
+
+		JLabel lblCondicionesContra2 = new JLabel(
+				"<html>" + condicionesContrasena2.replaceAll("\\n", "<br>") + "</html>");
+		lblCondicionesContra2.setVisible(false);
+		lblCondicionesContra2.setBounds(563, 275, 72, 56);
+		add(lblCondicionesContra2);
+
+		JButton btnCondicionesContra = new JButton();
+		btnCondicionesContra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (lblCondicionesContra1.isVisible()) {
+					lblCondicionesContra1.setVisible(false);
+					lblCondicionesContra2.setVisible(false);
+				} else {
+					lblCondicionesContra1.setVisible(true);
+					lblCondicionesContra2.setVisible(true);
+				}
+			}
+		});
+		btnCondicionesContra.setBackground(null);
+		btnCondicionesContra.setIcon(new ImageIcon("icono/iconoAyuda-Pequeño.png"));
+		btnCondicionesContra.setBounds(529, 254, 24, 23);
+		add(btnCondicionesContra);
 	}
 
+	private void validarFechaSeleccionada() {
+
+		Date fecha = dateChooser.getDate();
+		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+		if (fecha != null) {
+			fechaNac = formatoFecha.format(fecha);
+		} else {
+			fechaNac = "";
+		}
+
+	}
+
+	private String generarFechaRegistro() {
+		LocalDate fechaRegistro = LocalDate.now();
+		String fechaRegistroString = fechaRegistro.toString();
+		return fechaRegistroString;
+	}
+
+	private String generarIdCliente(GestionBD gestionBD) {
+		gestionBD.cargarClientes();
+		clientes = gestionBD.devolverClientes();
+		String idCliente = "C000";
+		int idClientePuro = clientes.size() + 1;
+		if (idClientePuro < 10) {
+			idCliente += Integer.toString(idClientePuro);
+		} else if (idClientePuro > 10) {
+			idCliente = "C00" + Integer.toString(idClientePuro);
+		} else if (idClientePuro > 100) {
+			idCliente = "C0" + Integer.toString(idClientePuro);
+		} else {
+			idCliente = "C" + Integer.toString(idClientePuro);
+		}
+		System.out.println(idCliente);
+		return idCliente;
+	}
+
+	private boolean validarCamposVacios() {
+		boolean campos = false;
+		if (txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty() || txtUsuario.getText().isEmpty()
+				|| txtContrasena.getText().isEmpty() || txtConfContrasena.getText().isEmpty()
+				|| txtConfContrasena.getText().isEmpty()) {
+			campos = false;
+		} else {
+			campos = true;
+		}
+		return campos;
+
+	}
 }

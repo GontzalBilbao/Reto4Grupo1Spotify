@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,14 +19,12 @@ import javax.swing.SwingConstants;
 import controlador.ControladorDeSonido;
 import controlador.GestionBD;
 import controlador.GestionInformacion;
-import modelo.Audio;
 import vista.VentanaPrincipal;
 
 public class PanelReproductorPodcasts extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	private int intinerador = 0;
 	private ControladorDeSonido controladorDeSonido;
 	private boolean aleatorio = false;
@@ -40,24 +37,23 @@ public class PanelReproductorPodcasts extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelReproductorPodcasts(VentanaPrincipal v, GestionBD gestion, GestionInformacion gestionInfo) {
-		
-		
-		
+
+	public PanelReproductorPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
-		
-		controladorDeSonido = new ControladorDeSonido(gestion.queryAudioPodcast());
+
+		controladorDeSonido = new ControladorDeSonido(gestionBD.queryAudioPodcast());
 
 		for (int i = 0; i < 5; i++) {
-			System.out.println(gestion.queryAudioPodcast().get(i).getNombre());
+			System.out.println(gestionBD.queryAudioPodcast().get(i).getNombre());
 		}
 
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
-		
+
 		JPopupMenu popupMenu = new JPopupMenu();
 		addPopup(this, popupMenu);
 
@@ -69,7 +65,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		JButton btnAtras = new JButton("ATRAS");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(1);
+				vp.cambiarDePanel(1);
 			}
 		});
 		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -79,7 +75,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		JButton btnPerfil = new JButton("PERFIL");
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(11);
+				vp.cambiarDePanel(11);
 			}
 		});
 		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -94,15 +90,15 @@ public class PanelReproductorPodcasts extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				/* Para que vuelba al inicio de reproduccion sin dar erro */
 				if (aleatorio = true)
-				if (aleatorio = true)
-					if (intinerador == 0) {
-						intinerador = gestion.queryAudioPodcast().size() - 1;
-					} else {
-						intinerador = (intinerador - 1) % gestion.queryAudioPodcast().size();
-					}
+					if (aleatorio = true)
+						if (intinerador == 0) {
+							intinerador = gestionBD.queryAudioPodcast().size() - 1;
+						} else {
+							intinerador = (intinerador - 1) % gestionBD.queryAudioPodcast().size();
+						}
 				controladorDeSonido.setCancionEnReproduccion(intinerador);
-				lblImagenPodcast.setIcon(gestion.queryPodcasters().get(intinerador).getImagen());
-				lblTitulo.setText("<html>" + gestion.queryAudioPodcast().get(intinerador).getNombre() + "</html>");
+				lblImagenPodcast.setIcon(gestionBD.queryPodcasters().get(intinerador).getImagen());
+				lblTitulo.setText("<html>" + gestionBD.queryAudioPodcast().get(intinerador).getNombre() + "</html>");
 
 			}
 		});
@@ -113,11 +109,11 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				intinerador = (intinerador + 1) % gestion.queryAudioPodcast().size();
+				intinerador = (intinerador + 1) % gestionBD.queryAudioPodcast().size();
 
 				controladorDeSonido.setCancionEnReproduccion(intinerador);
-				lblImagenPodcast.setIcon(gestion.queryPodcasters().get(intinerador).getImagen());
-				lblTitulo.setText("<html>" + gestion.queryAudioPodcast().get(intinerador).getNombre() + "</html>");
+				lblImagenPodcast.setIcon(gestionBD.queryPodcasters().get(intinerador).getImagen());
+				lblTitulo.setText("<html>" + gestionBD.queryAudioPodcast().get(intinerador).getNombre() + "</html>");
 				btnPlay.setVisible(true);
 				btnPlayStop.setVisible(false);
 			}
@@ -154,12 +150,12 @@ public class PanelReproductorPodcasts extends JPanel {
 		add(btnFavorito);
 
 		lblImagenPodcast = new JLabel();
-		lblImagenPodcast.setIcon(gestion.queryPodcasters().get(intinerador).getImagen());
+		lblImagenPodcast.setIcon(gestionBD.queryPodcasters().get(intinerador).getImagen());
 		lblImagenPodcast.setBounds(275, 150, 250, 250);
 		add(lblImagenPodcast);
 
 		lblTitulo = new JLabel("");
-		lblTitulo.setText(gestion.queryAudioPodcast().get(intinerador).getNombre());
+		lblTitulo.setText(gestionBD.queryAudioPodcast().get(intinerador).getNombre());
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -178,7 +174,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnPlayStop.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnPlayStop.setBounds(355, 425, 90, 30);
 		add(btnPlayStop);
-		
+
 		JButton btnmMenu = new JButton("MENU");
 		btnmMenu.setBackground(Color.BLACK);
 		btnmMenu.setForeground(Color.WHITE);
@@ -189,20 +185,21 @@ public class PanelReproductorPodcasts extends JPanel {
 		});
 		btnmMenu.setBounds(420, 470, 150, 30);
 		add(btnmMenu);
-		
+
 		JPopupMenu popupMenu_1 = new JPopupMenu();
 		addPopup(btnmMenu, popupMenu_1);
-		
+
 		JMenuItem mntmAñadirAPlayList = new JMenuItem("Añadir  a PalyList");
 		mntmAñadirAPlayList.setForeground(Color.WHITE);
 		mntmAñadirAPlayList.setBackground(Color.BLACK);
 		popupMenu_1.add(mntmAñadirAPlayList);
-		
+
 		JMenuItem mntmExportarPodcast = new JMenuItem("Exportear Podcast");
 		mntmExportarPodcast.setBackground(Color.BLACK);
 		mntmExportarPodcast.setForeground(Color.WHITE);
 		popupMenu_1.add(mntmExportarPodcast);
 	}
+
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -210,14 +207,16 @@ public class PanelReproductorPodcasts extends JPanel {
 					showMenu(e);
 				}
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					showMenu(e);
 				}
 			}
+
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
 	}
-	}
+}

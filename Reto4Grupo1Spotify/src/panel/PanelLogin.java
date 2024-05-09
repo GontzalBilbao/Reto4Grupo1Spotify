@@ -22,18 +22,22 @@ import vista.VentanaPrincipal;
 public class PanelLogin extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textFieldUsusario;
-	private JTextField textFieldContraseña;
-	private JButton btnRegistrarse_1;
+	private JTextField txtContraseña;
+	private JTextField txtUsuario;
+	private JButton btnLogin;
+	private String admin = "admin";
+	private String adminContra = "1234";
 
 	private ArrayList<Cliente> clientes;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelLogin(VentanaPrincipal v, GestionBD gestion, GestionInformacion gestionInfo) {
-		clientes = new ArrayList<Cliente>();
 
+
+	public PanelLogin(VentanaPrincipal v, GestionBD gestionBD, GestionInformacion gestionInfo) {
+		clientes = new ArrayList<Cliente>();
+		
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -45,10 +49,11 @@ public class PanelLogin extends JPanel {
 		lblUsuario.setBounds(220, 250, 90, 20);
 		add(lblUsuario);
 
-		textFieldUsusario = new JTextField();
-		textFieldUsusario.setBounds(320, 252, 200, 20);
-		add(textFieldUsusario);
-		textFieldUsusario.setColumns(10);
+
+		txtContraseña = new JTextField();
+		txtContraseña.setBounds(330, 300, 200, 20);
+		add(txtContraseña);
+		txtContraseña.setColumns(10);
 
 		JLabel lblContraseña = new JLabel("Contraseña:");
 		lblContraseña.setHorizontalAlignment(SwingConstants.LEFT);
@@ -57,11 +62,11 @@ public class PanelLogin extends JPanel {
 		lblContraseña.setBounds(220, 300, 90, 20);
 		add(lblContraseña);
 
-		textFieldContraseña = new JTextField();
-		textFieldContraseña.setColumns(10);
-		textFieldContraseña.setBounds(320, 302, 200, 20);
-		add(textFieldContraseña);
-
+		txtUsuario = new JTextField();
+		txtUsuario.setColumns(10);
+		txtUsuario.setBounds(330, 250, 200, 20);
+		add(txtUsuario);
+		
 		JLabel lblLogin = new JLabel("INICIO DE SESION");
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin.setForeground(Color.GREEN);
@@ -74,28 +79,81 @@ public class PanelLogin extends JPanel {
 		btnRegistrarse.setForeground(Color.BLACK);
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				v.cambiarDePanel(2);
 			}
 		});
 		btnRegistrarse.setBounds(90, 450, 180, 35);
 		add(btnRegistrarse);
 
-		btnRegistrarse_1 = new JButton("INICIAR SESIÓN");
-		btnRegistrarse_1.addActionListener(new ActionListener() {
+
+		btnLogin = new JButton("INICIAR SESIÓN");
+		btnLogin.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				gestion.queryClientes(textFieldUsusario.getText(), textFieldContraseña.getText(), v);
-				gestionInfo.tipoDePerfil(textFieldUsusario.getText());
+
+
+				boolean adminCorrecto = validarAdmin(gestionBD);
+				boolean usuarioCorrecto = validarUsuario(gestionBD);
+				
+				if (adminCorrecto == true) {
+					JOptionPane.showMessageDialog(null, "Bienvenido/a Admin", "Administrador",
+							JOptionPane.INFORMATION_MESSAGE);
+					v.cambiarDePanel(13);
+				} else {
+					
+					if (usuarioCorrecto == true) {
+						JOptionPane.showMessageDialog(null, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+						v.cambiarDePanel(3);
+					} else {
+						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error de Login",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+
 			}
 
 		});
-		btnRegistrarse_1.setForeground(Color.BLACK);
-		btnRegistrarse_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnRegistrarse_1.setBounds(530, 450, 180, 35);
-		add(btnRegistrarse_1);
+
+		btnLogin.setForeground(Color.BLACK);
+		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnLogin.setBounds(530, 450, 180, 35);
+		add(btnLogin);
+
 
 		JLabel lblIconoGrande = new JLabel("");
 		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));
 		lblIconoGrande.setBounds(0, 0, 100, 100);
 		add(lblIconoGrande);
 
+	}
+
+	private boolean validarUsuario(GestionBD gestionBD) {
+		boolean usuarioCorrecto = false;
+		gestionBD.queryClientes();
+		clientes = gestionBD.devolverClientes();
+		for (int i = 0; i < clientes.size(); i++) {
+			if (txtUsuario.getText().equals(clientes.get(i).getUsuario())) {
+				if (txtContraseña.getText().equals(clientes.get(i).getContrasena())) {
+					usuarioCorrecto = true;
+				} else {
+
+				}
+			} else {
+
+			}
+		}
+		return usuarioCorrecto;
+	}
+
+	private boolean validarAdmin(GestionBD gestionBD) {
+		boolean adminCorrecto = false;
+		String usuario = txtUsuario.getText();
+		String contra = txtContraseña.getText();
+		if (usuario.equals(admin) && contra.equals(adminContra)) {
+			adminCorrecto = true;
+		} else {
+
+		}
+		return adminCorrecto;
 	}
 }

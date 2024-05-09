@@ -8,6 +8,7 @@ public class Podcaster extends Artista {
 
 	private String idPodcaster;
 	private String genero;
+
 	private ArrayList<Podcast> podcast = new ArrayList<Podcast>();
 
 	public Podcaster() {
@@ -18,7 +19,6 @@ public class Podcaster extends Artista {
 		super(nombreArtistico, imagen, descripcion);
 		this.idPodcaster = idPodcaster;
 		this.genero = genero;
-
 	}
 
 	public String getIdPodcaster() {
@@ -37,12 +37,38 @@ public class Podcaster extends Artista {
 		this.genero = genero;
 	}
 
-	public ArrayList<Podcast> getPodcast() {
-		return podcast;
+	public String getNombreArtistico() {
+		// TODO Auto-generated method stub
+		return super.getNombreArtistico();
 	}
 
-	public void setPodcast(ArrayList<Podcast> podcast) {
-		this.podcast = podcast;
+	public void setNombreArtistico(String nombreArtistico) {
+		// TODO Auto-generated method stub
+		super.setNombreArtistico(nombreArtistico);
+	}
+
+	@Override
+	public ImageIcon getImagen() {
+		// TODO Auto-generated method stub
+		return super.getImagen();
+	}
+
+	@Override
+	public void setImagen(ImageIcon imagen) {
+		// TODO Auto-generated method stub
+		super.setImagen(imagen);
+	}
+
+	@Override
+	public String getDescripcion() {
+		// TODO Auto-generated method stub
+		return super.getDescripcion();
+	}
+
+	@Override
+	public void setDescripcion(String descripcion) {
+		// TODO Auto-generated method stub
+		super.setDescripcion(descripcion);
 	}
 
 	@Override
@@ -50,6 +76,7 @@ public class Podcaster extends Artista {
 		return "Podcaster [idPodcaster=" + idPodcaster + ", genero=" + genero + ", podcast=" + podcast
 				+ ", getNombreArtistico()=" + getNombreArtistico() + ", getImagen()=" + getImagen()
 				+ ", getDescripcion()=" + getDescripcion() + "]";
+
 	}
 
 }
