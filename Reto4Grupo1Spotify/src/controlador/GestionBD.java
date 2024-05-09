@@ -160,12 +160,13 @@ public class GestionBD {
 		return podcasters;
 	}
 
-	public ArrayList<Audio> queryAudioCancion() {
+	public ArrayList<Audio> queryAudioCancion(String nombre) {
 		ImageIcon imagen = new ImageIcon();
 		ArrayList<Audio> audios = new ArrayList<Audio>();
 		try {
-			String query = "SELECT * FROM audio WHERE tipo = 'cancion'";
+			String query = "SELECT * FROM `audio` join cancion on audio.idAudio = cancion.idCancion join album on cancion.idAlbum = album.idAlbum Where album.titulo = ?";
 			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, nombre);
 			ResultSet resultadoConsulta = consulta.executeQuery();
 			while (resultadoConsulta.next()) {
 				Blob imagenBlob = resultadoConsulta.getBlob(4);

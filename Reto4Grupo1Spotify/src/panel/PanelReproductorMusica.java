@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +20,8 @@ import javax.swing.SwingConstants;
 import controlador.ControladorDeSonido;
 import controlador.GestionBD;
 import controlador.GestionInformacion;
+import modelo.Album;
+import modelo.Cancion;
 import vista.VentanaPrincipal;
 
 public class PanelReproductorMusica extends JPanel {
@@ -34,16 +37,31 @@ public class PanelReproductorMusica extends JPanel {
 	private JButton btnPlay;
 	private JButton btnPlayStop;
 
+	private String idMusico = "";
+	
+	private ArrayList<Cancion> canciones;
+	private ArrayList<Album> albumes;
 	/**
 	 * Create the panel.
 	 */
 
 	public PanelReproductorMusica(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 
+		albumes = new ArrayList<Album>();
+		idMusico = gestionInfo.devolverArtistaSeleccionado();
+		gestionBD.cargarAlbumesDelMusico(idMusico);
+		albumes = gestionBD.devolverAlbumes();
+		gestionBD.cargarCancionesDelAlbum(albumes.get(0).getIdAlbum());
+		canciones = gestionBD.devolverCanciones();
+	
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
-		setLayout(null);
+		setLayout(null);	
+		
+		controladorDeSonido = new ControladorDeSonido(canciones);
 
+		intinerador = gestionInfo.pasarIndiceCancion();
+		
 		JPopupMenu popupMenu = new JPopupMenu();
 		addPopup(this, popupMenu);
 
@@ -55,7 +73,7 @@ public class PanelReproductorMusica extends JPanel {
 		JButton btnAtras = new JButton("ATRAS");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(1);
+				vp.cambiarDePanel(5);
 			}
 		});
 		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -79,16 +97,16 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				/* Para que vuelba al inicio de reproduccion sin dar erro */
-				if (aleatorio = true)
-					if (aleatorio = true)
-						if (intinerador == 0) {
-							intinerador = gestionBD.queryAudioCancion().size() - 1;
-						} else {
-							intinerador = (intinerador - 1) % gestionBD.queryAudioCancion().size();
-						}
+
+				if (intinerador == 0) {
+					intinerador = canciones.size() - 1;
+				} else {
+					intinerador = (intinerador - 1)
+							% canciones.size();
+				}
 				controladorDeSonido.setCancionEnReproduccion(intinerador);
-				lblImagenCancion.setIcon(gestionBD.queryAlbum().get(0).getImagen());
-				lblTitulo.setText("<html>" + gestionBD.queryAudioCancion().get(intinerador).getNombre() + "</html>");
+				lblImagenCancion.setIcon(canciones.get(0).getImagen());
+				lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
 
 			}
 		});
@@ -99,11 +117,12 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				intinerador = (intinerador + 1) % gestionBD.queryAudioCancion().size();
+				intinerador = (intinerador + 1)
+						% canciones.size();
 
 				controladorDeSonido.setCancionEnReproduccion(intinerador);
-				lblImagenCancion.setIcon(gestionBD.queryAlbum().get(0).getImagen());
-				lblTitulo.setText("<html>" + gestionBD.queryAudioCancion().get(intinerador).getNombre() + "</html>");
+				lblImagenCancion.setIcon(canciones.get(0).getImagen());
+				lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
 				btnPlay.setVisible(true);
 				btnPlayStop.setVisible(false);
 			}
@@ -140,12 +159,12 @@ public class PanelReproductorMusica extends JPanel {
 		add(btnFavorito);
 
 		lblImagenCancion = new JLabel();
-		lblImagenCancion.setIcon(gestionBD.queryAlbum().get(intinerador).getImagen());
+		lblImagenCancion.setIcon(canciones.get(intinerador).getImagen());
 		lblImagenCancion.setBounds(275, 150, 250, 250);
 		add(lblImagenCancion);
 
 		lblTitulo = new JLabel("");
-		lblTitulo.setText(gestionBD.queryAudioCancion().get(intinerador).getNombre());
+		lblTitulo.setText(gestionInfo.devolverAlbumSeleccionado());
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);

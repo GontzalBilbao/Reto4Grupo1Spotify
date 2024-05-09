@@ -44,7 +44,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
-		controladorDeSonido = new ControladorDeSonido(gestionBD.queryAudioPodcast());
+//		controladorDeSonido = new ControladorDeSonido(gestionBD.queryAudioPodcast());
 
 		for (int i = 0; i < 5; i++) {
 			System.out.println(gestionBD.queryAudioPodcast().get(i).getNombre());

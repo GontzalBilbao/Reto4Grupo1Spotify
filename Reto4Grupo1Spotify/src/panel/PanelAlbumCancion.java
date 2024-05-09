@@ -48,7 +48,7 @@ public class PanelAlbumCancion extends JPanel {
 		gestionBD.cargarAlbumesDelMusico(idMusico);
 		albumes = gestionBD.devolverAlbumes();
 		for (int i = 0; i < albumes.size(); i++) {
-			System.out.println(albumes.get(i).getTitulo());
+//			System.out.println(albumes.get(i).getTitulo());
 		}
 		tituloAlbum = gestionInfo.devolverAlbumSeleccionado();
 		for (int i = 0; i < albumes.size(); i++) {
@@ -61,9 +61,9 @@ public class PanelAlbumCancion extends JPanel {
 			}
 		}
 		
-		for (int i = 0; i < canciones.size(); i++) {
-			System.out.println(canciones.get(i).getNombre());
-		}
+//		for (int i = 0; i < canciones.size(); i++) {
+//			System.out.println(canciones.get(i).getNombre());
+//		}
 
 		JLabel lblTituloLista = new JLabel("CANCIONES");
 		lblTituloLista.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
@@ -143,11 +143,13 @@ public class PanelAlbumCancion extends JPanel {
 			// Añadir un borde al panelItem
 			panelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			// Añadir escuchador al panel
+			gestionInfo.recogerIndiceCancion(i);
 			panelItem.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JPanel clickedPanel = (JPanel) e.getSource();
 					gestionInfo.guardarAlbumSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
+					
 					vp.cambiarDePanel(7);
 					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "

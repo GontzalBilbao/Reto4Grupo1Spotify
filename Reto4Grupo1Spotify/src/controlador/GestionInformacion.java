@@ -20,6 +20,7 @@ public class GestionInformacion {
 
 	private String artistaSeleccionado = "";
 	private String albumSeleccionado = "";
+	private int recogerIndiceCancion;
 
 	public GestionInformacion() {
 		gestionBD = new GestionBD();
@@ -74,6 +75,15 @@ public class GestionInformacion {
 	public String devolverAlbumSeleccionado() {
 		return albumSeleccionado;
 	}
+	
+	public void guardarCancionSeleccionado(String tituloAlbum) {
+		this.albumSeleccionado = tituloAlbum;
+
+	}
+
+	public String devolverCancionSeleccionado() {
+		return albumSeleccionado;
+	}
 
 	public void tipoDePerfil(String usuario) {
 		this.tipoDePerfil = gestionBD.queryTipoDePerfil(usuario);
@@ -105,6 +115,14 @@ public class GestionInformacion {
 
 	public String pasrverPodcaster() {
 		return podcaster;
+	}
+	
+	public void recogerIndiceCancion(int indice) {
+		this.recogerIndiceCancion = indice;
+	}
+	
+	public int pasarIndiceCancion() {
+		return recogerIndiceCancion;
 	}
 
 }
