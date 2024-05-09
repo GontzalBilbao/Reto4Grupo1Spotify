@@ -2,6 +2,8 @@ package modelo;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
 public class Podcaster extends Artista {
 
 	private String idPodcaster;
@@ -12,7 +14,7 @@ public class Podcaster extends Artista {
 
 	}
 
-	public Podcaster(String idPodcaster, String nombreArtistico, String genero, String imagen, String descripcion) {
+	public Podcaster(String idPodcaster, String nombreArtistico, String genero, ImageIcon imagen, String descripcion) {
 		super(nombreArtistico, imagen, descripcion);
 		this.idPodcaster = idPodcaster;
 		this.genero = genero;

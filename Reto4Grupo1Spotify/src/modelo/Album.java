@@ -1,19 +1,21 @@
 package modelo;
 
+import javax.swing.ImageIcon;
+
 public class Album {
 	
 	private String idAlbum;
 	private String titulo;
 	private String año;
 	private String genero;
-	private String imagen;
+	private ImageIcon imagen;
 	private String idMusico;
 	
 	public Album() {
 
 	}
 
-	public Album(String idAlbum, String titulo, String año, String genero, String imagen, String idMusico) {
+	public Album(String idAlbum, String titulo, String año, String genero, ImageIcon imagen, String idMusico) {
 		super();
 		this.idAlbum = idAlbum;
 		this.titulo = titulo;
@@ -55,11 +57,11 @@ public class Album {
 		this.genero = genero;
 	}
 
-	public String getImagen() {
+	public ImageIcon getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(String imagen) {
+	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
 	}
 

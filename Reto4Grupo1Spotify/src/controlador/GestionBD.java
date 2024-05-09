@@ -3,6 +3,7 @@ package controlador;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,11 +11,8 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import java.sql.PreparedStatement;
-
-import modelo.Artista;
+import modelo.Album;
 import modelo.Audio;
-import modelo.Cancion;
 import modelo.Cliente;
 import modelo.Musico;
 import modelo.Podcaster;
@@ -26,6 +24,7 @@ public class GestionBD {
 	public ArrayList<Musico> musicos = new ArrayList<Musico>();
 	public ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
 	public ArrayList<Audio> audios = new ArrayList<Audio>();
+	public ArrayList<Album> album = new ArrayList<Album>();
 
 	public GestionBD() {
 		iniciarConexion();
@@ -59,7 +58,7 @@ public class GestionBD {
 	public ArrayList<Cliente> queryClientes(String usuario, String contrasena, VentanaPrincipal v) {
 		try {
 
-			String query = "SELECT usuario, contraseña FROM Cliente Where usuario = ?";
+			String query = "SELECT usuario, contraseña, tipo FROM Cliente Where usuario = ?";
 
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			consulta.setString(1, usuario);
@@ -84,13 +83,17 @@ public class GestionBD {
 //	}
 
 	public ArrayList<Musico> queryMusico() {
+		ImageIcon imagen = new ImageIcon();
 		try {
 			String query = "SELECT * FROM Musico";
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			ResultSet resultadoConsulta = consulta.executeQuery();
 			while (resultadoConsulta.next()) {
-				musicos.add(new Musico(resultadoConsulta.getString(2), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), resultadoConsulta.getString(4),
+				Blob imagenBlob = resultadoConsulta.getBlob(4);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				imagen = new ImageIcon(arrayImagen);
+				musicos.add(new Musico(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						imagen, resultadoConsulta.getString(4),
 						resultadoConsulta.getString(5)));
 			}
 			consulta.close();
@@ -101,13 +104,17 @@ public class GestionBD {
 	}
 
 	public ArrayList<Podcaster> queryPodcasters() {
+		ImageIcon imagen = new ImageIcon();
 		try {
 			String query = "SELECT * FROM Podcaster";
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			ResultSet resultadoConsulta = consulta.executeQuery();
 			while (resultadoConsulta.next()) {
+				Blob imagenBlob = resultadoConsulta.getBlob(4);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				imagen = new ImageIcon(arrayImagen);
 				podcasters.add(new Podcaster(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), resultadoConsulta.getString(4),
+						resultadoConsulta.getString(3), imagen,
 						resultadoConsulta.getString(5)));
 			}
 			consulta.close();
@@ -117,11 +124,11 @@ public class GestionBD {
 		return podcasters;
 	}
 
-	public ArrayList<Audio> lecturaImagenEnBD() {
+	public ArrayList<Audio> queryAudioCancion() {
 		ImageIcon imagen = new ImageIcon();
 		
 		try {
-			String query = "SELECT * FROM audio";
+			String query = "SELECT * FROM audio WHERE tipo = 'cancion'";
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			ResultSet resultadoConsulta = consulta.executeQuery();
 			while (resultadoConsulta.next()) {
@@ -137,4 +144,48 @@ public class GestionBD {
 		}
 		return audios;
 	}
+	public ArrayList<Album> queryAlbum() {
+		ImageIcon imagen = new ImageIcon();
+		
+		try {
+			String query = "SELECT * FROM album";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				Blob imagenBlob = resultadoConsulta.getBlob(5);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				imagen = new ImageIcon(arrayImagen);
+				album.add(new Album(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4), imagen, resultadoConsulta.getString(6)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return album;
+	}
+	
+	public ArrayList<Audio> queryAudioPodcast() {
+		ImageIcon imagen = new ImageIcon();
+		
+		try {
+			String query = "SELECT * FROM audio WHERE tipo = 'podcast'";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				Blob imagenBlob = resultadoConsulta.getBlob(4);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				imagen = new ImageIcon(arrayImagen);
+				audios.add(new Audio(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getInt(3), imagen, resultadoConsulta.getString(5)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return audios;
+	}
+	
+
+	
 }
