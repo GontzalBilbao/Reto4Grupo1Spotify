@@ -29,6 +29,7 @@ public class PanelAñadirMusico extends JPanel {
 	private JTextField txtNombre;
 	private JTextField txtDescripcion;
 	private JLabel lblMostrarImagen;
+	private String nombreEscrito;
 
 	public PanelAñadirMusico(VentanaPrincipal vp, GestionBD gestionBD) {
 		setSize(vp.getSize());
@@ -38,11 +39,13 @@ public class PanelAñadirMusico extends JPanel {
 		JButton btnFinalizar = new JButton("FINALIZAR");
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean validado = validarCampos(txtNombre, lblMostrarImagen);
+				nombreEscrito = txtNombre.getText();
+				boolean validado = validarCampos(nombreEscrito);
 				
 				if (validado != false) {
 					//añadir query de gestionBD de insertar musico
-					vp.cambiarDePanel(13);
+					//vp.cambiarDePanel(13);
+					System.out.println(nombreEscrito);
 				}
 			}
 		});
@@ -141,10 +144,10 @@ public class PanelAñadirMusico extends JPanel {
 		Files.copy(file.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
 	
-	private boolean validarCampos(JTextField txtNombre, JLabel lblMostrarImagen) {
+	private boolean validarCampos(String txtNombre) {
 		boolean validar = false;
-		if(txtNombre.getText() == null || lblMostrarImagen.getIcon() == null) {
-			JOptionPane.showMessageDialog(null, "Los campos del Nombre y la imagen no pueden estar vacios");
+		if(txtNombre.equalsIgnoreCase("")) {
+			JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio.");
 			validar = false;
 		}else {
 			validar = true;
