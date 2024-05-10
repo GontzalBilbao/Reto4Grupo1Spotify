@@ -39,6 +39,7 @@ public class Musico extends Artista {
 	}
 
 	@Override
+
 	public void setNombreArtistico(String nombreArtista) {
 
 		// TODO Auto-generated method stub
@@ -74,8 +75,10 @@ public class Musico extends Artista {
 	@Override
 	public String toString() {
 		return "Musico [getIdMusico()=" + getIdMusico() + ", getCaracteristica()=" + getCaracteristica()
+
 				+ ", getNombreArtista()=" + getNombreArtistico() + ", getImagen()=" + getImagen()
 				+ ", getDescripcion()=" + getDescripcion() + "]";
+
 	}
 
 }

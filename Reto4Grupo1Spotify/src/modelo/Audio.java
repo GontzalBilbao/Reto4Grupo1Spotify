@@ -10,7 +10,6 @@ public class Audio {
 	private ImageIcon imagen;
 	private String tipo;
 
-
 	private boolean reproduciendo;
 
 	public Audio() {

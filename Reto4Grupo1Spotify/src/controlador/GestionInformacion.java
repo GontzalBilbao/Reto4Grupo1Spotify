@@ -11,13 +11,10 @@ import modelo.Podcaster;
 
 public class GestionInformacion {
 
-
-
 	private GestionBD gestionBD;
 	private String musico;
 	private String podcaster;
 	private String tipoDePerfil;
-
 	private String artistaSeleccionado = "";
 	private String albumSeleccionado = "";
 	private String audioSeleccionado = "";
@@ -30,7 +27,7 @@ public class GestionInformacion {
 	public GestionInformacion() {
 		gestionBD = new GestionBD();
 	}
-	
+
 	public boolean validarContrasena(boolean campos, String contraseña, String confirmarContraseña) {
 		boolean vuelta = false;
 		Pattern regexContraseña = Pattern
@@ -67,11 +64,11 @@ public class GestionInformacion {
 	public void guardarIdArtistaSeleccionado(String idArtista) {
 		this.idArtista = idArtista;
 	}
-	
+
 	public String devolverIdArtistaSeleccionado() {
 		return idArtista;
 	}
-	
+
 	public void guardarArtistaSeleccionado(String nombreArtista) {
 		this.artistaSeleccionado = nombreArtista;
 	}

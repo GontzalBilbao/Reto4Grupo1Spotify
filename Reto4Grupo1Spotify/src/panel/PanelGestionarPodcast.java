@@ -11,39 +11,38 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 
 import controlador.GestionBD;
 import vista.VentanaPrincipal;
 
-public class PanelGestionarMusico extends JPanel {
+public class PanelGestionarPodcast extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelGestionarMusico(VentanaPrincipal v, GestionBD gestionBD) {
+	public PanelGestionarPodcast(VentanaPrincipal v, GestionBD gestionBD) {
 		setSize(800, 600);
-//		setBackground(Color.DARK_GRAY);
+		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
-		JPanel panelMusicos = new JPanel();
-		panelMusicos.setBorder(new LineBorder(Color.black, 1, true));
-		add(panelMusicos);
+		JPanel panelPodcasters = new JPanel();
+		add(panelPodcasters);
 
-		JScrollPane spPanelMusicos = new JScrollPane(panelMusicos);
-		spPanelMusicos.getVerticalScrollBar();
-		spPanelMusicos.setBorder(null);
-		spPanelMusicos.setSize(500, 425);
-		spPanelMusicos.setLocation(30, 100);
-		add(spPanelMusicos);
+		JScrollPane spPanelPodcasters = new JScrollPane(panelPodcasters);
+		spPanelPodcasters.getVerticalScrollBar();
+		spPanelPodcasters.setBorder(null);
+		spPanelPodcasters.setSize(500, 425);
+		spPanelPodcasters.setLocation(30, 100);
+		add(spPanelPodcasters);
 
-		JLabel lblMusicos = new JLabel("MUSICOS");
-		lblMusicos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMusicos.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
-		lblMusicos.setBounds(30, 11, 550, 67);
-		add(lblMusicos);
+		JLabel lblPodcasters = new JLabel("PODCASTERS");
+		lblPodcasters.setForeground(new Color(255, 255, 255));
+		lblPodcasters.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPodcasters.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblPodcasters.setBounds(30, 11, 550, 67);
+		add(lblPodcasters);
 
 		JButton btnModificar = new JButton("MODIFICAR");
 		btnModificar.addActionListener(new ActionListener() {
@@ -75,5 +74,7 @@ public class PanelGestionarMusico extends JPanel {
 		});
 		btnAtras.setBounds(650, 25, 100, 35);
 		add(btnAtras);
+
 	}
+
 }

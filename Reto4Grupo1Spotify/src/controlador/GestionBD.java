@@ -21,27 +21,29 @@ import modelo.Cliente;
 import modelo.MasEscuchado;
 import modelo.Musico;
 import modelo.Podcast;
+
 import modelo.Podcaster;
+
 import modelo.PodcastsFavoritos;
 import modelo.TopPlayList;
-
 
 public class GestionBD {
 	private Connection conexion;
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
 	public ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
+
 	public ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
 	public ArrayList<Musico> musicos = new ArrayList<Musico>();
 	public ArrayList<Album> albumes = new ArrayList<Album>();
 
 	public ArrayList<Cancion> canciones = new ArrayList<Cancion>();
-	
+
 	public ArrayList<CancionesFavoritas> cancionesFav = new ArrayList<CancionesFavoritas>();
 	public ArrayList<PodcastsFavoritos> podcastsFav = new ArrayList<PodcastsFavoritos>();
 	public ArrayList<MasEscuchado> masEscuchado = new ArrayList<MasEscuchado>();
-	public ArrayList<TopPlayList> topPlaylist = new ArrayList<TopPlayList>();
 
+	public ArrayList<TopPlayList> topPlaylist = new ArrayList<TopPlayList>();
 
 	public GestionBD() {
 		iniciarConexion();
@@ -74,6 +76,8 @@ public class GestionBD {
 		System.out.println("Conexion cerrada");
 	}
 
+	/* QUERYS DE LOS CLIENTES */
+
 	public void cargarClientes() {
 		clientes.clear();
 		clientes = queryClientes();
@@ -96,7 +100,6 @@ public class GestionBD {
 		}
 		return clientes;
 	}
-
 
 	public String queryTipoDePerfil(String usuario) {
 		String premiun = null;
@@ -193,11 +196,12 @@ public class GestionBD {
 						resultadoConsulta.getString(3), imagen, resultadoConsulta.getString(5)));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return audios;
 	}
+
+	/* QUERYS DE LOS PODCASTERS */
 
 	public void cargarPodcasters() {
 		podcasters.clear();
@@ -207,6 +211,8 @@ public class GestionBD {
 	public ArrayList<Podcaster> devolverPodcasters() {
 		return podcasters;
 	}
+
+	/* QUERYS DE LOS PODCASTS POR EL PODCASTER */
 
 	public void cargarPodcastsDelPodcaster(String idPodcaster) {
 		podcasts.clear();
@@ -240,80 +246,8 @@ public class GestionBD {
 	public ArrayList<Podcast> devolverPodcasts() {
 		return podcasts;
 	}
-	
-	
-	
-	public ArrayList<CancionesFavoritas> topCancionesFavoritas() {
-		
-		try {
-			Statement consulta = conexion.createStatement();
-			String query = "CALL CancionesFavoritas();";
-			ResultSet resultadoConsulta = consulta.executeQuery(query);
 
-			while (resultadoConsulta.next()) {
-				cancionesFav.add(new CancionesFavoritas(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return cancionesFav;
-	}
-
-	public ArrayList<PodcastsFavoritos> topPodcastsFavoritos() {
-		
-		try {
-			Statement consulta = conexion.createStatement();
-			String query = "CALL PodcastsFavoritos();";
-			ResultSet resultadoConsulta = consulta.executeQuery(query);
-
-			while (resultadoConsulta.next()) {
-				podcastsFav.add(new PodcastsFavoritos(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return podcastsFav;
-	}
-	
-	public ArrayList<MasEscuchado> topMasEscuchado() {
-
-		try {
-			Statement consulta = conexion.createStatement();
-			String query = "CALL topMasEscuchado();";
-			ResultSet resultadoConsulta = consulta.executeQuery(query);
-
-			while (resultadoConsulta.next()) {
-				masEscuchado.add(new MasEscuchado(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return masEscuchado;
-	}
-	
-	public ArrayList<TopPlayList> topPlayList() {
-		
-		try {
-			Statement consulta = conexion.createStatement();
-			String query = "CALL topPlaylist();";
-			ResultSet resultadoConsulta = consulta.executeQuery(query);
-
-			while (resultadoConsulta.next()) {
-				topPlaylist.add(new TopPlayList(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), resultadoConsulta.getInt(4), resultadoConsulta.getInt(5)));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return topPlaylist;
-	}
-	
-	
-	
-	
+	/* QUERYS DE LOS MUSICOS */
 
 	public void cargarMusicos() {
 		musicos.clear();
@@ -347,6 +281,8 @@ public class GestionBD {
 		return musicos;
 	}
 
+	/* QUERYS DE LOS ALBUMES POR EL MUSICO */
+
 	public void cargarAlbumesDelMusico(String idMusico) {
 		albumes.clear();
 		albumes = queryAlbumesDelMusico(idMusico);
@@ -355,7 +291,9 @@ public class GestionBD {
 	public ArrayList<Album> queryAlbumesDelMusico(String idMusico) {
 		ArrayList<Album> albumes = new ArrayList<Album>();
 		try {
+
 			String query = "SELECT album.idAlbum, album.titulo, album.año, album.genero, album.imagen, album.idMusico FROM musico JOIN album ON musico.idMusico = album.idMusico WHERE musico.idMusico LIKE ?";
+
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			consulta.setString(1, idMusico);
 			ResultSet resultadoConsulta = consulta.executeQuery();
@@ -380,6 +318,8 @@ public class GestionBD {
 	public ArrayList<Album> devolverAlbumes() {
 		return albumes;
 	}
+
+	/* QUERYS DE LOS CANCIONES POR EL ALBUM */
 
 	public void cargarCancionesDelAlbum(String idAlbum) {
 		canciones.clear();
@@ -432,5 +372,74 @@ public class GestionBD {
 		return premiun;
 	}
 
-}
+	/* ESTADISTICAS */
 
+	public ArrayList<CancionesFavoritas> topCancionesFavoritas() {
+
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL CancionesFavoritas();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				cancionesFav.add(new CancionesFavoritas(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cancionesFav;
+	}
+
+	public ArrayList<PodcastsFavoritos> topPodcastsFavoritos() {
+
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL PodcastsFavoritos();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				podcastsFav.add(new PodcastsFavoritos(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return podcastsFav;
+	}
+
+	public ArrayList<MasEscuchado> topMasEscuchado() {
+
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL topMasEscuchado();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				masEscuchado.add(new MasEscuchado(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return masEscuchado;
+	}
+
+	public ArrayList<TopPlayList> topPlayList() {
+
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL topPlaylist();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				topPlaylist.add(new TopPlayList(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4), resultadoConsulta.getInt(5)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return topPlaylist;
+	}
+
+}

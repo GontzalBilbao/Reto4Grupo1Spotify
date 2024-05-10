@@ -9,9 +9,9 @@ public class Cancion extends Audio {
 	private String idAlbum, artistaInvitado;
 
 	public Cancion() {
-		
+
 	}
-	
+
 	public Cancion(String idAudio, String idAlbum, String nombre, String duracion, String artistaInvitado,
 			ImageIcon imagen, String tipo) {
 		super(idAudio, nombre, duracion, imagen, tipo);
@@ -60,5 +60,4 @@ public class Cancion extends Audio {
 		return "Cancion [idAlbum=" + idAlbum + ", artistaInvitado=" + artistaInvitado + ", getIdAudio()=" + getIdAudio()
 				+ ", getNombre()=" + getNombre() + ", getDuracion()=" + getDuracion() + "]";
 	}
-
 }
