@@ -41,6 +41,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 	public PanelPodcasterPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.WHITE);
+
 		setLayout(null);
 
 		gestionBD.cargarPodcasters();
@@ -102,7 +103,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 		});
 		btnPerfil.setBounds(685, 11, 89, 23);
 		add(btnPerfil);
-		
+
 		// Crear un panel para contener los JLabels
 		JPanel panelPodcasts = new JPanel();
 //						panel.setBackground(new java.awt.Color(0, 0, 0, 0));
@@ -134,11 +135,14 @@ public class PanelPodcasterPodcasts extends JPanel {
 			panelItem.setName("panel " + i);
 			// Añadir un borde al panelItem
 			panelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
 			// Añadir escuchador al panel
 			panelItem.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JPanel clickedPanel = (JPanel) e.getSource();
+					gestionInfo.guardarAudioSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
+					vp.cambiarDePanel(10);
 					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
 //													+ ((JLabel) clickedPanel.getComponent(2)).getText());
@@ -221,7 +225,6 @@ public class PanelPodcasterPodcasts extends JPanel {
 		scrollPaneOtrosPodcasters.setLocation(20, 267);
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneOtrosPodcasters);
-
 	}
 
 	private void removerPodcasterElegido() {

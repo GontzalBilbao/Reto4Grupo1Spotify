@@ -8,14 +8,17 @@ public class Album {
 
 	private String idAlbum, titulo, año, genero;
 	private ImageIcon imagen;
+	private String idMusico;
 
-	public Album(String idAlbum, String titulo, String año, String genero, ImageIcon imagen) {
-		super();
+	
+
+	public Album(String idAlbum, String titulo, String año, String genero, ImageIcon imagen, String idMusico) {
 		this.idAlbum = idAlbum;
 		this.titulo = titulo;
 		this.año = año;
 		this.genero = genero;
 		this.imagen = imagen;
+		this.idMusico = idMusico;
 	}
 
 	public String getIdAlbum() {
@@ -56,6 +59,16 @@ public class Album {
 
 	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
+	}
+
+	
+	
+	public String getIdMusico() {
+		return idMusico;
+	}
+
+	public void setIdMusico(String idMusico) {
+		this.idMusico = idMusico;
 	}
 
 	@Override

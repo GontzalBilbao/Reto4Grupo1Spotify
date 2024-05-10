@@ -25,16 +25,20 @@ public class PanelLogin extends JPanel {
 	private JTextField txtContraseña;
 	private JTextField txtUsuario;
 	private JButton btnLogin;
-	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	private String admin = "admin";
 	private String adminContra = "1234";
+	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
 	/**
 	 * Create the panel.
 	 */
 
+
 	public PanelLogin(VentanaPrincipal v, GestionBD gestionBD, GestionInformacion gestionInfo) {
 
+
+		gestionBD.cargarClientes();
+		clientes = gestionBD.devolverClientes();
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -50,6 +54,7 @@ public class PanelLogin extends JPanel {
 		txtContraseña.setBounds(330, 300, 200, 20);
 		add(txtContraseña);
 		txtContraseña.setColumns(10);
+
 
 		JLabel lblContraseña = new JLabel("Contraseña:");
 		lblContraseña.setHorizontalAlignment(SwingConstants.LEFT);
@@ -81,13 +86,18 @@ public class PanelLogin extends JPanel {
 		btnRegistrarse.setBounds(90, 450, 180, 35);
 		add(btnRegistrarse);
 
+
 		btnLogin = new JButton("INICIAR SESIÓN");
 		btnLogin.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 
+
 				boolean adminCorrecto = validarAdmin(gestionBD);
-				boolean usuarioCorrecto = validarUsuario(gestionBD);
+
+
+
+				boolean usuarioCorrecto = validarUsuario(gestionBD, gestionInfo);
 
 				if (adminCorrecto == true) {
 					JOptionPane.showMessageDialog(null, "Bienvenido/a Admin", "Administrador",
@@ -113,6 +123,7 @@ public class PanelLogin extends JPanel {
 		btnLogin.setBounds(530, 450, 180, 35);
 		add(btnLogin);
 
+
 		JLabel lblIconoGrande = new JLabel("");
 		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));
 		lblIconoGrande.setBounds(0, 0, 100, 100);
@@ -120,13 +131,14 @@ public class PanelLogin extends JPanel {
 
 	}
 
-	private boolean validarUsuario(GestionBD gestionBD) {
+	private boolean validarUsuario(GestionBD gestionBD, GestionInformacion gestionInfo) {
 		boolean usuarioCorrecto = false;
 		gestionBD.queryClientes();
 		clientes = gestionBD.devolverClientes();
 		for (int i = 0; i < clientes.size(); i++) {
 			if (txtUsuario.getText().equals(clientes.get(i).getUsuario())) {
 				if (txtContraseña.getText().equals(clientes.get(i).getContrasena())) {
+					gestionInfo.sacarPremiun(txtUsuario.getText());
 					usuarioCorrecto = true;
 				} else {
 

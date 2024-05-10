@@ -56,7 +56,7 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelBienvenida(this));
 			break;
 		case 1:
-		setContentPane(new PanelLogin(this, gestionBD, gestionInfo));
+			setContentPane(new PanelLogin(this, gestionBD, gestionInfo));
 			break;
 		case 2:
 			setContentPane(new PanelRegistro(this, gestionBD, gestionInfo));
@@ -66,6 +66,7 @@ public class VentanaPrincipal extends JFrame {
 			break;
 		case 4:
 			setContentPane(new PanelDescubrirMusica(this, gestionBD, gestionInfo));
+
 			break;
 		case 5:
 			setContentPane(new PanelMusicoAlbumes(this, gestionBD, gestionInfo));
@@ -129,6 +130,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	public void lanzarVentana() {
+
 		this.cambiarDePanel(3);
 		this.setVisible(true);
 	}

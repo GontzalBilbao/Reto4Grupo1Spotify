@@ -8,6 +8,7 @@ public class Podcaster extends Artista {
 
 	private String idPodcaster;
 	private String genero;
+
 	private ArrayList<Podcast> podcast = new ArrayList<Podcast>();
 
 	public Podcaster() {
@@ -40,12 +41,14 @@ public class Podcaster extends Artista {
 
 	@Override
 	public String getNombreArtistico() {
+
 		return super.getNombreArtistico();
 	}
 
 	@Override
 
 	public void setNombreArtistico(String nombreArtistico) {
+
 		super.setNombreArtistico(nombreArtistico);
 	}
 
@@ -76,8 +79,8 @@ public class Podcaster extends Artista {
 	@Override
 
 	public String toString() {
-		return "Podcaster [getIdPodcaster()=" + getIdPodcaster() + ", getGenero()=" + getGenero()
-				+ ", getNombreArtista()=" + getNombreArtistico() + ", getImagen()=" + getImagen()
+		return "Podcaster [idPodcaster=" + idPodcaster + ", genero=" + genero + ", podcast=" + podcast
+				+ ", getNombreArtistico()=" + getNombreArtistico() + ", getImagen()=" + getImagen()
 				+ ", getDescripcion()=" + getDescripcion() + "]";
 
 	}

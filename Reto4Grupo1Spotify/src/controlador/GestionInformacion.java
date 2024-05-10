@@ -1,21 +1,36 @@
 package controlador;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import vista.VentanaPrincipal;
+import modelo.Musico;
+import modelo.Podcaster;
 
 public class GestionInformacion {
 
+
+
+	private GestionBD gestionBD;
+	private String musico;
+	private String podcaster;
+	private String tipoDePerfil;
+
 	private String artistaSeleccionado = "";
 	private String albumSeleccionado = "";
+	private String audioSeleccionado = "";
+	private String cancionSeleccionada = "";
+	private String idArtista = "";
+	private int recogerIndiceCancion;
+	private int recogerIndicePodcast;
+	private String premiun;
 
 	public GestionInformacion() {
-
+		gestionBD = new GestionBD();
 	}
-
+	
 	public boolean validarContrasena(boolean campos, String contraseña, String confirmarContraseña) {
 		boolean vuelta = false;
 		Pattern regexContraseña = Pattern
@@ -49,6 +64,14 @@ public class GestionInformacion {
 		return vuelta;
 	}
 
+	public void guardarIdArtistaSeleccionado(String idArtista) {
+		this.idArtista = idArtista;
+	}
+	
+	public String devolverIdArtistaSeleccionado() {
+		return idArtista;
+	}
+	
 	public void guardarArtistaSeleccionado(String nombreArtista) {
 		this.artistaSeleccionado = nombreArtista;
 	}
@@ -65,4 +88,79 @@ public class GestionInformacion {
 	public String devolverAlbumSeleccionado() {
 		return albumSeleccionado;
 	}
+
+	public void guardarCancionSeleccionado(String cancionSeleccionada) {
+		this.cancionSeleccionada = cancionSeleccionada;
+
+	}
+
+	public String devolverCancionSeleccionado() {
+		return cancionSeleccionada;
+	}
+
+	public void tipoDePerfil(String usuario) {
+		this.tipoDePerfil = gestionBD.queryTipoDePerfil(usuario);
+	}
+
+	public String devolverTipoDePerfil() {
+		return tipoDePerfil;
+	}
+
+	public ArrayList<Musico> devolverMusico() {
+		return gestionBD.queryMusico();
+	}
+
+	public void recogerMusico(String nombreMusico) {
+		this.musico = nombreMusico;
+	}
+
+	public String pasrverMusico() {
+		return musico;
+	}
+
+	public ArrayList<Podcaster> devolverPodcaster() {
+		return gestionBD.queryPodcasters();
+	}
+
+	public void recogerPodcaster(String nombrePodcaster) {
+		this.podcaster = nombrePodcaster;
+	}
+
+	public String pasrverPodcaster() {
+		return podcaster;
+	}
+
+	public void recogerIndiceCancion(int indice) {
+		this.recogerIndiceCancion = indice;
+	}
+
+	public int pasarIndiceCancion() {
+		return recogerIndiceCancion;
+	}
+
+	public void recogerIndicePodcast(int indice) {
+		this.recogerIndicePodcast = indice;
+	}
+
+	public int pasarIndicePodcast() {
+		return recogerIndicePodcast;
+	}
+
+	public void sacarPremiun(String usuario) {
+		this.premiun = gestionBD.sacarPremiun(usuario);
+	}
+
+	public String devolverPremiun() {
+		return premiun;
+	}
+
+	public void guardarAudioSeleccionado(String audioSeleccionado) {
+		this.audioSeleccionado = audioSeleccionado;
+
+	}
+
+	public String devolverAudioSeleccionado() {
+		return audioSeleccionado;
+	}
+
 }

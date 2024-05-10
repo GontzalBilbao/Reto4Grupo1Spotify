@@ -41,15 +41,15 @@ public class PanelAlbumCancion extends JPanel {
 	 */
 	public PanelAlbumCancion(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.WHITE);
 		setLayout(null);
 
-		idMusico = gestionInfo.devolverArtistaSeleccionado();
+		idMusico = gestionInfo.devolverIdArtistaSeleccionado();
 		gestionBD.cargarAlbumesDelMusico(idMusico);
 		albumes = gestionBD.devolverAlbumes();
-		for (int i = 0; i < albumes.size(); i++) {
-			System.out.println(albumes.get(i).getTitulo());
-		}
+//		for (int i = 0; i < albumes.size(); i++) {
+//			System.out.println(albumes.get(i).getTitulo());
+//		}
 		tituloAlbum = gestionInfo.devolverAlbumSeleccionado();
 		for (int i = 0; i < albumes.size(); i++) {
 			if (tituloAlbum.equals(albumes.get(i).getTitulo())) {
@@ -61,19 +61,19 @@ public class PanelAlbumCancion extends JPanel {
 			}
 		}
 		
-		for (int i = 0; i < canciones.size(); i++) {
-			System.out.println(canciones.get(i).getNombre());
-		}
+//		for (int i = 0; i < canciones.size(); i++) {
+//			System.out.println(canciones.get(i).getNombre());
+//		}
 
 		JLabel lblTituloLista = new JLabel("CANCIONES");
 		lblTituloLista.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
-		lblTituloLista.setBounds(540, 11, 130, 28);
+		lblTituloLista.setBounds(530, 11, 200, 28);
 		add(lblTituloLista);
 
 		JButton btnAtrás = new JButton("Atrás");
 		btnAtrás.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(4);
+				vp.cambiarDePanel(5);
 			}
 		});
 		btnAtrás.setBounds(10, 11, 89, 23);
@@ -143,11 +143,13 @@ public class PanelAlbumCancion extends JPanel {
 			// Añadir un borde al panelItem
 			panelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			// Añadir escuchador al panel
+			gestionInfo.recogerIndiceCancion(i);
 			panelItem.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JPanel clickedPanel = (JPanel) e.getSource();
-					gestionInfo.guardarAlbumSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
+					gestionInfo.guardarAlbumSeleccionado(tituloAlbum);
+					gestionInfo.guardarCancionSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					vp.cambiarDePanel(7);
 					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
@@ -209,7 +211,7 @@ public class PanelAlbumCancion extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					JPanel clickedPanel = (JPanel) e.getSource();
 					gestionInfo.guardarAlbumSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
-					gestionInfo.guardarArtistaSeleccionado(idMusico);
+					gestionInfo.guardarIdArtistaSeleccionado(idMusico);
 					vp.cambiarDePanel(6);
 					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
@@ -233,6 +235,35 @@ public class PanelAlbumCancion extends JPanel {
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneOtrosAlbumes);
 
+		String textoLabelCanciones = "NO HAY CANCIONES DE ESTE ARTISTA GUARDADOS";
+		JLabel lblNoHayCanciones = new JLabel("<html>	" + textoLabelCanciones.replaceAll("\\n", "<br>") + "</html>");
+		lblNoHayCanciones.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNoHayCanciones.setVerticalAlignment(SwingConstants.CENTER);
+		lblNoHayCanciones.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		lblNoHayCanciones.setBounds(520, 190, 189, 175);
+		add(lblNoHayCanciones);
+		
+		String textoLabelOtrosAlbumes = "NO HAY MÁS ÁLBUMES DE ESTE ARTISTA GUARDADOS";
+		JLabel lblNoHayMasAlbumes = new JLabel("<html>	" + textoLabelOtrosAlbumes.replaceAll("\\n", "<br>") + "</html>");
+		lblNoHayMasAlbumes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNoHayMasAlbumes.setVerticalAlignment(SwingConstants.CENTER);
+		lblNoHayMasAlbumes.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		lblNoHayMasAlbumes.setBounds(120, 320, 214, 175);
+		add(lblNoHayMasAlbumes);
+		
+		if(canciones.isEmpty()) {
+			panelCanciones.setVisible(false);
+			scrollPaneCanciones.setVisible(false);
+		} else {
+			lblNoHayCanciones.setVisible(false);
+		}
+		
+		if(albumes.size()<1) {
+			panelOtrosAlbumes.setVisible(false);
+			scrollPaneOtrosAlbumes.setVisible(false);
+		} else {
+			lblNoHayMasAlbumes.setVisible(false);
+		}
 	}
 
 	private void removerAlbumElegido() {

@@ -58,7 +58,7 @@ public class PanelMusicoAlbumes extends JPanel {
 			}
 		}
 
-		JLabel lblTituloLista = new JLabel("PODCASTS");
+		JLabel lblTituloLista = new JLabel("ÁLBUMES");
 		lblTituloLista.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
 		lblTituloLista.setBounds(540, 11, 130, 28);
 		add(lblTituloLista);
@@ -110,7 +110,7 @@ public class PanelMusicoAlbumes extends JPanel {
 //						panel.setBackground(new java.awt.Color(0, 0, 0, 0));
 //						panel.setOpaque(false);
 		panelAlbumes.setLayout(new GridLayout(0, 1));
-
+		
 		// Agregar JLabels al panel
 		for (int i = 0; i < albumes.size(); i++) {
 			JPanel panelItem = new JPanel();
@@ -142,7 +142,7 @@ public class PanelMusicoAlbumes extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					JPanel clickedPanel = (JPanel) e.getSource();
 					gestionInfo.guardarAlbumSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
-					gestionInfo.guardarArtistaSeleccionado(idMusico);
+					gestionInfo.guardarIdArtistaSeleccionado(idMusico);
 					vp.cambiarDePanel(6);
 					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
@@ -165,7 +165,7 @@ public class PanelMusicoAlbumes extends JPanel {
 		scrollPaneAlbumes.setLocation(453, 50);
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneAlbumes);
-
+		
 		// Crear un panel para contener los JLabels
 		JPanel panelOtrosMusicos = new JPanel();
 //				panel.setBackground(new java.awt.Color(0, 0, 0, 0));
@@ -226,7 +226,21 @@ public class PanelMusicoAlbumes extends JPanel {
 		scrollPaneOtrosMusicos.setLocation(20, 267);
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneOtrosMusicos);
+		
+		String textoLabelAlbumes = "NO HAY ÁLBUMES DE ESTE ARTISTA GUARDADOS";
+		JLabel lblNoHayAlbumes = new JLabel("<html>	" + textoLabelAlbumes.replaceAll("\\n", "<br>") + "</html>");
+		lblNoHayAlbumes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNoHayAlbumes.setVerticalAlignment(SwingConstants.CENTER);
+		lblNoHayAlbumes.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		lblNoHayAlbumes.setBounds(520, 190, 189, 175);
+		add(lblNoHayAlbumes);
 
+		if(albumes.isEmpty()) {
+			panelAlbumes.setVisible(false);
+			scrollPaneAlbumes.setVisible(false);
+		} else {
+			lblNoHayAlbumes.setVisible(false);
+		}
 	}
 
 	private void removerMusicoElegido() {

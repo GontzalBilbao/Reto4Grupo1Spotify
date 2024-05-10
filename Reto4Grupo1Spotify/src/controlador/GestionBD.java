@@ -12,8 +12,11 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 import modelo.Album;
+import modelo.Audio;
 import modelo.Cancion;
+
 import modelo.CancionesFavoritas;
+
 import modelo.Cliente;
 import modelo.MasEscuchado;
 import modelo.Musico;
@@ -26,16 +29,19 @@ import modelo.TopPlayList;
 public class GestionBD {
 	private Connection conexion;
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+
 	public ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
 	public ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
 	public ArrayList<Musico> musicos = new ArrayList<Musico>();
 	public ArrayList<Album> albumes = new ArrayList<Album>();
+
 	public ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 	
 	public ArrayList<CancionesFavoritas> cancionesFav = new ArrayList<CancionesFavoritas>();
 	public ArrayList<PodcastsFavoritos> podcastsFav = new ArrayList<PodcastsFavoritos>();
 	public ArrayList<MasEscuchado> masEscuchado = new ArrayList<MasEscuchado>();
 	public ArrayList<TopPlayList> topPlaylist = new ArrayList<TopPlayList>();
+
 
 	public GestionBD() {
 		iniciarConexion();
@@ -45,7 +51,9 @@ public class GestionBD {
 		System.out.println("Conectando..........");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+
 			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdreto4", "root", "");
+
 		} catch (ClassNotFoundException e) {
 			System.out.println("Libreria no encontrada");
 		} catch (SQLException e) {
@@ -89,6 +97,24 @@ public class GestionBD {
 		return clientes;
 	}
 
+
+	public String queryTipoDePerfil(String usuario) {
+		String premiun = null;
+		try {
+			PreparedStatement consulta = conexion.prepareStatement("SELECT tipo FROM cliente WHERE usuario = ?");
+			consulta.setString(1, usuario);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				premiun = resultadoConsulta.getString(1);
+			}
+			consulta.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return premiun;
+	}
+
 	public void agregarCliente(String idCliente, String nombre, String apellido, String usuario, String contraseña,
 			String fechaNac, String fechaRegistro, String tipoSuscp, String idIdioma) {
 
@@ -107,34 +133,75 @@ public class GestionBD {
 
 	public ArrayList<Cliente> devolverClientes() {
 		return clientes;
+
+	}
+
+	public ArrayList<Musico> queryMusico() {
+		ImageIcon imagen = new ImageIcon();
+		ArrayList<Musico> musicos = new ArrayList<Musico>();
+		try {
+			String query = "SELECT * FROM Musico";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				Blob imagenBlob = resultadoConsulta.getBlob(3);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				imagen = new ImageIcon(arrayImagen);
+				musicos.add(new Musico(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(4), imagen, resultadoConsulta.getString(5)));
+			}
+			consulta.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return musicos;
+	}
+
+	public ArrayList<Podcaster> queryPodcasters() {
+		ImageIcon imagen = new ImageIcon();
+		try {
+			String query = "SELECT * FROM Podcaster";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				Blob imagenBlob = resultadoConsulta.getBlob(4);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				imagen = new ImageIcon(arrayImagen);
+				podcasters.add(new Podcaster(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), imagen, resultadoConsulta.getString(5)));
+			}
+			consulta.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return podcasters;
+	}
+
+	public ArrayList<Audio> queryAudioCancion(String nombre) {
+		ImageIcon imagen = new ImageIcon();
+		ArrayList<Audio> audios = new ArrayList<Audio>();
+		try {
+			String query = "SELECT * FROM `audio` join cancion on audio.idAudio = cancion.idCancion join album on cancion.idAlbum = album.idAlbum Where album.titulo = ?";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, nombre);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				Blob imagenBlob = resultadoConsulta.getBlob(4);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				imagen = new ImageIcon(arrayImagen);
+				audios.add(new Audio(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), imagen, resultadoConsulta.getString(5)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return audios;
 	}
 
 	public void cargarPodcasters() {
 		podcasters.clear();
 		podcasters = queryPodcasters();
-	}
-
-	public ArrayList<Podcaster> queryPodcasters() {
-		try {
-			String query = "SELECT * FROM Podcaster";
-			PreparedStatement consulta = conexion.prepareStatement(query);
-			ResultSet resultadoConsulta = consulta.executeQuery();
-
-			while (resultadoConsulta.next()) {
-
-				Blob imagenBlob = resultadoConsulta.getBlob(4);
-				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
-				ImageIcon imagen = new ImageIcon(arrayImagen);
-
-				podcasters.add(new Podcaster(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), imagen, resultadoConsulta.getString(5)));
-
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return podcasters;
 	}
 
 	public ArrayList<Podcaster> devolverPodcasters() {
@@ -286,8 +353,9 @@ public class GestionBD {
 	}
 
 	public ArrayList<Album> queryAlbumesDelMusico(String idMusico) {
+		ArrayList<Album> albumes = new ArrayList<Album>();
 		try {
-			String query = "SELECT album.idAlbum, album.titulo, album.año, album.genero, album.imagen FROM musico JOIN album ON musico.idMusico = album.idMusico WHERE musico.idMusico LIKE ?";
+			String query = "SELECT album.idAlbum, album.titulo, album.año, album.genero, album.imagen, album.idMusico FROM musico JOIN album ON musico.idMusico = album.idMusico WHERE musico.idMusico LIKE ?";
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			consulta.setString(1, idMusico);
 			ResultSet resultadoConsulta = consulta.executeQuery();
@@ -299,7 +367,8 @@ public class GestionBD {
 				ImageIcon imagen = new ImageIcon(arrayImagen);
 
 				albumes.add(new Album(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), resultadoConsulta.getString(4), imagen));
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4), imagen,
+						resultadoConsulta.getString(6)));
 			}
 
 		} catch (SQLException e) {
@@ -311,7 +380,7 @@ public class GestionBD {
 	public ArrayList<Album> devolverAlbumes() {
 		return albumes;
 	}
-	
+
 	public void cargarCancionesDelAlbum(String idAlbum) {
 		canciones.clear();
 		canciones = queryCancionesDelAlbum(idAlbum);
@@ -331,7 +400,8 @@ public class GestionBD {
 				ImageIcon imagen = new ImageIcon(arrayImagen);
 
 				canciones.add(new Cancion(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), resultadoConsulta.getString(4), resultadoConsulta.getString(5), imagen, resultadoConsulta.getString(7)));
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4), resultadoConsulta.getString(5),
+						imagen, resultadoConsulta.getString(7)));
 			}
 
 		} catch (SQLException e) {
@@ -343,7 +413,24 @@ public class GestionBD {
 	public ArrayList<Cancion> devolverCanciones() {
 		return canciones;
 	}
-//	SELECT audio.idAudio, podcast.idPodcaster, audio.nombre, audio.duracion, podcast.colaboradores, podcast.descripcion, audio.imagen, audio.tipo
-//	FROM audio JOIN podcast audio.idAudio = podcast.idAudio
-//	WHERE podcast.idPodcaster 'NSN03';
+
+	public String sacarPremiun(String usuario) {
+		String premiun = null;
+		try {
+			String query = "SELECT `tipo`FROM `cliente` WHERE `usuario` = ?;";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, usuario);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+
+			while (resultadoConsulta.next()) {
+				premiun = resultadoConsulta.getString(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return premiun;
+	}
+
 }
+

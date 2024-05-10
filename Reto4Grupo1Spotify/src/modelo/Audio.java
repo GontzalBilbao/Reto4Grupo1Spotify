@@ -1,7 +1,5 @@
 package modelo;
 
-import java.util.Objects;
-
 import javax.swing.ImageIcon;
 
 public class Audio {
@@ -12,11 +10,15 @@ public class Audio {
 	private ImageIcon imagen;
 	private String tipo;
 
+
+	private boolean reproduciendo;
+
 	public Audio() {
 
 	}
 
 	public Audio(String idAudio, String nombre, String duracion, ImageIcon imagen, String tipo) {
+
 		this.idAudio = idAudio;
 		this.nombre = nombre;
 		this.duracion = duracion;
@@ -62,6 +64,14 @@ public class Audio {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public boolean sonando() {
+		if (!reproduciendo) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
