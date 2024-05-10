@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 import controlador.GestionBD;
 import vista.VentanaPrincipal;
@@ -26,26 +25,29 @@ import vista.VentanaPrincipal;
 public class PanelAñadirMusico extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField txtNombre;
-	private JTextField txtImagen;
-	private JTextField txtDescripcion;
 
-	/**
-	 * Create the panel.
-	 */
-	public PanelAñadirMusico(VentanaPrincipal v, GestionBD gestionBD) {
-		setSize(800, 600);
+	private JTextField txtNombre;
+	private JTextField txtDescripcion;
+	private JLabel lblMostrarImagen;
+
+	public PanelAñadirMusico(VentanaPrincipal vp, GestionBD gestionBD) {
+		setSize(vp.getSize());
 		setBackground(SystemColor.control);
 		setLayout(null);
 
-		JButton btnSiguiente = new JButton("SIGUIENTE");
-		btnSiguiente.addActionListener(new ActionListener() {
+		JButton btnFinalizar = new JButton("FINALIZAR");
+		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(16);
+				boolean validado = validarCampos(txtNombre, lblMostrarImagen);
+				
+				if (validado != false) {
+					//añadir query de gestionBD de insertar musico
+					vp.cambiarDePanel(13);
+				}
 			}
 		});
-		btnSiguiente.setBounds(560, 450, 200, 50);
-		add(btnSiguiente);
+		btnFinalizar.setBounds(560, 450, 200, 50);
+		add(btnFinalizar);
 
 		JLabel lblAñadirMusico = new JLabel("AÑADIR MUSICO");
 		lblAñadirMusico.setBounds(125, 15, 550, 65);
@@ -56,7 +58,7 @@ public class PanelAñadirMusico extends JPanel {
 		JButton btnAtras = new JButton("ATRAS");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(14);
+				vp.cambiarDePanel(14);
 			}
 		});
 		btnAtras.setBounds(650, 25, 100, 35);
@@ -83,6 +85,16 @@ public class PanelAñadirMusico extends JPanel {
 		txtDescripcion.setColumns(10);
 		txtDescripcion.setBounds(115, 290, 200, 25);
 		add(txtDescripcion);
+
+		JLabel lblTipoArtista = new JLabel("Solista o Grupo:");
+		lblTipoArtista.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTipoArtista.setBounds(115, 325, 170, 20);
+		add(lblTipoArtista);
+
+		JComboBox<String> comBoxTipoArtista = new JComboBox<String>();
+		comBoxTipoArtista.setModel(new DefaultComboBoxModel<String>(new String[] { "SOLISTA", "GRUPO" }));
+		comBoxTipoArtista.setBounds(115, 360, 90, 25);
+		add(comBoxTipoArtista);
 
 		JLabel lblImagen = new JLabel("Imagen del artista:");
 		lblImagen.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -111,15 +123,9 @@ public class PanelAñadirMusico extends JPanel {
 		btnImagenArtista.setBounds(355, 220, 110, 25);
 		add(btnImagenArtista);
 
-		JLabel lblTipoArtista = new JLabel("Solista o Grupo:");
-		lblTipoArtista.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTipoArtista.setBounds(115, 325, 170, 20);
-		add(lblTipoArtista);
-
-		JComboBox<String> comBoxTipoArtista = new JComboBox<String>();
-		comBoxTipoArtista.setModel(new DefaultComboBoxModel<String>(new String[] { "SOLISTA", "GRUPO" }));
-		comBoxTipoArtista.setBounds(115, 360, 90, 25);
-		add(comBoxTipoArtista);
+		lblMostrarImagen = new JLabel();
+		lblMostrarImagen.setBounds(560, 185, 200, 200);
+		add(lblMostrarImagen);
 
 	}
 
@@ -134,4 +140,16 @@ public class PanelAñadirMusico extends JPanel {
 		File destination = new File(directory.getPath() + File.separator + file.getName());
 		Files.copy(file.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
+	
+	private boolean validarCampos(JTextField txtNombre, JLabel lblMostrarImagen) {
+		boolean validar = false;
+		if(txtNombre.getText() == null || lblMostrarImagen.getIcon() == null) {
+			JOptionPane.showMessageDialog(null, "Los campos del Nombre y la imagen no pueden estar vacios");
+			validar = false;
+		}else {
+			validar = true;
+		}
+		return validar;
+	}
+	
 }

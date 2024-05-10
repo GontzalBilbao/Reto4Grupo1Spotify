@@ -20,11 +20,12 @@ import panel.PanelEstadistica;
 import panel.PanelGestionarAlbum;
 import panel.PanelGestionarCancion;
 import panel.PanelGestionarMusico;
+import panel.PanelGestionarPodcast;
 import panel.PanelGestionarPodcaster;
 import panel.PanelLogin;
 import panel.PanelMenuAdministrador;
 import panel.PanelMenuCliente;
-import panel.PanelMusicoAlbume;
+import panel.PanelMusicoAlbumes;
 import panel.PanelPerfil;
 import panel.PanelPlaylist;
 import panel.PanelPodcasterPodcasts;
@@ -68,7 +69,7 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelDescubrirMusica(this, gestionBD, gestionInfo));
 			break;
 		case 5:
-			setContentPane(new PanelMusicoAlbume(this, gestionBD, gestionInfo));
+			setContentPane(new PanelMusicoAlbumes(this, gestionBD, gestionInfo));
 			break;
 		case 6:
 			setContentPane(new PanelAlbumCancion(this, gestionBD, gestionInfo));
@@ -119,9 +120,11 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelAñadirPodcaster(this, gestionBD));
 			break;
 		case 22:
+			setContentPane(new PanelGestionarPodcast(this, gestionBD));
+		case 23:
 			setContentPane(new PanelAñadirPodcast(this, gestionBD));
 			break;
-		case 23:
+		case 24:
 			setContentPane(new PanelEstadistica(this, gestionBD));
 			break;
 		}

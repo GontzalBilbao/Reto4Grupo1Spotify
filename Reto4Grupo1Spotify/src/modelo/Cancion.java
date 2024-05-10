@@ -2,20 +2,29 @@ package modelo;
 
 import java.util.Objects;
 
-public class Cancion {
-	
-	private String artistaInvitado;
-	private String idAlbum;
-	private String idCancion;
-	
+import javax.swing.ImageIcon;
+
+public class Cancion extends Audio {
+
+	private String idAlbum, artistaInvitado;
+
 	public Cancion() {
-		
+
 	}
 
-	public Cancion(String artistaInvitado, String idAlbum, String idCancion) {
-		this.artistaInvitado = artistaInvitado;
+	public Cancion(String idAudio, String idAlbum, String nombre, String duracion, String artistaInvitado,
+			ImageIcon imagen, String tipo) {
+		super(idAudio, nombre, duracion, imagen, tipo);
 		this.idAlbum = idAlbum;
-		this.idCancion = idCancion;
+		this.artistaInvitado = artistaInvitado;
+	}
+
+	public String getIdAlbum() {
+		return idAlbum;
+	}
+
+	public void setIdAlbum(String idAlbum) {
+		this.idAlbum = idAlbum;
 	}
 
 	public String getArtistaInvitado() {
@@ -26,47 +35,29 @@ public class Cancion {
 		this.artistaInvitado = artistaInvitado;
 	}
 
-	public String getIsAlbum() {
-		return idAlbum;
-	}
-
-	public void setIsAlbum(String idAlbum) {
-		this.idAlbum = idAlbum;
-	}
-
-	public String getIdCancion() {
-		return idCancion;
-	}
-
-	public void setIdCancion(String idCancion) {
-		this.idCancion = idCancion;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(artistaInvitado, idCancion, idAlbum);
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(artistaInvitado, idAlbum);
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Cancion other = (Cancion) obj;
-		return Objects.equals(artistaInvitado, other.artistaInvitado) && Objects.equals(idCancion, other.idCancion)
-				&& Objects.equals(idAlbum, other.idAlbum);
+		return Objects.equals(artistaInvitado, other.artistaInvitado) && Objects.equals(idAlbum, other.idAlbum);
 	}
 
 	@Override
 	public String toString() {
-		return "Cancion [artistaInvitado=" + artistaInvitado + ", isAlbum=" + idAlbum + ", idCancion=" + idCancion + "]";
+		return "Cancion [idAlbum=" + idAlbum + ", artistaInvitado=" + artistaInvitado + ", getIdAudio()=" + getIdAudio()
+				+ ", getNombre()=" + getNombre() + ", getDuracion()=" + getDuracion() + "]";
 	}
-	
-	
-	
-	
-	
 }

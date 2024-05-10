@@ -1,7 +1,5 @@
 package modelo;
 
-import java.util.Objects;
-
 import javax.swing.ImageIcon;
 
 public class Audio {

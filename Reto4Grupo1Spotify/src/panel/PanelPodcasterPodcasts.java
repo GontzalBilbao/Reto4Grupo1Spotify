@@ -21,51 +21,42 @@ import javax.swing.SwingConstants;
 
 import controlador.GestionBD;
 import controlador.GestionInformacion;
-import modelo.Album;
-import modelo.Cancion;
+import modelo.Podcast;
+import modelo.Podcaster;
 import vista.VentanaPrincipal;
 
-public class PanelAlbumCancion extends JPanel {
+public class PanelPodcasterPodcasts extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Album> albumes = new ArrayList<Album>();
-	private ArrayList<Cancion> canciones = new ArrayList<Cancion>();
-	private String idMusico = "";
-	private String tituloAlbum = "";
-	private String año = "";
+	private ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
+	private ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
+	private String nombreArtista = "";
 	private String genero = "";
-	private int albumSeleccionado = 0;
+	private String descripcion = "";
+	private int podcasterSeleccionado = 0;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelAlbumCancion(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelPodcasterPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.WHITE);
 		setLayout(null);
 
-		idMusico = gestionInfo.devolverArtistaSeleccionado();
-		gestionBD.cargarAlbumesDelMusico(idMusico);
-		albumes = gestionBD.devolverAlbumes();
-		for (int i = 0; i < albumes.size(); i++) {
-			System.out.println(albumes.get(i).getTitulo());
-		}
-		tituloAlbum = gestionInfo.devolverAlbumSeleccionado();
-		for (int i = 0; i < albumes.size(); i++) {
-			if (tituloAlbum.equals(albumes.get(i).getTitulo())) {
-				albumSeleccionado = i;
-				año = albumes.get(i).getAño();
-				genero = albumes.get(i).getGenero();
-				gestionBD.cargarCancionesDelAlbum(albumes.get(i).getIdAlbum());
-				canciones = gestionBD.devolverCanciones();
+		gestionBD.cargarPodcasters();
+		podcasters = gestionBD.devolverPodcasters();
+		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
+		for (int i = 0; i < podcasters.size(); i++) {
+			if (nombreArtista.equals(podcasters.get(i).getNombreArtistico())) {
+				podcasterSeleccionado = i;
+				genero = podcasters.get(i).getGenero();
+				descripcion = podcasters.get(i).getDescripcion();
+				gestionBD.cargarPodcastsDelPodcaster(podcasters.get(i).getIdPodcaster());
+				podcasts = gestionBD.devolverPodcasts();
 			}
 		}
-		
-		for (int i = 0; i < canciones.size(); i++) {
-			System.out.println(canciones.get(i).getNombre());
-		}
 
-		JLabel lblTituloLista = new JLabel("CANCIONES");
+		JLabel lblTituloLista = new JLabel("PODCASTS");
 		lblTituloLista.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
 		lblTituloLista.setBounds(540, 11, 130, 28);
 		add(lblTituloLista);
@@ -73,34 +64,35 @@ public class PanelAlbumCancion extends JPanel {
 		JButton btnAtrás = new JButton("Atrás");
 		btnAtrás.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(4);
+				vp.cambiarDePanel(8);
 			}
 		});
 		btnAtrás.setBounds(10, 11, 89, 23);
 		add(btnAtrás);
 
-		JLabel lblTitulo = new JLabel("Nombre: " + tituloAlbum);
-		lblTitulo.setBounds(204, 68, 228, 14);
-		add(lblTitulo);
+		JLabel lblNombre = new JLabel("Nombre: " + nombreArtista);
+		lblNombre.setBounds(204, 68, 228, 14);
+		add(lblNombre);
 
-		JLabel lblImagenAlbum = new JLabel("New label");
-		Image image = albumes.get(albumSeleccionado).getImagen().getImage();
+		JLabel lblImagenArtista = new JLabel("New label");
+		Image image = podcasters.get(podcasterSeleccionado).getImagen().getImage();
 		Image nuevaImagen = image.getScaledInstance(175, 190, Image.SCALE_SMOOTH);
 		ImageIcon ImagenReescalada = new ImageIcon(nuevaImagen);
-		lblImagenAlbum.setIcon(ImagenReescalada);
-		lblImagenAlbum.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		lblImagenAlbum.setBounds(20, 50, 175, 190);
-		add(lblImagenAlbum);
+		lblImagenArtista.setIcon(ImagenReescalada);
+		lblImagenArtista.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+		lblImagenArtista.setBounds(20, 50, 175, 190);
+		add(lblImagenArtista);
 
-		JLabel lblAño = new JLabel("Año publicación: " + año);
-		lblAño.setBounds(204, 93, 228, 14);
-		add(lblAño);
-
-		JLabel lblGenero = new JLabel("<html>" + "Género: " + genero.replaceAll("\\n", "<br>") + "</html>");
-		lblGenero.setVerticalAlignment(SwingConstants.TOP);
-		lblGenero.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGenero.setBounds(204, 118, 228, 130);
+		JLabel lblGenero = new JLabel("Género: " + genero);
+		lblGenero.setBounds(204, 93, 228, 14);
 		add(lblGenero);
+
+		JLabel lblDescripcion = new JLabel(
+				"<html>" + "Descripción: " + descripcion.replaceAll("\\n", "<br>") + "</html>");
+		lblDescripcion.setVerticalAlignment(SwingConstants.TOP);
+		lblDescripcion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDescripcion.setBounds(204, 118, 228, 120);
+		add(lblDescripcion);
 
 		JButton btnPerfil = new JButton("Perfil");
 		btnPerfil.addActionListener(new ActionListener() {
@@ -110,15 +102,15 @@ public class PanelAlbumCancion extends JPanel {
 		});
 		btnPerfil.setBounds(685, 11, 89, 23);
 		add(btnPerfil);
-
+		
 		// Crear un panel para contener los JLabels
-		JPanel panelCanciones = new JPanel();
+		JPanel panelPodcasts = new JPanel();
 //						panel.setBackground(new java.awt.Color(0, 0, 0, 0));
 //						panel.setOpaque(false);
-		panelCanciones.setLayout(new GridLayout(0, 1));
+		panelPodcasts.setLayout(new GridLayout(0, 1));
 
 		// Agregar JLabels al panel
-		for (int i = 0; i < canciones.size(); i++) {
+		for (int i = 0; i < podcasts.size(); i++) {
 			JPanel panelItem = new JPanel();
 			panelItem.setBorder(null);
 //							panelItem.setOpaque(false);
@@ -126,15 +118,15 @@ public class PanelAlbumCancion extends JPanel {
 			panelItem.setLayout(new GridLayout());
 
 			// Cargar imagen
-			ImageIcon imageIcon = canciones.get(i).getImagen();
+			ImageIcon imageIcon = podcasters.get(podcasterSeleccionado).getImagen();
 			Image image1 = imageIcon.getImage();
-			Image newImage = image1.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+			Image newImage = image1.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 			ImageIcon newImageIcon = new ImageIcon(newImage);
 			JLabel imageLabel = new JLabel(newImageIcon);
 			panelItem.add(imageLabel);
 
 			// Agregar JLabels debajo de la imagen
-			JLabel label1 = new JLabel(canciones.get(i).getNombre()); // podcasts.get(i).getNombre()
+			JLabel label1 = new JLabel(podcasts.get(i).getNombre()); // podcasts.get(i).getNombre()
 //							JLabel label2 = new JLabel("Autor: " + i);
 			panelItem.add(label1);
 //							panelItem.add(label2);
@@ -147,8 +139,6 @@ public class PanelAlbumCancion extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JPanel clickedPanel = (JPanel) e.getSource();
-					gestionInfo.guardarAlbumSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
-					vp.cambiarDePanel(7);
 					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
 //													+ ((JLabel) clickedPanel.getComponent(2)).getText());
@@ -156,30 +146,30 @@ public class PanelAlbumCancion extends JPanel {
 				}
 			});
 			// Agregar panelItem al panel principal
-			panelCanciones.add(panelItem);
+			panelPodcasts.add(panelItem);
 		}
 
 		// Crear un JScrollPane y agregar el panel
-		JScrollPane scrollPaneCanciones = new JScrollPane(panelCanciones);
+		JScrollPane scrollPanePodcasts = new JScrollPane(panelPodcasts);
 		// Como se mueve muy despacio vamos a darle un poco de velocidad
-		scrollPaneCanciones.getVerticalScrollBar().setUnitIncrement(30);
-		scrollPaneCanciones.setBorder(null);
+		scrollPanePodcasts.getVerticalScrollBar().setUnitIncrement(30);
+		scrollPanePodcasts.setBorder(null);
 //						scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
 //						scrollPane.setOpaque(false);
-		scrollPaneCanciones.setSize(300, 500);
-		scrollPaneCanciones.setLocation(453, 50);
+		scrollPanePodcasts.setSize(300, 500);
+		scrollPanePodcasts.setLocation(453, 50);
 		// Agregar el JScrollPane a la ventana
-		add(scrollPaneCanciones);
+		add(scrollPanePodcasts);
 
 		// Crear un panel para contener los JLabels
-		JPanel panelOtrosAlbumes = new JPanel();
+		JPanel panelOtrosPodcasters = new JPanel();
 //				panel.setBackground(new java.awt.Color(0, 0, 0, 0));
 //				panel.setOpaque(false);
-		panelOtrosAlbumes.setLayout(new GridLayout(1, 0));
+		panelOtrosPodcasters.setLayout(new GridLayout(1, 0));
 
-		removerAlbumElegido();
+		removerPodcasterElegido();
 		// Agregar JLabels al panel
-		for (int i = 0; i < albumes.size(); i++) {
+		for (int i = 0; i < podcasters.size(); i++) {
 			JPanel panelItem = new JPanel();
 			panelItem.setBorder(null);
 //					panelItem.setOpaque(false);
@@ -187,7 +177,7 @@ public class PanelAlbumCancion extends JPanel {
 			panelItem.setLayout(new GridLayout(0, 1));
 
 			// Cargar imagen
-			ImageIcon imageIcon = albumes.get(i).getImagen();
+			ImageIcon imageIcon = podcasters.get(i).getImagen();
 			Image image1 = imageIcon.getImage();
 			Image newImage = image1.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 			ImageIcon newImageIcon = new ImageIcon(newImage);
@@ -195,7 +185,7 @@ public class PanelAlbumCancion extends JPanel {
 			panelItem.add(imageLabel);
 
 			// Agregar JLabels debajo de la imagen
-			JLabel label1 = new JLabel(albumes.get(i).getTitulo()); // podcasts.get(i).getNombre()
+			JLabel label1 = new JLabel(podcasters.get(i).getNombreArtistico()); // podcasts.get(i).getNombre()
 //					JLabel label2 = new JLabel("Autor: " + i);
 			panelItem.add(label1);
 //					panelItem.add(label2);
@@ -208,9 +198,8 @@ public class PanelAlbumCancion extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JPanel clickedPanel = (JPanel) e.getSource();
-					gestionInfo.guardarAlbumSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
-					gestionInfo.guardarArtistaSeleccionado(idMusico);
-					vp.cambiarDePanel(6);
+					gestionInfo.guardarArtistaSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
+					vp.cambiarDePanel(9);
 					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
 //											+ ((JLabel) clickedPanel.getComponent(2)).getText());
@@ -218,27 +207,29 @@ public class PanelAlbumCancion extends JPanel {
 				}
 			});
 			// Agregar panelItem al panel principal
-			panelOtrosAlbumes.add(panelItem);
+			panelOtrosPodcasters.add(panelItem);
 		}
 
 		// Crear un JScrollPane y agregar el panel
-		JScrollPane scrollPaneOtrosAlbumes = new JScrollPane(panelOtrosAlbumes);
+		JScrollPane scrollPaneOtrosPodcasters = new JScrollPane(panelOtrosPodcasters);
 		// Como se mueve muy despacio vamos a darle un poco de velocidad
-		scrollPaneOtrosAlbumes.getVerticalScrollBar().setUnitIncrement(30);
-		scrollPaneOtrosAlbumes.setBorder(null);
+		scrollPaneOtrosPodcasters.getVerticalScrollBar().setUnitIncrement(30);
+		scrollPaneOtrosPodcasters.setBorder(null);
 //				scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
 //				scrollPane.setOpaque(false);
-		scrollPaneOtrosAlbumes.setSize(412, 283);
-		scrollPaneOtrosAlbumes.setLocation(20, 267);
+		scrollPaneOtrosPodcasters.setSize(412, 283);
+		scrollPaneOtrosPodcasters.setLocation(20, 267);
 		// Agregar el JScrollPane a la ventana
-		add(scrollPaneOtrosAlbumes);
+		add(scrollPaneOtrosPodcasters);
+
+		
 
 	}
 
-	private void removerAlbumElegido() {
-		for (int i = 0; i < albumes.size(); i++) {
-			if (albumes.get(i).getTitulo().equals(tituloAlbum)) {
-				albumes.remove(i);
+	private void removerPodcasterElegido() {
+		for (int i = 0; i < podcasters.size(); i++) {
+			if (podcasters.get(i).getNombreArtistico().equals(nombreArtista)) {
+				podcasters.remove(i);
 			} else {
 
 			}

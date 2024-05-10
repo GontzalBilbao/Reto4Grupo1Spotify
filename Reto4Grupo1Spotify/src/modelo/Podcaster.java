@@ -8,6 +8,7 @@ public class Podcaster extends Artista {
 
 	private String idPodcaster;
 	private String genero;
+	@SuppressWarnings("unused")
 	private ArrayList<Podcast> podcast = new ArrayList<Podcast>();
 
 	public Podcaster() {
