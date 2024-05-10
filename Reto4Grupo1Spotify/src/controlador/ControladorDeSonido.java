@@ -5,15 +5,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 
+import interfaces.IControladorSonido;
 import modelo.Cancion;
 
-public class ControladorDeSonido {
+public class ControladorDeSonido implements IControladorSonido {
 
 	private ArrayList<Cancion> canciones;
 	private int cancionEnReproduccion;
@@ -32,12 +34,14 @@ public class ControladorDeSonido {
 		}
 	}
 
+	@Override
 	public void setCancionEnReproduccion(int can) {
 		if (canciones.get(cancionEnReproduccion).sonando()) {
 			cancionEnCurso.stop();
 		}
 	}
 
+	@Override
 	public void reproducir(int cola) {
 		try {
 			if (canciones.get(cola).sonando()) {
@@ -55,14 +59,17 @@ public class ControladorDeSonido {
 		}
 	}
 
+	@Override
 	public void pausar() {
 		cancionEnCurso.stop();
 	}
 
+	@Override
 	public boolean cancionActiva() {
 		return cancionEnCurso.isActive();
 	}
 
+	@Override
 	public void bucle(boolean activo, int cola) {
 
 		if (activo == true) {
@@ -77,6 +84,7 @@ public class ControladorDeSonido {
 
 	}
 
+	@Override
 	public int ramdom() {
 		int numeroAleatorioActual;
 
@@ -88,11 +96,13 @@ public class ControladorDeSonido {
 		return numeroAleatorioActual;
 	}
 
+	@Override
 	public long seguirCancion() {
 		cancionEnCurso.stop();
 		return cancionEnCurso.getMicrosecondPosition();
 	}
 
+	@Override
 	public void continuarCancion(JButton btnplay2) {
 
 		if (!enReproduccion) {
@@ -108,5 +118,20 @@ public class ControladorDeSonido {
 		}
 
 	}
+	
+	public void anuncio() {
+		try {
+			cancionEnCurso.open(AudioSystem.getAudioInputStream(new File("anuncio/Anuncio.wav")));
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cancionEnCurso.start();
+	}
 
+	public void parar() {
+		cancionEnCurso.stop();
+		cancionEnCurso.close();
+	}
+	
 }

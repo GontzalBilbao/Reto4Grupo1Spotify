@@ -38,7 +38,7 @@ public class GestionBD {
 		System.out.println("Conectando..........");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost/bdreto4", "root", "");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3307/bdreto4", "root", "");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Libreria no encontrada");
 		} catch (SQLException e) {
@@ -365,6 +365,28 @@ public class GestionBD {
 	public ArrayList<Cancion> devolverCanciones() {
 		return canciones;
 	}
+
+	public String sacarPremiun(String usuario) {
+		String premiun = null;
+		try {
+			String query = "SELECT `tipo`FROM `cliente` WHERE `usuario` = ?;";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, usuario);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+
+			while (resultadoConsulta.next()) {
+				premiun = resultadoConsulta.getString(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return premiun;
+	}
+	
+	
+	
+	
 //	SELECT audio.idAudio, podcast.idPodcaster, audio.nombre, audio.duracion, podcast.colaboradores, podcast.descripcion, audio.imagen, audio.tipo
 //	FROM audio JOIN podcast audio.idAudio = podcast.idAudio
 //	WHERE podcast.idPodcaster 'NSN03';

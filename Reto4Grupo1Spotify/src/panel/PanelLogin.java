@@ -93,7 +93,7 @@ public class PanelLogin extends JPanel {
 
 
 				boolean adminCorrecto = validarAdmin(gestionBD);
-				boolean usuarioCorrecto = validarUsuario(gestionBD);
+				boolean usuarioCorrecto = validarUsuario(gestionBD, gestionInfo);
 				
 				if (adminCorrecto == true) {
 					JOptionPane.showMessageDialog(null, "Bienvenido/a Admin", "Administrador",
@@ -127,13 +127,14 @@ public class PanelLogin extends JPanel {
 
 	}
 
-	private boolean validarUsuario(GestionBD gestionBD) {
+	private boolean validarUsuario(GestionBD gestionBD, GestionInformacion gestionInfo) {
 		boolean usuarioCorrecto = false;
 		gestionBD.queryClientes();
 		clientes = gestionBD.devolverClientes();
 		for (int i = 0; i < clientes.size(); i++) {
 			if (txtUsuario.getText().equals(clientes.get(i).getUsuario())) {
 				if (txtContraseña.getText().equals(clientes.get(i).getContrasena())) {
+					gestionInfo.sacarPremiun(txtUsuario.getText());
 					usuarioCorrecto = true;
 				} else {
 

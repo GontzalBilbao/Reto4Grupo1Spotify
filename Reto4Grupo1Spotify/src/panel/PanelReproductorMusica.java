@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import controlador.ControladorDeSonido;
 import controlador.GestionBD;
 import controlador.GestionInformacion;
+import interfaces.IControladorSonido;
 import modelo.Album;
 import modelo.Cancion;
 import vista.VentanaPrincipal;
@@ -29,7 +30,7 @@ public class PanelReproductorMusica extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private int intinerador = 0;
-	private ControladorDeSonido controladorDeSonido;
+	private IControladorSonido controladorDeSonido;
 	private boolean aleatorio = false;
 	private JLabel lblIconoGrande;
 	private JLabel lblImagenCancion;
@@ -41,19 +42,20 @@ public class PanelReproductorMusica extends JPanel {
 	
 	private ArrayList<Cancion> canciones;
 	private ArrayList<Album> albumes;
+
+	protected boolean anuncio = false;
 	/**
 	 * Create the panel.
 	 */
 
 	public PanelReproductorMusica(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
-
-		albumes = new ArrayList<Album>();
+		
 		idMusico = gestionInfo.devolverArtistaSeleccionado();
 		gestionBD.cargarAlbumesDelMusico(idMusico);
 		albumes = gestionBD.devolverAlbumes();
 		gestionBD.cargarCancionesDelAlbum(albumes.get(0).getIdAlbum());
 		canciones = gestionBD.devolverCanciones();
-	
+		
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);	
@@ -104,10 +106,37 @@ public class PanelReproductorMusica extends JPanel {
 					intinerador = (intinerador - 1)
 							% canciones.size();
 				}
-				controladorDeSonido.setCancionEnReproduccion(intinerador);
-				lblImagenCancion.setIcon(canciones.get(0).getImagen());
-				lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
+				
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+					intinerador = (intinerador + 1)
+							% canciones.size();
 
+					controladorDeSonido.setCancionEnReproduccion(intinerador);
+					lblImagenCancion.setIcon(canciones.get(0).getImagen());
+					lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
+					btnPlay.setVisible(true);
+					btnPlayStop.setVisible(false);
+				} else {
+					if (!anuncio) {
+						controladorDeSonido.parar();
+						controladorDeSonido.anuncio();
+						lblImagenCancion.setIcon(new ImageIcon("anuncio/Anuncio.jpg"));
+						lblTitulo.setText("");
+						btnPlay.setVisible(false);
+						btnPlayStop.setVisible(true);
+						anuncio = true;
+					} else {
+						intinerador = controladorDeSonido.ramdom();
+						controladorDeSonido.reproducir(intinerador);
+						lblImagenCancion.setIcon(canciones.get(0).getImagen());
+						lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
+						btnPlay.setVisible(true);
+						btnPlayStop.setVisible(false);	
+					}
+					
+				}
+				
+				
 			}
 		});
 		btnCancionAnterior.setBounds(165, 265, 70, 30);
@@ -117,14 +146,36 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				intinerador = (intinerador + 1)
-						% canciones.size();
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+					intinerador = (intinerador + 1)
+							% canciones.size();
 
-				controladorDeSonido.setCancionEnReproduccion(intinerador);
-				lblImagenCancion.setIcon(canciones.get(0).getImagen());
-				lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
-				btnPlay.setVisible(true);
-				btnPlayStop.setVisible(false);
+					controladorDeSonido.setCancionEnReproduccion(intinerador);
+					lblImagenCancion.setIcon(canciones.get(0).getImagen());
+					lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
+					btnPlay.setVisible(true);
+					btnPlayStop.setVisible(false);
+				} else {
+					if (!anuncio) {
+						controladorDeSonido.parar();
+						controladorDeSonido.anuncio();
+						lblImagenCancion.setIcon(new ImageIcon("anuncio/Anuncio.jpg"));
+						lblTitulo.setText("");
+						btnPlay.setVisible(false);
+						btnPlayStop.setVisible(true);
+						anuncio = true;
+					} else {
+						intinerador = controladorDeSonido.ramdom();
+						controladorDeSonido.reproducir(intinerador);
+						lblImagenCancion.setIcon(canciones.get(0).getImagen());
+						lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
+						btnPlay.setVisible(true);
+						btnPlayStop.setVisible(false);	
+					}
+					
+				}
+				
+				
 			}
 		});
 		btnCancionSiguiente.setBackground(Color.BLACK);

@@ -21,6 +21,8 @@ public class GestionInformacion {
 	private String artistaSeleccionado = "";
 	private String albumSeleccionado = "";
 	private int recogerIndiceCancion;
+	private int recogerIndicePodcast;
+	private String premiun;
 
 	public GestionInformacion() {
 		gestionBD = new GestionBD();
@@ -75,7 +77,7 @@ public class GestionInformacion {
 	public String devolverAlbumSeleccionado() {
 		return albumSeleccionado;
 	}
-	
+
 	public void guardarCancionSeleccionado(String tituloAlbum) {
 		this.albumSeleccionado = tituloAlbum;
 
@@ -116,13 +118,29 @@ public class GestionInformacion {
 	public String pasrverPodcaster() {
 		return podcaster;
 	}
-	
+
 	public void recogerIndiceCancion(int indice) {
 		this.recogerIndiceCancion = indice;
 	}
-	
+
 	public int pasarIndiceCancion() {
 		return recogerIndiceCancion;
+	}
+
+	public void recogerIndicePodcast(int indice) {
+		this.recogerIndicePodcast = indice;
+	}
+
+	public int pasarIndicePodcast() {
+		return recogerIndicePodcast;
+	}
+
+	public void sacarPremiun(String usuario) {
+		this.premiun = gestionBD.sacarPremiun(usuario);
+	}
+
+	public String devolverPremiun() {
+		return premiun;
 	}
 
 }
