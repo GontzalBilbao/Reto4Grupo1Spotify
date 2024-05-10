@@ -38,7 +38,7 @@ public class GestionBD {
 		System.out.println("Conectando..........");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3307/bdreto4", "root", "");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdreto4", "root", "");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Libreria no encontrada");
 		} catch (SQLException e) {
@@ -204,11 +204,11 @@ public class GestionBD {
 		return album;
 	}
 
-	public ArrayList<Audio> queryAudioPodcast() {
+	public ArrayList<Audio> queryAudioPodcast(String idAudio) {
 		ImageIcon imagen = new ImageIcon();
 		ArrayList<Audio> audios = new ArrayList<Audio>();
 		try {
-			String query = "SELECT * FROM audio WHERE nombre = ?";
+			String query = "SELECT * FROM audio WHERE idAudio = ?";
 			PreparedStatement consulta = conexion.prepareStatement(query);
 			ResultSet resultadoConsulta = consulta.executeQuery();
 			while (resultadoConsulta.next()) {
