@@ -4,8 +4,8 @@ import javax.swing.ImageIcon;
 
 public class Artista {
 
+	
 	private String nombreArtistico;
-	private String nombreArtista;
 	private ImageIcon imagen;
 	private String descripcion;
 
@@ -13,9 +13,8 @@ public class Artista {
 
 	}
 
-	public Artista(String nombreArtistico, ImageIcon imagen, String descripcion) {
-		super();
-		this.nombreArtistico = nombreArtistico;
+	public Artista(String nombreArtista, ImageIcon imagen, String descripcion) {
+		this.nombreArtistico = nombreArtista;
 		this.imagen = imagen;
 		this.descripcion = descripcion;
 	}
@@ -31,7 +30,7 @@ public class Artista {
 	public ImageIcon getImagen() {
 		return imagen;
 	}
-
+	
 	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
 	}

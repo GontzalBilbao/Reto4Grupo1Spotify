@@ -14,21 +14,30 @@ import javax.swing.ImageIcon;
 import modelo.Album;
 import modelo.Audio;
 import modelo.Cancion;
+import modelo.CancionesFavoritas;
 import modelo.Cliente;
+import modelo.MasEscuchado;
 import modelo.Musico;
 import modelo.Podcast;
 import modelo.Podcaster;
+import modelo.PodcastsFavoritos;
+import modelo.TopPlayList;
+
+
 
 public class GestionBD {
 	private Connection conexion;
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-	public ArrayList<Audio> audios = new ArrayList<Audio>();
-	public ArrayList<Album> album = new ArrayList<Album>();
+
 	public ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
 	public ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
 	public ArrayList<Musico> musicos = new ArrayList<Musico>();
 	public ArrayList<Album> albumes = new ArrayList<Album>();
 	public ArrayList<Cancion> canciones = new ArrayList<Cancion>();
+	public ArrayList<CancionesFavoritas> cancionesFav = new ArrayList<CancionesFavoritas>();
+	public ArrayList<PodcastsFavoritos> podcastsFav = new ArrayList<PodcastsFavoritos>();
+	public ArrayList<MasEscuchado> masEscuchado = new ArrayList<MasEscuchado>();
+	public ArrayList<TopPlayList> topPlaylist = new ArrayList<TopPlayList>();
 
 	public GestionBD() {
 		iniciarConexion();
@@ -117,6 +126,7 @@ public class GestionBD {
 
 	public ArrayList<Cliente> devolverClientes() {
 		return clientes;
+
 	}
 
 	public ArrayList<Musico> queryMusico() {
@@ -266,6 +276,80 @@ public class GestionBD {
 	public ArrayList<Podcast> devolverPodcasts() {
 		return podcasts;
 	}
+	
+	
+	
+	public ArrayList<CancionesFavoritas> topCancionesFavoritas() {
+		
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL CancionesFavoritas();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				cancionesFav.add(new CancionesFavoritas(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cancionesFav;
+	}
+
+	public ArrayList<PodcastsFavoritos> topPodcastsFavoritos() {
+		
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL PodcastsFavoritos();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				podcastsFav.add(new PodcastsFavoritos(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return podcastsFav;
+	}
+	
+	public ArrayList<MasEscuchado> topMasEscuchado() {
+
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL topMasEscuchado();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				masEscuchado.add(new MasEscuchado(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return masEscuchado;
+	}
+	
+	public ArrayList<TopPlayList> topPlayList() {
+		
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "CALL topPlaylist();";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+
+			while (resultadoConsulta.next()) {
+				topPlaylist.add(new TopPlayList(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getInt(4), resultadoConsulta.getInt(5)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return topPlaylist;
+	}
+	
+	
+	
+	
 
 	public void cargarMusicos() {
 		musicos.clear();
@@ -383,10 +467,7 @@ public class GestionBD {
 		}
 		return premiun;
 	}
-	
-	
-	
-	
+		
 //	SELECT audio.idAudio, podcast.idPodcaster, audio.nombre, audio.duracion, podcast.colaboradores, podcast.descripcion, audio.imagen, audio.tipo
 //	FROM audio JOIN podcast audio.idAudio = podcast.idAudio
 //	WHERE podcast.idPodcaster 'NSN03';

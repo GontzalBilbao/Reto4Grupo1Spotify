@@ -27,17 +27,16 @@ public class PanelLogin extends JPanel {
 	private JButton btnLogin;
 	private String admin = "admin";
 	private String adminContra = "1234";
-
 	private ArrayList<Cliente> clientes;
 
 	/**
 	 * Create the panel.
 	 */
 
-
 	public PanelLogin(VentanaPrincipal v, GestionBD gestionBD, GestionInformacion gestionInfo) {
+
 		clientes = new ArrayList<Cliente>();
-		
+
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -49,10 +48,10 @@ public class PanelLogin extends JPanel {
 		lblUsuario.setBounds(220, 250, 90, 20);
 		add(lblUsuario);
 
-
 		txtContraseña = new JTextField();
 		txtContraseña.setBounds(330, 300, 200, 20);
 		add(txtContraseña);
+
 		txtContraseña.setColumns(10);
 
 		JLabel lblContraseña = new JLabel("Contraseña:");
@@ -66,7 +65,7 @@ public class PanelLogin extends JPanel {
 		txtUsuario.setColumns(10);
 		txtUsuario.setBounds(330, 250, 200, 20);
 		add(txtUsuario);
-		
+
 		JLabel lblLogin = new JLabel("INICIO DE SESION");
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin.setForeground(Color.GREEN);
@@ -85,22 +84,20 @@ public class PanelLogin extends JPanel {
 		btnRegistrarse.setBounds(90, 450, 180, 35);
 		add(btnRegistrarse);
 
-
 		btnLogin = new JButton("INICIAR SESIÓN");
 		btnLogin.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 
-
 				boolean adminCorrecto = validarAdmin(gestionBD);
 				boolean usuarioCorrecto = validarUsuario(gestionBD, gestionInfo);
-				
+
 				if (adminCorrecto == true) {
 					JOptionPane.showMessageDialog(null, "Bienvenido/a Admin", "Administrador",
 							JOptionPane.INFORMATION_MESSAGE);
 					v.cambiarDePanel(13);
 				} else {
-					
+
 					if (usuarioCorrecto == true) {
 						JOptionPane.showMessageDialog(null, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
 						v.cambiarDePanel(3);
@@ -118,7 +115,6 @@ public class PanelLogin extends JPanel {
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogin.setBounds(530, 450, 180, 35);
 		add(btnLogin);
-
 
 		JLabel lblIconoGrande = new JLabel("");
 		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));

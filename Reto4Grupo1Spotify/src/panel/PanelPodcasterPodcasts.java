@@ -43,6 +43,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 		setBackground(Color.WHITE);
 		setLayout(null);
 
+
 		gestionBD.cargarPodcasters();
 		podcasters = gestionBD.devolverPodcasters();
 		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
@@ -225,6 +226,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 		scrollPaneOtrosPodcasters.setLocation(20, 267);
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneOtrosPodcasters);
+
 	}
 	
 	private void removerPodcasterElegido() {

@@ -6,10 +6,8 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import modelo.Artista;
 import modelo.Musico;
 import modelo.Podcaster;
-import vista.VentanaPrincipal;
 
 public class GestionInformacion {
 
@@ -26,7 +24,7 @@ public class GestionInformacion {
 	private String premiun;
 
 	public GestionInformacion() {
-		gestionBD = new GestionBD();
+
 	}
 
 	public boolean validarContrasena(boolean campos, String contraseña, String confirmarContraseña) {
@@ -148,7 +146,7 @@ public class GestionInformacion {
 		this.audioSeleccionado = audioSeleccionado;
 
 	}
-	
+
 	public String devolverAudioSeleccionado() {
 		return audioSeleccionado;
 	}

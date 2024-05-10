@@ -15,10 +15,11 @@ public class Podcaster extends Artista {
 
 	}
 
-	public Podcaster(String idPodcaster, String nombreArtistico, String genero, ImageIcon imagen, String descripcion) {
-		super(nombreArtistico, imagen, descripcion);
+	public Podcaster(String idPodcaster, String nombreArtista, String genero, ImageIcon imagen, String descripcion) {
+		super(nombreArtista, imagen, descripcion);
 		this.idPodcaster = idPodcaster;
 		this.genero = genero;
+
 	}
 
 	public String getIdPodcaster() {
@@ -37,13 +38,15 @@ public class Podcaster extends Artista {
 		this.genero = genero;
 	}
 
+	@Override
 	public String getNombreArtistico() {
-		// TODO Auto-generated method stub
 		return super.getNombreArtistico();
 	}
 
+	@Override
+
 	public void setNombreArtistico(String nombreArtistico) {
-		// TODO Auto-generated method stub
+
 		super.setNombreArtistico(nombreArtistico);
 	}
 
@@ -71,10 +74,9 @@ public class Podcaster extends Artista {
 		super.setDescripcion(descripcion);
 	}
 
-	@Override
 	public String toString() {
-		return "Podcaster [idPodcaster=" + idPodcaster + ", genero=" + genero + ", podcast=" + podcast
-				+ ", getNombreArtistico()=" + getNombreArtistico() + ", getImagen()=" + getImagen()
+		return "Podcaster [getIdPodcaster()=" + getIdPodcaster() + ", getGenero()=" + getGenero()
+				+ ", getNombreArtista()=" + getNombreArtistico() + ", getImagen()=" + getImagen()
 				+ ", getDescripcion()=" + getDescripcion() + "]";
 
 	}

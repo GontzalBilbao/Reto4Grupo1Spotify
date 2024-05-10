@@ -1,6 +1,5 @@
 package modelo;
 
-
 import java.util.Objects;
 
 import javax.swing.ImageIcon;
@@ -10,8 +9,6 @@ public class Album {
 	private String idAlbum, titulo, año, genero;
 	private ImageIcon imagen;
 	private String idMusico;
-
-	
 
 	public Album(String idAlbum, String titulo, String año, String genero, ImageIcon imagen, String idMusico) {
 		this.idAlbum = idAlbum;
@@ -62,8 +59,6 @@ public class Album {
 		this.imagen = imagen;
 	}
 
-	
-	
 	public String getIdMusico() {
 		return idMusico;
 	}
@@ -96,6 +91,5 @@ public class Album {
 		return "Album [idAlbum=" + idAlbum + ", titulo=" + titulo + ", año=" + año + ", genero=" + genero + ", imagen="
 				+ imagen + "]";
 	}
-
 
 }

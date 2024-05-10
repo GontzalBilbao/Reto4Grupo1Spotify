@@ -143,7 +143,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				intinerador = (intinerador + 1) % gestionBD.queryAudioPodcast().size();
+//				intinerador = (intinerador + 1) % gestionBD.queryAudioPodcast().size();
 
 				controladorDePodcast.setCancionEnReproduccion(intinerador);
 				lblImagenPodcast.setIcon(podcasters.get(podcasterSeleccionado).getImagen());
