@@ -20,6 +20,7 @@ public class GestionInformacion {
 
 	private String artistaSeleccionado = "";
 	private String albumSeleccionado = "";
+	private String audioSeleccionado = "";
 	private int recogerIndiceCancion;
 	private int recogerIndicePodcast;
 	private String premiun;
@@ -141,6 +142,15 @@ public class GestionInformacion {
 
 	public String devolverPremiun() {
 		return premiun;
+	}
+
+	public void guardarAudioSeleccionado(String audioSeleccionado) {
+		this.audioSeleccionado = audioSeleccionado;
+
+	}
+	
+	public String devolverAudioSeleccionado() {
+		return audioSeleccionado;
 	}
 
 }

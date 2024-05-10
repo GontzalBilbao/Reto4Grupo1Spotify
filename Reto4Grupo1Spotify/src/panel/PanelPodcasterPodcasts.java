@@ -141,6 +141,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JPanel clickedPanel = (JPanel) e.getSource();
+					gestionInfo.guardarAudioSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					vp.cambiarDePanel(10);
 					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "

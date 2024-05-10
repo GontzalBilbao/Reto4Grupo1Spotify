@@ -30,6 +30,7 @@ public class PanelReproductorPodcasts extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private int intinerador = 0;
+	private int podcastSeleccionado = 0;
 	private IControladorSonido controladorDePodcast;
 	private boolean aleatorio = false;
 	private JLabel lblIconoGrande;
@@ -41,27 +42,44 @@ public class PanelReproductorPodcasts extends JPanel {
 	private ArrayList<Podcaster> podcasters;
 	private ArrayList<Podcast> podcasts;
 	private String nombreArtista = "";
-	
+	private String audioSeleccionado = "";
+
+	private int podcasterSeleccionado;
+
 	/**
 	 * Create the panel.
 	 */
 
 	public PanelReproductorPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 
-		
 		gestionBD.cargarPodcasters();
 		podcasters = gestionBD.devolverPodcasters();
-		gestionBD.cargarPodcastsDelPodcaster(podcasters.get(0).getIdPodcaster());
-		podcasts = gestionBD.devolverPodcasts();
-		
+		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
+		System.out.println(nombreArtista);
+		for (int i = 0; i < podcasters.size(); i++) {
+			if (nombreArtista.equals(podcasters.get(i).getNombreArtistico())) {
+				gestionBD.cargarPodcastsDelPodcaster(podcasters.get(i).getIdPodcaster());
+				podcasts = gestionBD.devolverPodcasts();
+				podcasterSeleccionado = i;
+			}
+		}
+		audioSeleccionado = gestionInfo.devolverAudioSeleccionado();
+		for (int i = 0; i < podcasts.size(); i++) {
+			if (audioSeleccionado.equals(podcasts.get(i).getNombre())) {
+				podcastSeleccionado = i;
+			}
+		}
+//		gestionBD.cargarPodcastsDelPodcaster(podcasters.get(0).getIdPodcaster());
+//		podcasts = gestionBD.devolverPodcasts();
+
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
-	
+
 		controladorDePodcast = new ControladorDePodcast(podcasts);
 
 		intinerador = gestionInfo.pasarIndicePodcast();
-		
+
 //		for (int i = 0; i < 5; i++) {
 //			System.out.println(gestionBD.queryAudioPodcast().get(i).getNombre());
 //		}
@@ -113,7 +131,7 @@ public class PanelReproductorPodcasts extends JPanel {
 							intinerador = (intinerador - 1) % podcasts.size();
 						}
 				controladorDePodcast.setCancionEnReproduccion(intinerador);
-				lblImagenPodcast.setIcon(podcasts.get(intinerador).getImagen());
+				lblImagenPodcast.setIcon(podcasters.get(podcastSeleccionado).getImagen());
 				lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 
 			}
@@ -128,8 +146,8 @@ public class PanelReproductorPodcasts extends JPanel {
 				intinerador = (intinerador + 1) % gestionBD.queryAudioPodcast().size();
 
 				controladorDePodcast.setCancionEnReproduccion(intinerador);
-				lblImagenPodcast.setIcon(podcasts.get(intinerador).getImagen());
-				lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
+				lblImagenPodcast.setIcon(podcasters.get(podcasterSeleccionado).getImagen());
+				lblTitulo.setText("<html>" + podcasts.get(podcastSeleccionado).getNombre() + "</html>");
 				btnPlay.setVisible(true);
 				btnPlayStop.setVisible(false);
 			}
@@ -166,12 +184,12 @@ public class PanelReproductorPodcasts extends JPanel {
 		add(btnFavorito);
 
 		lblImagenPodcast = new JLabel();
-		lblImagenPodcast.setIcon(podcasts.get(intinerador).getImagen());
+		lblImagenPodcast.setIcon(podcasters.get(podcasterSeleccionado).getImagen());
 		lblImagenPodcast.setBounds(275, 150, 250, 250);
 		add(lblImagenPodcast);
 
 		lblTitulo = new JLabel("");
-		lblTitulo.setText(podcasts.get(intinerador).getNombre());
+		lblTitulo.setText(podcasts.get(podcastSeleccionado).getNombre());
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
