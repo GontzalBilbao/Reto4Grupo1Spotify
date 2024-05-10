@@ -24,7 +24,7 @@ import panel.PanelGestionarPodcaster;
 import panel.PanelLogin;
 import panel.PanelMenuAdministrador;
 import panel.PanelMenuCliente;
-import panel.PanelMusicoAlbumes;
+import panel.PanelMusicoAlbume;
 import panel.PanelPerfil;
 import panel.PanelPlaylist;
 import panel.PanelPodcasterPodcasts;
@@ -68,7 +68,7 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelDescubrirMusica(this, gestionBD, gestionInfo));
 			break;
 		case 5:
-			setContentPane(new PanelMusicoAlbumes(this, gestionBD, gestionInfo));
+			setContentPane(new PanelMusicoAlbume(this, gestionBD, gestionInfo));
 			break;
 		case 6:
 			setContentPane(new PanelAlbumCancion(this, gestionBD, gestionInfo));
@@ -95,41 +95,41 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelMenuAdministrador(this));
 			break;
 		case 14:
-			setContentPane(new PanelGestionarMusico(this));
+			setContentPane(new PanelGestionarMusico(this, gestionBD));
 			break;
 		case 15:
-			setContentPane(new PanelAñadirMusico(this));
+			setContentPane(new PanelAñadirMusico(this, gestionBD));
 			break;
 		case 16:
-			setContentPane(new PanelAñadirAlbum(this));
+			setContentPane(new PanelAñadirAlbum(this, gestionBD));
 			break;
 		case 17:
-			setContentPane(new PanelAñadirCancion(this));
+			setContentPane(new PanelAñadirCancion(this, gestionBD));
 			break;
 		case 18:
-			setContentPane(new PanelGestionarAlbum(this));
+			setContentPane(new PanelGestionarAlbum(this, gestionBD));
 			break;
 		case 19:
-			setContentPane(new PanelGestionarCancion(this));
+			setContentPane(new PanelGestionarCancion(this, gestionBD));
 			break;
 		case 20:
-			setContentPane(new PanelGestionarPodcaster(this));
+			setContentPane(new PanelGestionarPodcaster(this, gestionBD));
 			break;
 		case 21:
-			setContentPane(new PanelAñadirPodcaster(this));
+			setContentPane(new PanelAñadirPodcaster(this, gestionBD));
 			break;
 		case 22:
-			setContentPane(new PanelAñadirPodcast(this));
+			setContentPane(new PanelAñadirPodcast(this, gestionBD));
 			break;
 		case 23:
-			setContentPane(new PanelEstadistica(this));
+			setContentPane(new PanelEstadistica(this, gestionBD));
 			break;
 		}
 
 	}
 
 	public void lanzarVentana() {
-		this.cambiarDePanel(3);
+		this.cambiarDePanel(13);
 		this.setVisible(true);
 	}
 
