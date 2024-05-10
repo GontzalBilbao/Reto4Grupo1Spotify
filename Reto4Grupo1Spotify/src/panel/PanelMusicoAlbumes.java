@@ -48,7 +48,7 @@ public class PanelMusicoAlbumes extends JPanel {
 		musicos = gestionBD.devolverMusicos();
 		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
 		for (int i = 0; i < musicos.size(); i++) {
-			if (nombreArtista.equals(musicos.get(i).getNombreArtista())) {
+			if (nombreArtista.equals(musicos.get(i).getNombreArtistico())) {
 				musicoSeleccionado = i;
 				idMusico = musicos.get(i).getIdMusico();
 				caracteristica = musicos.get(i).getCaracteristica();
@@ -190,7 +190,7 @@ public class PanelMusicoAlbumes extends JPanel {
 			panelItem.add(imageLabel);
 
 			// Agregar JLabels debajo de la imagen
-			JLabel label1 = new JLabel(musicos.get(i).getNombreArtista()); // podcasts.get(i).getNombre()
+			JLabel label1 = new JLabel(musicos.get(i).getNombreArtistico()); // podcasts.get(i).getNombre()
 //					JLabel label2 = new JLabel("Autor: " + i);
 			panelItem.add(label1);
 //					panelItem.add(label2);
@@ -231,7 +231,7 @@ public class PanelMusicoAlbumes extends JPanel {
 
 	private void removerMusicoElegido() {
 		for (int i = 0; i < musicos.size(); i++) {
-			if (musicos.get(i).getNombreArtista().equals(nombreArtista)) {
+			if (musicos.get(i).getNombreArtistico().equals(nombreArtista)) {
 				musicos.remove(i);
 			} else {
 

@@ -1,11 +1,14 @@
 package modelo;
 
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
 public class Podcaster extends Artista {
 
 	private String idPodcaster;
 	private String genero;
+	private ArrayList<Podcast> podcast = new ArrayList<Podcast>();
 
 	public Podcaster() {
 
@@ -13,8 +16,10 @@ public class Podcaster extends Artista {
 
 	public Podcaster(String idPodcaster, String nombreArtista, String genero, ImageIcon imagen, String descripcion) {
 		super(nombreArtista, imagen, descripcion);
+
 		this.idPodcaster = idPodcaster;
 		this.genero = genero;
+
 	}
 
 	public String getIdPodcaster() {
@@ -34,15 +39,14 @@ public class Podcaster extends Artista {
 	}
 
 	@Override
-	public String getNombreArtista() {
-		// TODO Auto-generated method stub
-		return super.getNombreArtista();
+	public String getNombreArtistico() {
+		return super.getNombreArtistico();
 	}
 
 	@Override
-	public void setNombreArtista(String nombreArtista) {
-		// TODO Auto-generated method stub
-		super.setNombreArtista(nombreArtista);
+
+	public void setNombreArtistico(String nombreArtistico) {
+		super.setNombreArtistico(nombreArtistico);
 	}
 
 	@Override
@@ -70,11 +74,12 @@ public class Podcaster extends Artista {
 	}
 
 	@Override
+
 	public String toString() {
 		return "Podcaster [getIdPodcaster()=" + getIdPodcaster() + ", getGenero()=" + getGenero()
-				+ ", getNombreArtista()=" + getNombreArtista() + ", getImagen()=" + getImagen() + ", getDescripcion()="
-				+ getDescripcion() + "]";
-	}
+				+ ", getNombreArtista()=" + getNombreArtistico() + ", getImagen()=" + getImagen()
+				+ ", getDescripcion()=" + getDescripcion() + "]";
 
+	}
 
 }

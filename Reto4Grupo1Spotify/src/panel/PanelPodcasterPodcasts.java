@@ -47,7 +47,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 		podcasters = gestionBD.devolverPodcasters();
 		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
 		for (int i = 0; i < podcasters.size(); i++) {
-			if (nombreArtista.equals(podcasters.get(i).getNombreArtista())) {
+			if (nombreArtista.equals(podcasters.get(i).getNombreArtistico())) {
 				podcasterSeleccionado = i;
 				genero = podcasters.get(i).getGenero();
 				descripcion = podcasters.get(i).getDescripcion();
@@ -185,7 +185,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 			panelItem.add(imageLabel);
 
 			// Agregar JLabels debajo de la imagen
-			JLabel label1 = new JLabel(podcasters.get(i).getNombreArtista()); // podcasts.get(i).getNombre()
+			JLabel label1 = new JLabel(podcasters.get(i).getNombreArtistico()); // podcasts.get(i).getNombre()
 //					JLabel label2 = new JLabel("Autor: " + i);
 			panelItem.add(label1);
 //					panelItem.add(label2);
@@ -222,13 +222,11 @@ public class PanelPodcasterPodcasts extends JPanel {
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneOtrosPodcasters);
 
-		
-
 	}
 
 	private void removerPodcasterElegido() {
 		for (int i = 0; i < podcasters.size(); i++) {
-			if (podcasters.get(i).getNombreArtista().equals(nombreArtista)) {
+			if (podcasters.get(i).getNombreArtistico().equals(nombreArtista)) {
 				podcasters.remove(i);
 			} else {
 

@@ -29,10 +29,13 @@ public class PanelDescubrirMusica extends JPanel {
 	private ArrayList<Musico> musicos = new ArrayList<Musico>();
 	
 	
+
 	/**
 	 * Create the panel.
 	 */
+
 	public PanelDescubrirMusica(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+
 		setSize(800, 600);
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -66,7 +69,7 @@ public class PanelDescubrirMusica extends JPanel {
 					panelItem.add(imageLabel);
 
 		// Agregar JLabels debajo de la imagen
-					JLabel label1 = new JLabel(musicos.get(i).getNombreArtista()); //podcasts.get(i).getNombre()
+					JLabel label1 = new JLabel(musicos.get(i).getNombreArtistico()); //podcasts.get(i).getNombre()
 //					JLabel label2 = new JLabel("Autor: " + i);
 					label1.setSize(50, 50);
 					panelItem.add(label1);
@@ -132,6 +135,8 @@ public class PanelDescubrirMusica extends JPanel {
 
 		
 		
-	}
+	
 
+
+	}
 }

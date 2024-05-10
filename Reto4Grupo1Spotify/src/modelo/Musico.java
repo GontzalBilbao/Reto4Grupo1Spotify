@@ -34,15 +34,15 @@ public class Musico extends Artista {
 	}
 
 	@Override
-	public String getNombreArtista() {
+	public String getNombreArtistico() {
 		// TODO Auto-generated method stub
-		return super.getNombreArtista();
+		return super.getNombreArtistico();
 	}
 
 	@Override
-	public void setNombreArtista(String nombreArtista) {
+	public void setNombreArtistico(String nombreArtista) {
 		// TODO Auto-generated method stub
-		super.setNombreArtista(nombreArtista);
+		super.setNombreArtistico(nombreArtista);
 	}
 
 	@Override
@@ -72,10 +72,13 @@ public class Musico extends Artista {
 	@Override
 	public String toString() {
 		return "Musico [getIdMusico()=" + getIdMusico() + ", getCaracteristica()=" + getCaracteristica()
-				+ ", getNombreArtista()=" + getNombreArtista() + ", getImagen()=" + getImagen() + ", getDescripcion()="
+				+ ", getNombreArtista()=" + getNombreArtistico() + ", getImagen()=" + getImagen() + ", getDescripcion()="
 				+ getDescripcion() + "]";
 	}
 
 
 }
+
+
+
 

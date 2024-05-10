@@ -34,6 +34,7 @@ public class PanelLogin extends JPanel {
 	 */
 
 	public PanelLogin(VentanaPrincipal v, GestionBD gestionBD, GestionInformacion gestionInfo) {
+
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -82,17 +83,18 @@ public class PanelLogin extends JPanel {
 
 		btnLogin = new JButton("INICIAR SESIÓN");
 		btnLogin.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 
 				boolean adminCorrecto = validarAdmin(gestionBD);
 				boolean usuarioCorrecto = validarUsuario(gestionBD);
-				
+
 				if (adminCorrecto == true) {
 					JOptionPane.showMessageDialog(null, "Bienvenido/a Admin", "Administrador",
 							JOptionPane.INFORMATION_MESSAGE);
 					v.cambiarDePanel(13);
 				} else {
-					
+
 					if (usuarioCorrecto == true) {
 						JOptionPane.showMessageDialog(null, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
 						v.cambiarDePanel(3);
@@ -101,8 +103,11 @@ public class PanelLogin extends JPanel {
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
+
 			}
+
 		});
+
 		btnLogin.setForeground(Color.BLACK);
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogin.setBounds(530, 450, 180, 35);

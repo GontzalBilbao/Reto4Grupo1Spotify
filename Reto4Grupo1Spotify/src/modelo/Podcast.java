@@ -8,12 +8,13 @@ public class Podcast extends Audio {
 
 	private String descripcion;
 	private String idPodcaster;
-	
+
 	public Podcast() {
 
 	}
 
-	public Podcast(String idAudio, String idPodcaster,  String nombre, String duracion, String colaboradores, String descripcion, ImageIcon imagen, String tipo) {
+	public Podcast(String idAudio, String idPodcaster, String nombre, String duracion, String colaboradores,
+			String descripcion, ImageIcon imagen, String tipo) {
 		super(idAudio, nombre, duracion, imagen, tipo);
 		this.descripcion = descripcion;
 		this.idPodcaster = idPodcaster;
@@ -27,7 +28,6 @@ public class Podcast extends Audio {
 		this.descripcion = descripcion;
 	}
 
-	
 	public String getIdPodcaster() {
 		return idPodcaster;
 	}
