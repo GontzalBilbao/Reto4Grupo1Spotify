@@ -17,6 +17,7 @@ import modelo.CancionesFavoritas;
 import modelo.Cliente;
 import modelo.MasEscuchado;
 import modelo.Musico;
+import modelo.PlayList;
 import modelo.Podcast;
 import modelo.Podcaster;
 import modelo.PodcastsFavoritos;
@@ -30,6 +31,7 @@ public class GestionBD {
 	public ArrayList<Musico> musicos = new ArrayList<Musico>();
 	public ArrayList<Album> albumes = new ArrayList<Album>();
 	public ArrayList<Cancion> canciones = new ArrayList<Cancion>();
+	public ArrayList<PlayList> playLists = new ArrayList<PlayList>();
 
 	public ArrayList<CancionesFavoritas> cancionesFav = new ArrayList<CancionesFavoritas>();
 	public ArrayList<PodcastsFavoritos> podcastsFav = new ArrayList<PodcastsFavoritos>();
@@ -44,7 +46,7 @@ public class GestionBD {
 		System.out.println("Conectando..........");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3307/bdreto4", "root", "");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdreto4", "root", "");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Libreria no encontrada");
 		} catch (SQLException e) {

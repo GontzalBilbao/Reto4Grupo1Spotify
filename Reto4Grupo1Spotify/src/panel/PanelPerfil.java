@@ -8,10 +8,16 @@ import vista.VentanaPrincipal;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import controlador.GestionBD;
+import controlador.GestionInformacion;
+
 import javax.swing.JScrollBar;
 import javax.swing.JList;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelPerfil extends JPanel {
 
@@ -20,7 +26,7 @@ public class PanelPerfil extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelPerfil(VentanaPrincipal v) {
+	public PanelPerfil(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -68,6 +74,11 @@ public class PanelPerfil extends JPanel {
 		panelFoto.add(lblLetra);
 		
 		JButton btnAtras = new JButton("Atrás");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vp.cambiarDePanel(vp.nPanel);
+			}
+		});
 		btnAtras.setBounds(75, 85, 89, 23);
 		add(btnAtras);
 
