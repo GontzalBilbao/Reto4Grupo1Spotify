@@ -1,26 +1,21 @@
 package modelo;
 
+import java.util.Objects;
+
+import javax.swing.ImageIcon;
+
 public class Album {
-	
-	private String idAlbum;
-	private String titulo;
-	private String año;
-	private String genero;
-	private String imagen;
-	private String idMusico;
-	
-	public Album() {
 
-	}
+	private String idAlbum, titulo, año, genero;
+	private ImageIcon imagen;
 
-	public Album(String idAlbum, String titulo, String año, String genero, String imagen, String idMusico) {
+	public Album(String idAlbum, String titulo, String año, String genero, ImageIcon imagen) {
 		super();
 		this.idAlbum = idAlbum;
 		this.titulo = titulo;
 		this.año = año;
 		this.genero = genero;
 		this.imagen = imagen;
-		this.idMusico = idMusico;
 	}
 
 	public String getIdAlbum() {
@@ -55,30 +50,37 @@ public class Album {
 		this.genero = genero;
 	}
 
-	public String getImagen() {
+	public ImageIcon getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(String imagen) {
+	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
 	}
 
-	public String getIdMusico() {
-		return idMusico;
+	@Override
+	public int hashCode() {
+		return Objects.hash(año, genero, idAlbum, imagen, titulo);
 	}
 
-	public void setIdMusico(String idMusico) {
-		this.idMusico = idMusico;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Album other = (Album) obj;
+		return Objects.equals(año, other.año) && Objects.equals(genero, other.genero)
+				&& Objects.equals(idAlbum, other.idAlbum) && Objects.equals(imagen, other.imagen)
+				&& Objects.equals(titulo, other.titulo);
 	}
 
 	@Override
 	public String toString() {
 		return "Album [idAlbum=" + idAlbum + ", titulo=" + titulo + ", año=" + año + ", genero=" + genero + ", imagen="
-				+ imagen + ", idMusico=" + idMusico + "]";
+				+ imagen + "]";
 	}
-	
-	
-	
-	
 
 }

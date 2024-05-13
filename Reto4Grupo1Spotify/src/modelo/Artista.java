@@ -1,11 +1,11 @@
 package modelo;
 
-import java.util.Objects;
+import javax.swing.ImageIcon;
 
 public class Artista {
 	
 	private String nombreArtistico;
-	private String imagen;
+	private ImageIcon imagen;
 	private String descripcion;
 	
 	
@@ -14,8 +14,7 @@ public class Artista {
 	}
 
 
-	public Artista(String nombreArtistico, String imagen, String descripcion) {
-		super();
+	public Artista(String nombreArtistico, ImageIcon imagen, String descripcion) {
 		this.nombreArtistico = nombreArtistico;
 		this.imagen = imagen;
 		this.descripcion = descripcion;
@@ -32,12 +31,12 @@ public class Artista {
 	}
 
 
-	public String getImagen() {
+	public ImageIcon getImagen() {
 		return imagen;
 	}
 
 
-	public void setImagen(String imagen) {
+	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
 	}
 

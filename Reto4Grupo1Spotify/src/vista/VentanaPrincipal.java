@@ -20,11 +20,12 @@ import panel.PanelEstadistica;
 import panel.PanelGestionarAlbum;
 import panel.PanelGestionarCancion;
 import panel.PanelGestionarMusico;
+import panel.PanelGestionarPodcast;
 import panel.PanelGestionarPodcaster;
 import panel.PanelLogin;
 import panel.PanelMenuAdministrador;
 import panel.PanelMenuCliente;
-import panel.PanelMusicoAlbume;
+import panel.PanelMusicoAlbumes;
 import panel.PanelPerfil;
 import panel.PanelPlaylist;
 import panel.PanelPodcasterPodcasts;
@@ -48,7 +49,7 @@ public class VentanaPrincipal extends JFrame {
 	GestionBD gestionBD = new GestionBD();
 	GestionInformacion gestionInfo = new GestionInformacion();
 	GestionFicheros gestionFich = new GestionFicheros();
-	
+
 	public void cambiarDePanel(int i) {
 
 		switch (i) {
@@ -56,7 +57,7 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelBienvenida(this));
 			break;
 		case 1:
-			setContentPane(new PanelLogin(this, this.gestionBD));
+		setContentPane(new PanelLogin(this, gestionBD, gestionInfo));
 			break;
 		case 2:
 			setContentPane(new PanelRegistro(this, gestionBD, gestionInfo));
@@ -65,25 +66,25 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelMenuCliente(this));
 			break;
 		case 4:
-			setContentPane(new PanelDescubrirMusica(this, this.gestionInfo));
+			setContentPane(new PanelDescubrirMusica(this, gestionBD, gestionInfo));
 			break;
 		case 5:
-			setContentPane(new PanelMusicoAlbume(this));
+			setContentPane(new PanelMusicoAlbumes(this, gestionBD, gestionInfo));
 			break;
 		case 6:
-			setContentPane(new PanelAlbumCancion(this));
+			setContentPane(new PanelAlbumCancion(this, gestionBD, gestionInfo));
 			break;
 		case 7:
-			setContentPane(new PanelReproductorMusica(this));
+			setContentPane(new PanelReproductorMusica(this, gestionBD, gestionInfo));
 			break;
 		case 8:
-			setContentPane(new PanelDescubrirPodcasts(this, this.gestionInfo));
+			setContentPane(new PanelDescubrirPodcasts(this, gestionBD, gestionInfo));
 			break;
 		case 9:
-			setContentPane(new PanelPodcasterPodcasts(this));
+			setContentPane(new PanelPodcasterPodcasts(this, gestionBD, gestionInfo));
 			break;
 		case 10:
-			setContentPane(new PanelReproductorPodcasts(this));
+			setContentPane(new PanelReproductorPodcasts(this, gestionBD, gestionInfo));
 			break;
 		case 11:
 			setContentPane(new PanelPerfil(this));
@@ -95,41 +96,43 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelMenuAdministrador(this));
 			break;
 		case 14:
-			setContentPane(new PanelGestionarMusico(this));
+			setContentPane(new PanelGestionarMusico(this, gestionBD));
 			break;
 		case 15:
-			setContentPane(new PanelAñadirMusico(this));
+			setContentPane(new PanelAñadirMusico(this, gestionBD));
 			break;
 		case 16:
-			setContentPane(new PanelAñadirAlbum(this));
+			setContentPane(new PanelAñadirAlbum(this, gestionBD));
 			break;
 		case 17:
-			setContentPane(new PanelAñadirCancion(this));
+			setContentPane(new PanelAñadirCancion(this, gestionBD));
 			break;
 		case 18:
-			setContentPane(new PanelGestionarAlbum(this));
+			setContentPane(new PanelGestionarAlbum(this, gestionBD));
 			break;
 		case 19:
-			setContentPane(new PanelGestionarCancion(this));
+			setContentPane(new PanelGestionarCancion(this, gestionBD));
 			break;
 		case 20:
-			setContentPane(new PanelGestionarPodcaster(this));
+			setContentPane(new PanelGestionarPodcaster(this, gestionBD));
 			break;
 		case 21:
-			setContentPane(new PanelAñadirPodcaster(this));
+			setContentPane(new PanelAñadirPodcaster(this, gestionBD));
 			break;
 		case 22:
-			setContentPane(new PanelAñadirPodcast(this));
-			break;
+			setContentPane(new PanelGestionarPodcast(this, gestionBD));
 		case 23:
-			setContentPane(new PanelEstadistica(this));
+			setContentPane(new PanelAñadirPodcast(this, gestionBD));
+			break;
+		case 24:
+			setContentPane(new PanelEstadistica(this, gestionBD));
 			break;
 		}
 
 	}
 
 	public void lanzarVentana() {
-		this.cambiarDePanel(3);
+		this.cambiarDePanel(13);
 		this.setVisible(true);
 	}
 

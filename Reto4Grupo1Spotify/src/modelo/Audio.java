@@ -1,19 +1,20 @@
 package modelo;
 
+import javax.swing.ImageIcon;
+
 public class Audio {
-	
+
 	private String idAudio;
 	private String nombre;
 	private String duracion;
-	private String imagen;
+	private ImageIcon imagen;
 	private String tipo;
-	
+
 	public Audio() {
-		
+
 	}
 
-	public Audio(String idAudio, String nombre, String duracion, String imagen, String tipo) {
-		super();
+	public Audio(String idAudio, String nombre, String duracion, ImageIcon imagen, String tipo) {
 		this.idAudio = idAudio;
 		this.nombre = nombre;
 		this.duracion = duracion;
@@ -45,11 +46,11 @@ public class Audio {
 		this.duracion = duracion;
 	}
 
-	public String getImagen() {
+	public ImageIcon getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(String imagen) {
+	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
 	}
 
@@ -66,9 +67,5 @@ public class Audio {
 		return "Audio [idAudio=" + idAudio + ", nombre=" + nombre + ", duracion=" + duracion + ", imagen=" + imagen
 				+ ", tipo=" + tipo + "]";
 	}
-	
-	
-	
-	
 
 }
