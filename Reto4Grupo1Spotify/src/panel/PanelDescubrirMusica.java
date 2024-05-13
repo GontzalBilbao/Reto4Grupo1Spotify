@@ -11,10 +11,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-<<<<<<< HEAD
-=======
-import javax.swing.DefaultListCellRenderer;
->>>>>>> refs/remotes/origin/Dani
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,11 +27,6 @@ import vista.VentanaPrincipal;
 public class PanelDescubrirMusica extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-<<<<<<< HEAD
-=======
-
-	private JComboBox comboBoxArtistas;
->>>>>>> refs/remotes/origin/Dani
 
 	private ArrayList<Musico> musicos = new ArrayList<Musico>();
 
@@ -103,53 +94,7 @@ public class PanelDescubrirMusica extends JPanel {
 			});
 			// Agregar panelItem al panel principal
 			panel.add(panelItem);
-<<<<<<< HEAD
-=======
-		}
 
-		// Crear un JScrollPane y agregar el panel
-		JScrollPane scrollPane = new JScrollPane(panel);
-		// Como se mueve muy despacio vamos a darle un poco de velocidad
-		scrollPane.getVerticalScrollBar().setUnitIncrement(30);
-		scrollPane.setBorder(null);
-//				scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
-//				scrollPane.setOpaque(false);
-		scrollPane.setSize(764, 367);
-		scrollPane.setLocation(10, 131);
-		// Agregar el JScrollPane a la ventana
-		add(scrollPane);
-
-		JLabel lblTituloLista = new JLabel("DESCUBRIR MÚSICA");
-		lblTituloLista.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
-		lblTituloLista.setBounds(262, 11, 276, 28);
-		add(lblTituloLista);
-
-		JButton btnAtrás = new JButton("Atrás");
-		btnAtrás.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(3);
-			}
-		});
-
-		btnAtrás.setBounds(10, 11, 89, 23);
-		add(btnAtrás);
-
-		JButton btnPerfil = new JButton("Perfil");
-		btnPerfil.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(11);
-			}
-		});
-		btnPerfil.setBounds(685, 11, 89, 23);
-		add(btnPerfil);
-
-		JComboBox<String> comboBoxMusico = new JComboBox<String>();
-		comboBoxMusico.setFont(new Font("Tahoma", Font.BOLD, 13));
-		comboBoxMusico.setBounds(255, 250, 300, 30);
-		add(comboBoxMusico);
-		for (int i = 0; i < musicos.size(); i++) {
-			comboBoxMusico.addItem(musicos.get(i).getNombreArtistico());
->>>>>>> refs/remotes/origin/Dani
 		}
 
 		// Crear un JScrollPane y agregar el panel

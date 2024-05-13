@@ -26,13 +26,6 @@ public class PanelAñadirMusico extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-<<<<<<< HEAD
-	/**
-	 * Create the panel.
-	 */
-	public PanelAñadirMusico(VentanaPrincipal vp) {
-		setSize(800, 600);
-=======
 	private JTextField txtNombre;
 	private JTextField txtDescripcion;
 	private JLabel lblMostrarImagen;
@@ -40,25 +33,20 @@ public class PanelAñadirMusico extends JPanel {
 
 	public PanelAñadirMusico(VentanaPrincipal vp, GestionBD gestionBD) {
 		setSize(vp.getSize());
->>>>>>> refs/remotes/origin/Dani
 		setBackground(SystemColor.control);
 		setLayout(null);
 
 		JButton btnFinalizar = new JButton("FINALIZAR");
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-				vp.cambiarDePanel(16);
-=======
 				nombreEscrito = txtNombre.getText();
 				boolean validado = validarCampos(nombreEscrito);
-				
+
 				if (validado != false) {
-					//añadir query de gestionBD de insertar musico
-					//vp.cambiarDePanel(13);
+					// añadir query de gestionBD de insertar musico
+					// vp.cambiarDePanel(13);
 					System.out.println(nombreEscrito);
 				}
->>>>>>> refs/remotes/origin/Dani
 			}
 		});
 		btnFinalizar.setBounds(560, 450, 200, 50);
@@ -155,16 +143,16 @@ public class PanelAñadirMusico extends JPanel {
 		File destination = new File(directory.getPath() + File.separator + file.getName());
 		Files.copy(file.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
-	
+
 	private boolean validarCampos(String txtNombre) {
 		boolean validar = false;
-		if(txtNombre.equalsIgnoreCase("")) {
+		if (txtNombre.equalsIgnoreCase("")) {
 			JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio.");
 			validar = false;
-		}else {
+		} else {
 			validar = true;
 		}
 		return validar;
 	}
-	
+
 }

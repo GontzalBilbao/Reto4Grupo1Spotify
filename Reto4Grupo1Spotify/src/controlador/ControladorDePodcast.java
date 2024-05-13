@@ -12,7 +12,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 
 import interfaces.IControladorSonido;
-import modelo.Cancion;
 import modelo.Podcast;
 
 public class ControladorDePodcast implements IControladorSonido{
