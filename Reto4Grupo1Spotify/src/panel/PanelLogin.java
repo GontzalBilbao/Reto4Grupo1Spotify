@@ -97,6 +97,7 @@ public class PanelLogin extends JPanel {
 
 					if (usuarioCorrecto == true) {
 						JOptionPane.showMessageDialog(null, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+						gestionInfo.guardarClienteSeleccionado(txtUsuario.getText());
 						v.cambiarDePanel(3);
 					} else {
 						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error de Login",

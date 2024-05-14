@@ -22,13 +22,15 @@ import vista.VentanaPrincipal;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import modelo.Cliente;
 
 public class PanelPlaylist extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNuevaPlayList;
-	private String idCliente = null;
+	private String usuario = null;
 	private String nuevaPlayList = null;
+	private Cliente cliente;
 	
 	private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
 
@@ -75,8 +77,8 @@ public class PanelPlaylist extends JPanel {
 //		JList<String> lista = new JList<String>(playlists.toArray(new String[playlists.size()]));
 //		list.add(lista);
 //		
-		idCliente = "C0001";
-		gestionBD.cargarPlayLists(idCliente);
+		usuario = gestionInfo.devolverClienteSeleccionado();
+		gestionBD.cargarPlayLists(usuario);
 		playlists = gestionBD.devolverPlayList();
 		for (int i = 0; i < playlists.size(); i++) {
 			System.out.println(playlists.get(i).getTitulo());
@@ -110,6 +112,8 @@ public class PanelPlaylist extends JPanel {
 				}else {
 					nuevaPlayList = textFieldNuevaPlayList.getText();
 					
+					String idCliente = cliente.getIdCliente();
+					
 					gestionBD.añadirPlayList(nuevaPlayList, idCliente);
 					JOptionPane.showMessageDialog(null, "PlayList añadida con éxito", "PlayList Guardada",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -126,7 +130,8 @@ public class PanelPlaylist extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				gestionBD.eliminarPlayList(list.getSelectedValue().toString());
-				
+				JOptionPane.showMessageDialog(null, "PlayList eliminada con éxito", "PlayList Eliminada",
+						JOptionPane.INFORMATION_MESSAGE);
 				
 			}
 		});
@@ -139,6 +144,8 @@ public class PanelPlaylist extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				gestionFicheros.imprimirInformacion(playlists);
+				JOptionPane.showMessageDialog(null, "PlayList exportada con éxito", "PlayList Exportada",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));

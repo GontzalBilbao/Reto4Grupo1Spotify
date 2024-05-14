@@ -69,8 +69,8 @@ public class GestionInformacion {
 		return albumSeleccionado;
 	}
 	
-	public void guardarClienteSeleccionado(String idCliente) {
-		this.clienteSeleccionado = idCliente;
+	public void guardarClienteSeleccionado(String usuario) {
+		this.clienteSeleccionado = usuario;
 	}
 	
 	public String devolverClienteSeleccionado() {

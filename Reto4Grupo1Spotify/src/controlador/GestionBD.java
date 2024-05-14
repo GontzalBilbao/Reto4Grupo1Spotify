@@ -359,16 +359,16 @@ public class GestionBD {
 	
 	/* PLAYLIST */
 	
-	public void cargarPlayLists(String idCliente) {
+	public void cargarPlayLists(String cliente) {
 		playLists.clear();
-		playLists = queryPlayListsDelUsuario(idCliente);
+		playLists = queryPlayListsDelUsuario(cliente);
 	}
 
-	public ArrayList<PlayList> queryPlayListsDelUsuario(String idCliente) {
+	public ArrayList<PlayList> queryPlayListsDelUsuario(String cliente) {
 		try {
-			String query = "SELECT * from playlist where idCliente = ?";
+			String query = "SELECT * from playlist join cliente on playlist.idCliente = cliente.idCliente where usuario = ?";
 			PreparedStatement consulta = conexion.prepareStatement(query);
-			consulta.setString(1, idCliente);
+			consulta.setString(1, cliente);
 			ResultSet resultadoConsulta = consulta.executeQuery();
 
 			while (resultadoConsulta.next()) {
