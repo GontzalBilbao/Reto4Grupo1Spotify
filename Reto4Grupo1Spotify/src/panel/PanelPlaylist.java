@@ -31,6 +31,7 @@ public class PanelPlaylist extends JPanel {
 	private String usuario = null;
 	private String nuevaPlayList = null;
 	private Cliente cliente;
+	private String idCliente = null;
 	
 	private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
 
@@ -112,7 +113,7 @@ public class PanelPlaylist extends JPanel {
 				}else {
 					nuevaPlayList = textFieldNuevaPlayList.getText();
 					
-					String idCliente = cliente.getIdCliente();
+					idCliente = "123";
 					
 					gestionBD.añadirPlayList(nuevaPlayList, idCliente);
 					JOptionPane.showMessageDialog(null, "PlayList añadida con éxito", "PlayList Guardada",

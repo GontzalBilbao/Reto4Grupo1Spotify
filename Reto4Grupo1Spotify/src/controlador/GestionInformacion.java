@@ -77,4 +77,5 @@ public class GestionInformacion {
 		return clienteSeleccionado;
 		
 	}
+	
 }
