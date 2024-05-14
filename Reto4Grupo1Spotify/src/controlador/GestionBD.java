@@ -359,16 +359,16 @@ public class GestionBD {
 	
 	/* PLAYLIST */
 	
-	public void cargarPlayLists(String cliente) {
+	public void cargarPlayLists(String usuario) {
 		playLists.clear();
-		playLists = queryPlayListasDelUsuario(cliente);
+		playLists = queryPlayListasDelUsuario(usuario);
 	}
 
-	public ArrayList<PlayList> queryPlayListasDelUsuario(String cliente) {
+	public ArrayList<PlayList> queryPlayListasDelUsuario(String usuario) {
 		try {
 			String query = "SELECT * from playlist join cliente on playlist.idCliente = cliente.idCliente where usuario = ?";
 			PreparedStatement consulta = conexion.prepareStatement(query);
-			consulta.setString(1, cliente);
+			consulta.setString(1, usuario);
 			ResultSet resultadoConsulta = consulta.executeQuery();
 
 			while (resultadoConsulta.next()) {
@@ -408,6 +408,35 @@ public class GestionBD {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	public void cargarIdCliente(String usuario) {
+		clientes.clear();
+		clientes = queryIdUsuario(usuario);
+	}
+
+	public ArrayList<Cliente> queryIdUsuario(String usuario) {
+		try {
+			String query = "SELECT * from cliente where usuario = ?";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, usuario);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+
+			while (resultadoConsulta.next()) {
+				clientes.add(new Cliente(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4), resultadoConsulta.getString(5),
+						resultadoConsulta.getString(6), resultadoConsulta.getString(7), resultadoConsulta.getString(8),
+						resultadoConsulta.getString(9)));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return clientes;
+	}
+
+	public ArrayList<Cliente> devolverIdUsuario() {
+		return clientes;
 	}
 
 

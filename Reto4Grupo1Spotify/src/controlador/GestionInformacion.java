@@ -78,4 +78,12 @@ public class GestionInformacion {
 		
 	}
 	
+	public void guardarIdClienteSeleccionado(String idCliente) {
+		this.clienteSeleccionado = idCliente;
+	}
+	
+	public String devolverIdClienteSeleccionado() {
+		return clienteSeleccionado;
+		
+	}
 }

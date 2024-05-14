@@ -34,6 +34,7 @@ public class PanelPlaylist extends JPanel {
 	private String idCliente = null;
 	
 	private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
+	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
 	/**
 	 * Create the panel.
@@ -85,6 +86,16 @@ public class PanelPlaylist extends JPanel {
 			System.out.println(playlists.get(i).getTitulo());
 		}
 		
+		idCliente = gestionInfo.devolverIdClienteSeleccionado();
+		gestionBD.queryIdUsuario(idCliente);
+		clientes = gestionBD.devolverIdUsuario();
+		for (int i = 0; i < clientes.size(); i++) {
+			System.out.println(clientes.get(i).getIdCliente());
+			
+		idCliente = clientes.get(i).getIdCliente();
+			
+		}
+		
 		DefaultListModel listModel = new DefaultListModel();
 		for (int i = 0; i < playlists.size(); i++){
 		    listModel.addElement(playlists.get(i).getTitulo());
@@ -112,8 +123,6 @@ public class PanelPlaylist extends JPanel {
 							JOptionPane.ERROR_MESSAGE);
 				}else {
 					nuevaPlayList = textFieldNuevaPlayList.getText();
-					
-					idCliente = "123";
 					
 					gestionBD.añadirPlayList(nuevaPlayList, idCliente);
 					JOptionPane.showMessageDialog(null, "PlayList añadida con éxito", "PlayList Guardada",

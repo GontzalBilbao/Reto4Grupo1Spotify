@@ -69,7 +69,7 @@ public class PanelPerfil extends JPanel {
 		lblUsuario.setBounds(50, 382, 250, 50);
 		add(lblUsuario);
 		
-		JLabel lblTipo = new JLabel("Tipo");
+		JLabel lblTipo = new JLabel(tipo.toUpperCase());
 		lblTipo.setFont(new Font("Lucida Bright", Font.BOLD, 18));
 		lblTipo.setForeground(Color.LIGHT_GRAY);
 		lblTipo.setBounds(90, 432, 80, 30);
