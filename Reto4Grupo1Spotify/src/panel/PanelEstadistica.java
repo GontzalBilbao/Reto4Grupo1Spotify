@@ -38,8 +38,8 @@ public class PanelEstadistica extends JPanel {
 	private ArrayList<MasEscuchado> masEscuchado;
 	private ArrayList<TopPlayList> topPlaylist;
 	
-	public PanelEstadistica(VentanaPrincipal v, GestionBD gestionBD) {
-		setSize(800, 600);
+	public PanelEstadistica(VentanaPrincipal vp, GestionBD gestionBD) {
+		setSize(vp.getSize());
 		setLayout(null);
 		
 		listaCanciones.removeAll();
@@ -196,7 +196,7 @@ public class PanelEstadistica extends JPanel {
 		mntmAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				v.cambiarDePanel(13);
+				vp.cambiarDePanel(13);
 				
 			}
 		});

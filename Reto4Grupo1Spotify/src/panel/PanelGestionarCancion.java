@@ -61,7 +61,7 @@ public class PanelGestionarCancion extends JPanel {
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(15);
+				vp.cambiarDePanel(17);
 			}
 		});
 		btnAñadir.setBounds(560, 290, 200, 50);

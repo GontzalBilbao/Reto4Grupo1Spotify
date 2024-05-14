@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import controlador.GestionBD;
 import vista.VentanaPrincipal;
@@ -19,30 +20,28 @@ public class PanelGestionarPodcast extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Create the panel.
-	 */
-	public PanelGestionarPodcast(VentanaPrincipal v, GestionBD gestionBD) {
-		setSize(800, 600);
-		setBackground(Color.DARK_GRAY);
+	public PanelGestionarPodcast(VentanaPrincipal vp, GestionBD gestionBD) {
+		setSize(vp.getSize());
+//		setBackground(Color.DARK_GRAY);
 		setLayout(null);
+		setVisible(true);
 
-		JPanel panelPodcasters = new JPanel();
-		add(panelPodcasters);
+		JPanel panelPodcasts = new JPanel();
+		panelPodcasts.setBorder(new LineBorder(Color.black, 1, true));
+		add(panelPodcasts);
 
-		JScrollPane spPanelPodcasters = new JScrollPane(panelPodcasters);
-		spPanelPodcasters.getVerticalScrollBar();
-		spPanelPodcasters.setBorder(null);
-		spPanelPodcasters.setSize(500, 425);
-		spPanelPodcasters.setLocation(30, 100);
-		add(spPanelPodcasters);
+		JScrollPane spPanelPodcasts = new JScrollPane(panelPodcasts);
+		spPanelPodcasts.getVerticalScrollBar();
+		spPanelPodcasts.setBorder(null);
+		spPanelPodcasts.setSize(500, 425);
+		spPanelPodcasts.setLocation(30, 100);
+		add(spPanelPodcasts);
 
-		JLabel lblPodcasters = new JLabel("PODCASTERS");
-		lblPodcasters.setForeground(new Color(255, 255, 255));
-		lblPodcasters.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPodcasters.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
-		lblPodcasters.setBounds(30, 11, 550, 67);
-		add(lblPodcasters);
+		JLabel lblPodcasts = new JLabel("PODCASTS");
+		lblPodcasts.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPodcasts.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblPodcasts.setBounds(30, 11, 550, 67);
+		add(lblPodcasts);
 
 		JButton btnModificar = new JButton("MODIFICAR");
 		btnModificar.addActionListener(new ActionListener() {
@@ -60,7 +59,7 @@ public class PanelGestionarPodcast extends JPanel {
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(15);
+				vp.cambiarDePanel(23);
 			}
 		});
 		btnAñadir.setBounds(560, 290, 200, 50);
@@ -69,7 +68,7 @@ public class PanelGestionarPodcast extends JPanel {
 		JButton btnAtras = new JButton("ATRAS");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(13);
+				vp.cambiarDePanel(13);
 			}
 		});
 		btnAtras.setBounds(650, 25, 100, 35);

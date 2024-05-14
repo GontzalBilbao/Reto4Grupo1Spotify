@@ -1,16 +1,15 @@
 package panel;
 
-import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import vista.VentanaPrincipal;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 
 public class PanelMenuAdministrador extends JPanel {
 
@@ -20,9 +19,18 @@ public class PanelMenuAdministrador extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelMenuAdministrador(VentanaPrincipal vp) {
-		setSize(800, 600);
+		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);
+		
+		JButton btnAtras = new JButton("CERRAR SESION");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vp.cambiarDePanel(1);
+			}
+		});
+		btnAtras.setBounds(620, 25, 130, 35);
+		add(btnAtras);
 
 		JButton btnArtistas = new JButton("MUSICOS");
 		btnArtistas.addActionListener(new ActionListener() {
@@ -73,7 +81,7 @@ public class PanelMenuAdministrador extends JPanel {
 		btnEstadisticas.setBounds(500, 450, 220, 60);
 		btnEstadisticas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(23);
+				vp.cambiarDePanel(24);
 			}
 		});
 		add(btnEstadisticas);

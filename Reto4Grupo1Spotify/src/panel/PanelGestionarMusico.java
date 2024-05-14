@@ -23,8 +23,8 @@ public class PanelGestionarMusico extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelGestionarMusico(VentanaPrincipal v, GestionBD gestionBD) {
-		setSize(800, 600);
+	public PanelGestionarMusico(VentanaPrincipal vp, GestionBD gestionBD) {
+		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
@@ -61,7 +61,7 @@ public class PanelGestionarMusico extends JPanel {
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(15);
+				vp.cambiarDePanel(15);
 			}
 		});
 		btnAñadir.setBounds(560, 290, 200, 50);
@@ -70,7 +70,7 @@ public class PanelGestionarMusico extends JPanel {
 		JButton btnAtras = new JButton("ATRAS");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(13);
+				vp.cambiarDePanel(13);
 			}
 		});
 		btnAtras.setBounds(650, 25, 100, 35);
