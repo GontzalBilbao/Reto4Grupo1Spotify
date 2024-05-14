@@ -73,7 +73,7 @@ public class PanelMenuAdministrador extends JPanel {
 		btnEstadisticas.setBounds(500, 450, 220, 60);
 		btnEstadisticas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(23);
+				vp.cambiarDePanel(24);
 			}
 		});
 		add(btnEstadisticas);

@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import modelo.Musico;
 import modelo.Podcaster;
 
 public class GestionInformacion {
@@ -95,16 +94,8 @@ public class GestionInformacion {
 		return cancionSeleccionada;
 	}
 
-	public void tipoDePerfil(String usuario) {
-		this.tipoDePerfil = gestionBD.queryTipoDePerfil(usuario);
-	}
-
 	public String devolverTipoDePerfil() {
 		return tipoDePerfil;
-	}
-
-	public ArrayList<Musico> devolverMusico() {
-		return gestionBD.queryMusico();
 	}
 
 	public void recogerMusico(String nombreMusico) {
@@ -144,7 +135,7 @@ public class GestionInformacion {
 	}
 
 	public void sacarPremiun(String usuario) {
-		this.premiun = gestionBD.sacarPremiun(usuario);
+		this.premiun = gestionBD.sacarPremium(usuario);
 	}
 
 	public String devolverPremiun() {

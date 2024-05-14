@@ -101,23 +101,6 @@ public class GestionBD {
 		return clientes;
 	}
 
-	public String queryTipoDePerfil(String usuario) {
-		String premiun = null;
-		try {
-			PreparedStatement consulta = conexion.prepareStatement("SELECT tipo FROM cliente WHERE usuario = ?");
-			consulta.setString(1, usuario);
-			ResultSet resultadoConsulta = consulta.executeQuery();
-			while (resultadoConsulta.next()) {
-				premiun = resultadoConsulta.getString(1);
-			}
-			consulta.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return premiun;
-	}
-
 	public void agregarCliente(String idCliente, String nombre, String apellido, String usuario, String contraseña,
 			String fechaNac, String fechaRegistro, String tipoSuscp, String idIdioma) {
 
@@ -139,27 +122,6 @@ public class GestionBD {
 
 	}
 
-	public ArrayList<Musico> queryMusico() {
-		ImageIcon imagen = new ImageIcon();
-		ArrayList<Musico> musicos = new ArrayList<Musico>();
-		try {
-			String query = "SELECT * FROM Musico";
-			PreparedStatement consulta = conexion.prepareStatement(query);
-			ResultSet resultadoConsulta = consulta.executeQuery();
-			while (resultadoConsulta.next()) {
-				Blob imagenBlob = resultadoConsulta.getBlob(3);
-				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
-				imagen = new ImageIcon(arrayImagen);
-				musicos.add(new Musico(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(4), imagen, resultadoConsulta.getString(5)));
-			}
-			consulta.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return musicos;
-	}
-
 	public ArrayList<Podcaster> queryPodcasters() {
 		ImageIcon imagen = new ImageIcon();
 		try {
@@ -178,27 +140,6 @@ public class GestionBD {
 			e.printStackTrace();
 		}
 		return podcasters;
-	}
-
-	public ArrayList<Audio> queryAudioCancion(String nombre) {
-		ImageIcon imagen = new ImageIcon();
-		ArrayList<Audio> audios = new ArrayList<Audio>();
-		try {
-			String query = "SELECT * FROM `audio` join cancion on audio.idAudio = cancion.idCancion join album on cancion.idAlbum = album.idAlbum Where album.titulo = ?";
-			PreparedStatement consulta = conexion.prepareStatement(query);
-			consulta.setString(1, nombre);
-			ResultSet resultadoConsulta = consulta.executeQuery();
-			while (resultadoConsulta.next()) {
-				Blob imagenBlob = resultadoConsulta.getBlob(4);
-				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
-				imagen = new ImageIcon(arrayImagen);
-				audios.add(new Audio(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
-						resultadoConsulta.getString(3), imagen, resultadoConsulta.getString(5)));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return audios;
 	}
 
 	/* QUERYS DE LOS PODCASTERS */
@@ -354,8 +295,8 @@ public class GestionBD {
 		return canciones;
 	}
 
-	public String sacarPremiun(String usuario) {
-		String premiun = null;
+	public String sacarPremium(String usuario) {
+		String premium = null;
 		try {
 			String query = "SELECT `tipo`FROM `cliente` WHERE `usuario` = ?;";
 			PreparedStatement consulta = conexion.prepareStatement(query);
@@ -363,13 +304,13 @@ public class GestionBD {
 			ResultSet resultadoConsulta = consulta.executeQuery();
 
 			while (resultadoConsulta.next()) {
-				premiun = resultadoConsulta.getString(1);
+				premium = resultadoConsulta.getString(1);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return premiun;
+		return premium;
 	}
 
 	/* ESTADISTICAS */
