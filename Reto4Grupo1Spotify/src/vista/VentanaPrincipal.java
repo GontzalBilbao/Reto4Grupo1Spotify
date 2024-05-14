@@ -91,7 +91,7 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelPerfil(this, gestionBD, gestionInfo));
 			break;
 		case 12:
-			setContentPane(new PanelPlaylist(this));
+			setContentPane(new PanelPlaylist(this, gestionBD, gestionInfo, gestionFich));
 			break;
 		case 13:
 			setContentPane(new PanelMenuAdministrador(this));

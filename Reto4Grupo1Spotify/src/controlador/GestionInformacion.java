@@ -13,6 +13,8 @@ public class GestionInformacion {
 
 	private String albumSeleccionado = "";
 
+	private String clienteSeleccionado = "";
+
 	public GestionInformacion() {
 
 	}
@@ -65,5 +67,14 @@ public class GestionInformacion {
 
 	public String devolverAlbumSeleccionado() {
 		return albumSeleccionado;
+	}
+	
+	public void guardarClienteSeleccionado(String idCliente) {
+		this.clienteSeleccionado = idCliente;
+	}
+	
+	public String devolverClienteSeleccionado() {
+		return clienteSeleccionado;
+		
 	}
 }

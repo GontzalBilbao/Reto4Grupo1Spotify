@@ -356,5 +356,59 @@ public class GestionBD {
 		}
 		return topPlaylist;
 	}
+	
+	/* PLAYLIST */
+	
+	public void cargarPlayLists(String idCliente) {
+		playLists.clear();
+		playLists = queryPlayListsDelUsuario(idCliente);
+	}
+
+	public ArrayList<PlayList> queryPlayListsDelUsuario(String idCliente) {
+		try {
+			String query = "SELECT * from playlist where idCliente = ?";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, idCliente);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+
+			while (resultadoConsulta.next()) {
+				playLists.add(new PlayList(resultadoConsulta.getInt(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4)));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return playLists;
+	}
+
+	public ArrayList<PlayList> devolverPlayList() {
+		return playLists;
+	}
+	
+	public void añadirPlayList(String nuevaPlayList, String idCliente) {
+
+		try {
+			Statement insertarDatos = conexion.createStatement();
+			String insert = "INSERT INTO playList (titulo, fechaCreacion, idCliente) VALUES ('" + nuevaPlayList + "', CURRENT_TIMESTAMP, '" + idCliente + "')";
+			insertarDatos.executeUpdate(insert);
+			insertarDatos.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void eliminarPlayList(String playListSeleccionada) {
+	    try {
+	        Statement eliminarDatos = conexion.createStatement();
+	        String delete = "DELETE FROM playList WHERE titulo = '" + playListSeleccionada + "'";
+	        eliminarDatos.executeUpdate(delete);
+	        eliminarDatos.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 
 }
