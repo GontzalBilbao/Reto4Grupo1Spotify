@@ -47,7 +47,7 @@ public class PanelEdicionPlayList extends JPanel {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.nPanel = 12;
-				vp.cambiarDePanel(vp.nPanel);
+				vp.cambiarDePanel(11);
 			}
 		});
 		btnNewButton_1.setBounds(617, 50, 89, 23);
