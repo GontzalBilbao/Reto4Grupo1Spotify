@@ -1,6 +1,7 @@
 package panel;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,8 +11,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -21,6 +25,7 @@ import controlador.GestionInformacion;
 import interfaces.IControladorSonido;
 import modelo.Album;
 import modelo.Cancion;
+import modelo.PlayList;
 import vista.VentanaPrincipal;
 
 public class PanelReproductorMusica extends JPanel {
@@ -39,15 +44,19 @@ public class PanelReproductorMusica extends JPanel {
 	private JButton btnCancionSiguiente;
 	private JButton btnFavorito;
 	private JButton btnmMenu;
+	private JPopupMenu popupMenu;
 	
 	private String tituloAlbumSeleccionado = "";
 	private String nombreCancionSeleccionada = "";
 	private int numeroCancion = 0;
 	private int numeroAlbum = 0;
 	private String idMusico = "";
+	private String idCancionActual = "";
+	private int idPlaylistElegida = 0;
 	
 	private ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 	private ArrayList<Album> albumes = new ArrayList<Album>();
+	private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
 
 	protected boolean anuncio = false;
 
@@ -287,41 +296,71 @@ public class PanelReproductorMusica extends JPanel {
 		btnmMenu.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnmMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				JFrame f = new JFrame();
-				String playlist = JOptionPane.showInputDialog(f, "Introduzca el nombre de la playlist:");
+				showPopupMenu(btnmMenu);
 
+				
+//				JFrame f = new JFrame();
+//				String playlist = JOptionPane.showInputDialog(f, "Introduzca el nombre de la playlist:");
+//
 //				if (gestionInfo.capacidadDePlaylist(gestionInfo.devolverIdPlaylist(playlist)) == 3) {
 //					JOptionPane.showMessageDialog(null,
 //							"Has llegado a la capacidad maxima de la playlist " + playlist + "!!");
 //				} else {
-					gestionInfo.añadirCancionAPlaylist(canciones.get(intinerador).getIdAudio(),
-							gestionInfo.devolverIdPlaylist(playlist));
+//					gestionInfo.añadirCancionAPlaylist(canciones.get(intinerador).getIdAudio(),
+//							gestionInfo.devolverIdPlaylist(playlist));
 //				}
 			}
 		});
+		popupMenu = new JPopupMenu();
+        JMenu addToPlaylistMenu = new JMenu("Añadir a Playlist");
+        
+		gestionBD.cargarPlayLists(gestionInfo.devolverClienteSeleccionado());
+		playlists = gestionBD.devolverPlayLists();
+		
+        for (int i = 0; i < playlists.size(); i++) {
+        	System.out.println(playlists.get(i).getTitulo());
+        	JMenuItem menuItem = new JMenuItem(playlists.get(i).getTitulo());
+        	menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+			        JMenuItem menuItem = (JMenuItem) e.getSource();
+			        String infoMenuItem = menuItem.getText();
+			        int idPlaylist = cogerIdPlaylistSeleccionada(infoMenuItem);
+			        String idCancion = cogerIdCancionEnReproduccion(lblTitulo.getText());
+//			        String fechaAgregacion = 
+//					addToPlaylist(e);
+				}
+			});
+        	addToPlaylistMenu.add(menuItem);
+		}
+        
+        popupMenu.add(addToPlaylistMenu);
 		btnmMenu.setBounds(420, 470, 150, 30);
 		add(btnmMenu);
 
 	}
-
-//	private static void addPopup(Component component, final JPopupMenu popup) {
-//		component.addMouseListener(new MouseAdapter() {
-//			public void mousePressed(MouseEvent e) {
-//				if (e.isPopupTrigger()) {
-//					showMenu(e);
-//				}
-//			}
-//
-//			public void mouseReleased(MouseEvent e) {
-//				if (e.isPopupTrigger()) {
-//					showMenu(e);
-//				}
-//			}
-//
-//			private void showMenu(MouseEvent e) {
-//				popup.show(e.getComponent(), e.getX(), e.getY());
-//			}
-//		});
-//	}
+    private String cogerIdCancionEnReproduccion(String text) {
+		for (int i = 0; i < canciones.size(); i++) {
+			if (canciones.get(i).getNombre().equals(text)) {
+				idCancionActual = canciones.get(i).getIdAudio();
+			} else {
+				
+			}
+		}
+    	return idCancionActual;
+	}
+	private int cogerIdPlaylistSeleccionada(String titulo) {
+		for (int i = 0; i < playlists.size(); i++) {
+			if (playlists.get(i).getTitulo().equals(titulo)) {
+				idPlaylistElegida = playlists.get(i).getIdList();
+			} else {
+				
+			}
+		}
+		
+		return idPlaylistElegida;
+		
+	}
+	private void showPopupMenu(Component component) {
+        popupMenu.show(component, 0, component.getHeight());
+    }
 }

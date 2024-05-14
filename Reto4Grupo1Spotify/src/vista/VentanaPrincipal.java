@@ -36,6 +36,7 @@ import panel.PanelReproductorPodcasts;
 public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	public int nPanel = 0;
 
 	public VentanaPrincipal() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("icono/logopequeño.png"));
@@ -87,10 +88,10 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelReproductorPodcasts(this, gestionBD, gestionInfo));
 			break;
 		case 11:
-			setContentPane(new PanelPerfil(this));
+			setContentPane(new PanelPerfil(this, gestionBD, gestionInfo));
 			break;
 		case 12:
-			setContentPane(new PanelPlaylist(this));
+			setContentPane(new PanelPlaylist(this, gestionBD, gestionInfo, gestionFich));
 			break;
 		case 13:
 			setContentPane(new PanelMenuAdministrador(this));

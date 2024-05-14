@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -107,6 +108,7 @@ public class PanelLogin extends JPanel {
 
 					if (usuarioCorrecto == true) {
 						JOptionPane.showMessageDialog(null, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+						gestionInfo.guardarClienteSeleccionado(txtUsuario.getText());
 						v.cambiarDePanel(3);
 					} else {
 						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error de Login",

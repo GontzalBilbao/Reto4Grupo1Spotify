@@ -20,6 +20,7 @@ import modelo.CancionesFavoritas;
 import modelo.Cliente;
 import modelo.MasEscuchado;
 import modelo.Musico;
+import modelo.PlayList;
 import modelo.Podcast;
 import modelo.Podcaster;
 import modelo.PodcastsFavoritos;
@@ -36,6 +37,7 @@ public class GestionBD {
 	public ArrayList<Album> albumes = new ArrayList<Album>();
 
 	public ArrayList<Cancion> canciones = new ArrayList<Cancion>();
+	public ArrayList<PlayList> playLists = new ArrayList<PlayList>();
 
 	public ArrayList<CancionesFavoritas> cancionesFav = new ArrayList<CancionesFavoritas>();
 	public ArrayList<PodcastsFavoritos> podcastsFav = new ArrayList<PodcastsFavoritos>();
@@ -380,7 +382,7 @@ public class GestionBD {
 		}
 		return topPlaylist;
 	}
-	
+
 	public void agregarFavorito(String idCliente, String idAudio) {
 		try {
 			Statement insertarDatos = conexion.createStatement();
@@ -392,13 +394,66 @@ public class GestionBD {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/* PLAYLIST */
+
+	public void cargarPlayLists(String cliente) {
+		playLists.clear();
+		playLists = queryPlayListasDelUsuario(cliente);
+	}
+
+	public ArrayList<PlayList> queryPlayListasDelUsuario(String cliente) {
+		try {
+			String query = "SELECT * from playlist join cliente on playlist.idCliente = cliente.idCliente where usuario = ?";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, cliente);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+
+			while (resultadoConsulta.next()) {
+				playLists.add(new PlayList(resultadoConsulta.getInt(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4)));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return playLists;
+	}
+
+	public ArrayList<PlayList> devolverPlayLists() {
+		return playLists;
+	}
+
+	public void añadirPlayList(String nuevaPlayList, String idCliente) {
+
+		try {
+			Statement insertarDatos = conexion.createStatement();
+			String insert = "INSERT INTO playList (titulo, fechaCreacion, idCliente) VALUES ('" + nuevaPlayList
+					+ "', CURRENT_TIMESTAMP, '" + idCliente + "')";
+			insertarDatos.executeUpdate(insert);
+			insertarDatos.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void eliminarPlayList(String playListSeleccionada) {
+		try {
+			Statement eliminarDatos = conexion.createStatement();
+			String delete = "DELETE FROM playList WHERE titulo = '" + playListSeleccionada + "'";
+			eliminarDatos.executeUpdate(delete);
+			eliminarDatos.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public int idPlaylist(String titulo) {
 		int idPlaylist = 0;
 		try {
 
-			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT idList FROM `playlist` Where titulo = ?;");
+			PreparedStatement consulta = conexion.prepareStatement("SELECT idList FROM `playlist` Where titulo = ?;");
 			consulta.setString(1, titulo);
 
 			ResultSet resultadoConsulta = consulta.executeQuery();
@@ -415,7 +470,7 @@ public class GestionBD {
 
 		return idPlaylist;
 	}
-	
+
 	public void insertCancionEnPlaylist(String idAudio, int idPlaylist) {
 		try {
 			PreparedStatement consulta = conexion.prepareStatement("INSERT INTO playlistcanciones VALUES (?,?,?)");
@@ -438,7 +493,7 @@ public class GestionBD {
 		}
 
 	}
-	
+
 	public String sacarIdCliente(String usuario) {
 		String idCliente = null;
 		try {
