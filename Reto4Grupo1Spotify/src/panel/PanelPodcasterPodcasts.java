@@ -75,7 +75,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 		lblNombre.setBounds(204, 68, 228, 14);
 		add(lblNombre);
 
-		JLabel lblImagenArtista = new JLabel("New label");
+		JLabel lblImagenArtista = new JLabel("");
 		Image image = podcasters.get(podcasterSeleccionado).getImagen().getImage();
 		Image nuevaImagen = image.getScaledInstance(175, 190, Image.SCALE_SMOOTH);
 		ImageIcon ImagenReescalada = new ImageIcon(nuevaImagen);

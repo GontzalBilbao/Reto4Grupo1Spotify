@@ -1,21 +1,19 @@
 package panel;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 import controlador.ControladorDeSonido;
 import controlador.GestionBD;
@@ -37,6 +35,11 @@ public class PanelReproductorMusica extends JPanel {
 	private JLabel lblTitulo;
 	private JButton btnPlay;
 	private JButton btnPlayStop;
+	private JButton btnCancionAnterior;
+	private JButton btnCancionSiguiente;
+	private JButton btnFavorito;
+	private JButton btnmMenu;
+	
 	private String tituloAlbumSeleccionado = "";
 	private String nombreCancionSeleccionada = "";
 	private int numeroCancion = 0;
@@ -54,6 +57,14 @@ public class PanelReproductorMusica extends JPanel {
 	 */
 
 	public PanelReproductorMusica(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+		
+		Timer timerAnuncio = new Timer(20000, new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	btnCancionSiguiente.setEnabled(true);
+		        btnCancionAnterior.setEnabled(true);
+		    }
+		});
+		
 		
 		idMusico = gestionInfo.devolverIdArtistaSeleccionado();
 		tituloAlbumSeleccionado = gestionInfo.devolverAlbumSeleccionado();
@@ -81,9 +92,6 @@ public class PanelReproductorMusica extends JPanel {
 		controladorDeSonido = new ControladorDeSonido(canciones);
 
 		intinerador = gestionInfo.pasarIndiceCancion();
-		
-		JPopupMenu popupMenu = new JPopupMenu();
-		addPopup(this, popupMenu);
 
 		lblIconoGrande = new JLabel("");
 		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));
@@ -110,7 +118,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnPerfil.setBounds(500, 36, 90, 35);
 		add(btnPerfil);
 
-		JButton btnCancionAnterior = new JButton("<");
+		btnCancionAnterior = new JButton("<");
 		btnCancionAnterior.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCancionAnterior.setBackground(Color.BLACK);
 		btnCancionAnterior.setForeground(Color.WHITE);
@@ -136,20 +144,29 @@ public class PanelReproductorMusica extends JPanel {
 					btnPlayStop.setVisible(false);
 				} else {
 					if (!anuncio) {
+						btnCancionAnterior.setEnabled(false);
+						btnCancionSiguiente.setEnabled(false);
+						btnPlay.setVisible(false);
+						btnPlayStop.setVisible(false);
+						btnFavorito.setVisible(false);
+						btnmMenu.setVisible(false);
+						timerAnuncio.restart();
+						
 						controladorDeSonido.parar();
 						controladorDeSonido.anuncio();
 						lblImagenCancion.setIcon(new ImageIcon("anuncio/Anuncio.jpg"));
 						lblTitulo.setText("");
-						btnPlay.setVisible(false);
-						btnPlayStop.setVisible(true);
 						anuncio = true;
 					} else {
+						btnmMenu.setVisible(true);
+						btnFavorito.setVisible(true);
+						
 						intinerador = controladorDeSonido.ramdom();
 						controladorDeSonido.reproducir(intinerador);
 						lblImagenCancion.setIcon(canciones.get(0).getImagen());
 						lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
-						btnPlay.setVisible(true);
-						btnPlayStop.setVisible(false);	
+						btnPlayStop.setVisible(true );	
+						anuncio = false;
 					}
 					
 				}
@@ -160,7 +177,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionAnterior.setBounds(165, 265, 70, 30);
 		add(btnCancionAnterior);
 
-		JButton btnCancionSiguiente = new JButton(">");
+		btnCancionSiguiente = new JButton(">");
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -175,20 +192,30 @@ public class PanelReproductorMusica extends JPanel {
 					btnPlayStop.setVisible(false);
 				} else {
 					if (!anuncio) {
+						btnCancionAnterior.setEnabled(false);
+						btnCancionSiguiente.setEnabled(false);
+						btnPlay.setVisible(false);
+						btnPlayStop.setVisible(false);
+						btnFavorito.setVisible(false);
+						btnmMenu.setVisible(false);
+						timerAnuncio.restart();
+						
+						
 						controladorDeSonido.parar();
 						controladorDeSonido.anuncio();
 						lblImagenCancion.setIcon(new ImageIcon("anuncio/Anuncio.jpg"));
 						lblTitulo.setText("");
-						btnPlay.setVisible(false);
-						btnPlayStop.setVisible(true);
 						anuncio = true;
-					} else {
+					} else {	
+						btnmMenu.setVisible(true);
+						btnFavorito.setVisible(true);
+						
 						intinerador = controladorDeSonido.ramdom();
 						controladorDeSonido.reproducir(intinerador);
 						lblImagenCancion.setIcon(canciones.get(0).getImagen());
 						lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
-						btnPlay.setVisible(true);
-						btnPlayStop.setVisible(false);	
+						btnPlayStop.setVisible(true);	
+						anuncio = false;
 					}
 					
 				}
@@ -216,9 +243,10 @@ public class PanelReproductorMusica extends JPanel {
 		btnPlay.setBounds(355, 425, 90, 30);
 		add(btnPlay);
 
-		JButton btnFavorito = new JButton("FAVORITO");
+		btnFavorito = new JButton("FAVORITO");
 		btnFavorito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				gestionBD.agregarFavorito(gestionInfo.devolverIdCliente() ,canciones.get(intinerador).getIdAudio());
 			}
 		});
 		btnFavorito.setBackground(Color.BLACK);
@@ -253,48 +281,47 @@ public class PanelReproductorMusica extends JPanel {
 		btnPlayStop.setBounds(355, 425, 90, 30);
 		add(btnPlayStop);
 
-		JButton btnmMenu = new JButton("MENU");
+		btnmMenu = new JButton("MENU");
 		btnmMenu.setBackground(Color.BLACK);
 		btnmMenu.setForeground(Color.WHITE);
 		btnmMenu.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnmMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				JFrame f = new JFrame();
+				String playlist = JOptionPane.showInputDialog(f, "Introduzca el nombre de la playlist:");
+
+//				if (gestionInfo.capacidadDePlaylist(gestionInfo.devolverIdPlaylist(playlist)) == 3) {
+//					JOptionPane.showMessageDialog(null,
+//							"Has llegado a la capacidad maxima de la playlist " + playlist + "!!");
+//				} else {
+					gestionInfo.añadirCancionAPlaylist(canciones.get(intinerador).getIdAudio(),
+							gestionInfo.devolverIdPlaylist(playlist));
+//				}
 			}
 		});
 		btnmMenu.setBounds(420, 470, 150, 30);
 		add(btnmMenu);
 
-		JPopupMenu popupMenu_1 = new JPopupMenu();
-		addPopup(btnmMenu, popupMenu_1);
-
-		JMenuItem mntmAñadirAPlayList = new JMenuItem("Añadir  a PalyList");
-		mntmAñadirAPlayList.setForeground(Color.WHITE);
-		mntmAñadirAPlayList.setBackground(Color.BLACK);
-		popupMenu_1.add(mntmAñadirAPlayList);
-
-		JMenuItem mntmExportarCancion = new JMenuItem("Exportear Canción");
-		mntmExportarCancion.setBackground(Color.BLACK);
-		mntmExportarCancion.setForeground(Color.WHITE);
-		popupMenu_1.add(mntmExportarCancion);
 	}
 
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
-	}
+//	private static void addPopup(Component component, final JPopupMenu popup) {
+//		component.addMouseListener(new MouseAdapter() {
+//			public void mousePressed(MouseEvent e) {
+//				if (e.isPopupTrigger()) {
+//					showMenu(e);
+//				}
+//			}
+//
+//			public void mouseReleased(MouseEvent e) {
+//				if (e.isPopupTrigger()) {
+//					showMenu(e);
+//				}
+//			}
+//
+//			private void showMenu(MouseEvent e) {
+//				popup.show(e.getComponent(), e.getX(), e.getY());
+//			}
+//		});
+//	}
 }

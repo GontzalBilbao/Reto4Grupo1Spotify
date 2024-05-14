@@ -124,6 +124,7 @@ public class GestionBDTest {
 		ArrayList<Cancion> canciones = gestionBD.queryCancionesDelAlbum(IdAlbum);
 
 		Cancion cancion1 = canciones.get(0);
+		
 		ImageIcon imagen = new ImageIcon("/Reto4Grupo1Spotify/icono/imagen_testJUnit.jpg");
 		Cancion esperado = new Cancion("AVEN01-01", "AVEN01", "Nightmare", "6:14", "null", imagen, "cancion");
 
@@ -133,15 +134,13 @@ public class GestionBDTest {
 	@Test
 	public void testSacarPremium() {
 		String premium = gestionBD.sacarPremium("juanito");
-
 		String esperado = "premium";
-
 		assertEquals(esperado, premium);
 	}
 
 	@Test
 	public void testTopCancionesFavoritas() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test

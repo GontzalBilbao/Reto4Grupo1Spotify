@@ -21,6 +21,7 @@ public class GestionInformacion {
 	private String idArtista = "";
 	private int recogerIndiceCancion;
 	private int recogerIndicePodcast;
+	private String idCliente;
 	private String premiun;
 
 	public GestionInformacion() {
@@ -134,7 +135,7 @@ public class GestionInformacion {
 		return recogerIndicePodcast;
 	}
 
-	public void sacarPremiun(String usuario) {
+	public void sacarPremium(String usuario) {
 		this.premiun = gestionBD.sacarPremium(usuario);
 	}
 
@@ -151,4 +152,19 @@ public class GestionInformacion {
 		return audioSeleccionado;
 	}
 
+	public int devolverIdPlaylist(String titulo) {
+		return gestionBD.idPlaylist(titulo);
+	}
+	
+	public void sacarIdCliente(String usuario) {
+		this.idCliente = gestionBD.sacarIdCliente(usuario);
+	}
+	
+	public String devolverIdCliente() {
+		return idCliente;
+	}
+	
+	public void añadirCancionAPlaylist(String idAudio, int idPlaylist) {
+		gestionBD.insertCancionEnPlaylist(idAudio, idPlaylist);
+	}
 }

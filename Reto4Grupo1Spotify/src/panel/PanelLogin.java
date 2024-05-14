@@ -138,7 +138,8 @@ public class PanelLogin extends JPanel {
 		for (int i = 0; i < clientes.size(); i++) {
 			if (txtUsuario.getText().equals(clientes.get(i).getUsuario())) {
 				if (txtContraseña.getText().equals(clientes.get(i).getContrasena())) {
-					gestionInfo.sacarPremiun(txtUsuario.getText());
+					gestionInfo.sacarPremium(txtUsuario.getText());
+					gestionInfo.sacarIdCliente(txtUsuario.getText());
 					usuarioCorrecto = true;
 				} else {
 

@@ -7,23 +7,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import modelo.Album;
-import modelo.Audio;
 import modelo.Cancion;
-
 import modelo.CancionesFavoritas;
-
 import modelo.Cliente;
 import modelo.MasEscuchado;
 import modelo.Musico;
 import modelo.Podcast;
-
 import modelo.Podcaster;
-
 import modelo.PodcastsFavoritos;
 import modelo.TopPlayList;
 
@@ -381,6 +379,82 @@ public class GestionBD {
 			e.printStackTrace();
 		}
 		return topPlaylist;
+	}
+	
+	public void agregarFavorito(String idCliente, String idAudio) {
+		try {
+			Statement insertarDatos = conexion.createStatement();
+			String insert = "INSERT INTO gustos values ('" + idCliente + "','" + idAudio + "')";
+			insertarDatos.executeUpdate(insert);
+			insertarDatos.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public int idPlaylist(String titulo) {
+		int idPlaylist = 0;
+		try {
+
+			PreparedStatement consulta = conexion
+					.prepareStatement("SELECT idList FROM `playlist` Where titulo = ?;");
+			consulta.setString(1, titulo);
+
+			ResultSet resultadoConsulta = consulta.executeQuery();
+
+			while (resultadoConsulta.next()) {
+				idPlaylist = resultadoConsulta.getInt(1);
+			}
+
+			resultadoConsulta.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return idPlaylist;
+	}
+	
+	public void insertCancionEnPlaylist(String idAudio, int idPlaylist) {
+		try {
+			PreparedStatement consulta = conexion.prepareStatement("INSERT INTO playlistcanciones VALUES (?,?,?)");
+			consulta.setInt(1, idPlaylist);
+			consulta.setString(2, idAudio);
+			LocalDate fechaSinFormato = LocalDate.now();
+			DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String fechaCreacion = formato.format(fechaSinFormato);
+			consulta.setString(3, fechaCreacion);
+			consulta.executeUpdate();
+			JOptionPane.showMessageDialog(null, "Cancion añadida!");
+			// Cambia al Panel para iniciar sesión
+
+			// Cierra la consulta
+			consulta.close();
+
+		} catch (Exception e) {
+			System.out.println(e);
+//			JOptionPane.showMessageDialog(null, "Campos inválidos");
+		}
+
+	}
+	
+	public String sacarIdCliente(String usuario) {
+		String idCliente = null;
+		try {
+			String query = "SELECT `idCliente`FROM `cliente` WHERE `usuario` = ?;";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, usuario);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+
+			while (resultadoConsulta.next()) {
+				idCliente = resultadoConsulta.getString(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return idCliente;
 	}
 
 }

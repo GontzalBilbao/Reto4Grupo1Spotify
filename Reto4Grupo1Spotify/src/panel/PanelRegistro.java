@@ -36,9 +36,8 @@ public class PanelRegistro extends JPanel {
 	private JTextField txtUsuario;
 	private JTextField txtContrasena;
 	private JTextField txtConfContrasena;
-	private JTextField txtFechaNac;
-	private JComboBox comboBoxSuscripcion;
-	private JComboBox comboBoxIdioma;
+	private JComboBox<String> comboBoxSuscripcion;
+	private JComboBox<String> comboBoxIdioma;
 	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	private JDateChooser dateChooser;
 
@@ -148,11 +147,11 @@ public class PanelRegistro extends JPanel {
 		txtConfContrasena.setBounds(375, 297, 144, 20);
 		add(txtConfContrasena);
 
-		comboBoxSuscripcion = new JComboBox(Suscripciones);
+		comboBoxSuscripcion = new JComboBox<String>(Suscripciones);
 		comboBoxSuscripcion.setBounds(375, 339, 89, 22);
 		add(comboBoxSuscripcion);
 
-		comboBoxIdioma = new JComboBox(Idiomas);
+		comboBoxIdioma = new JComboBox<String>(Idiomas);
 		comboBoxIdioma.setBounds(375, 381, 89, 22);
 		add(comboBoxIdioma);
 

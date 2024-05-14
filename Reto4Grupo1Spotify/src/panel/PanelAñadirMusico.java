@@ -1,15 +1,21 @@
 package panel;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.io.InputStream;
+import java.io.OutputStream;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -18,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controlador.GestionBD;
 import vista.VentanaPrincipal;
@@ -44,8 +51,9 @@ public class PanelAñadirMusico extends JPanel {
 
 				if (validado != false) {
 					// añadir query de gestionBD de insertar musico
-					// vp.cambiarDePanel(13);
-					System.out.println(nombreEscrito);
+
+					JOptionPane.showMessageDialog(null, "Se ha agregado el musico.");
+					vp.cambiarDePanel(14);
 				}
 			}
 		});
@@ -109,16 +117,56 @@ public class PanelAñadirMusico extends JPanel {
 		btnImagenArtista.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser elegirArchivo = new JFileChooser();
-				int ValorDevuelto = elegirArchivo.showOpenDialog(null);
-				if (ValorDevuelto == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = elegirArchivo.getSelectedFile();
+				// Crea un JFileChooser, que sirve para elegir un archivo guardado en el sistema
+				// local
+				JFileChooser selectorDeImagen = new JFileChooser();
+				// Se genera un filtro para que a la hora de seleccionar, te filtre que tipo de
+				// extensión tendrán los archivos (Imagenes, Audios...)
+				selectorDeImagen.setFileFilter(new FileNameExtensionFilter("Imágenes", "jpg", "png", "jpeg", "gif"));
+				// El siguiente objeto lo que hace es devolver un valor dependiendo de si has
+				// hecho click en aceptar o cancelar en el PopUp
+				int seleccion = selectorDeImagen.showOpenDialog(null);
+				// Si has dado a aceptar, proseguirá, si no no hará nada (0, APPROVE, 1 CANCEL,
+				// 2 ERROR)
+				if (seleccion == JFileChooser.APPROVE_OPTION) {
+					// Guarda el archivo seleccionado
+					File imagen = selectorDeImagen.getSelectedFile();
+
 					try {
-						guardarImagen(selectedFile);
-						JOptionPane.showMessageDialog(null, "Archivo agregado exitosamente.");
+						// Copiar el archivo seleccionado a la carpeta "imagenes" dentro del proyecto
+						File carpetaImagenes = new File("imagenes");
+						if (!carpetaImagenes.exists()) {
+							carpetaImagenes.mkdir();
+						}
+						// Crea la ruta del archivo para poder mostrarla más adelante
+						File destino = new File("imagenes/" + imagen.getName());
+						// Creamos el objeto para leer el archivo a nivel de bytes que traigamos
+						InputStream leerImagen = new FileInputStream(imagen);
+						// Creamos el objeto para poder escribir el archivo en la carpeta
+						OutputStream escribirImagen = new FileOutputStream(destino);
+						// Con lo siguiente creamos un buffer para ahorrar tiempo y procesamiento, en
+						// este caso es importante ya que queremos que en el mismo "Run" se cargue el
+						// archivo del sistema, y al mismo tiempo se visualice, por lo tanto necesitamos
+						// que sea lo más rápido y eficiente posible
+						byte[] buffer = new byte[1024];
+						int longitud;
+						// Mientras siga habiendo bytes por leer, seguirá escribiendo
+						while ((longitud = leerImagen.read(buffer)) > 0) {
+							escribirImagen.write(buffer, 0, longitud);
+						}
+						leerImagen.close();
+						escribirImagen.close();
+						// Para mostrar la imagen, sólo hará falta la ruta de la imagen, pero "destino"
+						// es un String, debemos dejar claro que es una ruta (PathName)
+						ImageIcon icono = new ImageIcon(destino.getPath());
+						Image image = icono.getImage();
+						Image nuevaImagen = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+						ImageIcon ImagenReescalada = new ImageIcon(nuevaImagen);
+						lblMostrarImagen.setIcon(ImagenReescalada);
+						lblMostrarImagen.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+
 					} catch (IOException ex) {
 						ex.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Error al agregar el archivo.");
 					}
 				}
 			}
@@ -132,22 +180,15 @@ public class PanelAñadirMusico extends JPanel {
 
 	}
 
-	private void guardarImagen(File file) throws IOException {
-		// Directorio de la carpeta donde se almacenarán los archivos
-		File directory = new File("Canciones");
-		if (!directory.exists()) {
-			directory.mkdir(); // Crea el directorio si no existe
-		}
-
-		// Copiar el archivo seleccionado a la carpeta del proyecto
-		File destination = new File(directory.getPath() + File.separator + file.getName());
-		Files.copy(file.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
-	}
-
 	private boolean validarCampos(String txtNombre) {
 		boolean validar = false;
 		if (txtNombre.equalsIgnoreCase("")) {
-			JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio.");
+
+			JOptionPane.showMessageDialog(null, "El nombre del musico es obligatorio.");
+			validar = false;
+
+		} else if (lblMostrarImagen.getIcon() == null) {
+			JOptionPane.showMessageDialog(null, "La imagen del musico es obligatoria..");
 			validar = false;
 		} else {
 			validar = true;

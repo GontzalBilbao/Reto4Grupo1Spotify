@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 import controlador.ControladorDePodcast;
 import controlador.GestionBD;
@@ -32,12 +32,14 @@ public class PanelReproductorPodcasts extends JPanel {
 	private int intinerador = 0;
 	private int numeroPodcast = 0;
 	private IControladorSonido controladorDePodcast;
-	private boolean aleatorio = false;
+//	private boolean aleatorio = false;
 	private JLabel lblIconoGrande;
 	private JLabel lblImagenPodcast;
 	private JLabel lblTitulo;
 	private JButton btnPlay;
 	private JButton btnPlayStop;
+	private JButton btnCancionAnterior;
+	private JButton btnCancionSiguiente;
 
 	private ArrayList<Podcaster> podcasters;
 	private ArrayList<Podcast> podcasts;
@@ -45,6 +47,8 @@ public class PanelReproductorPodcasts extends JPanel {
 	private String nombrePodcastSeleccionado = "";
 
 	private int numeroPodcaster;
+	
+	protected boolean anuncio= false;
 
 	/**
 	 * Create the panel.
@@ -52,6 +56,14 @@ public class PanelReproductorPodcasts extends JPanel {
 
 	public PanelReproductorPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 
+		Timer timerAnuncio = new Timer(20000, new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	btnCancionSiguiente.setEnabled(true);
+		        btnCancionAnterior.setEnabled(true);
+		    }
+		});
+		
+		
 		gestionBD.cargarPodcasters();
 		podcasters = gestionBD.devolverPodcasters();
 		nombrePodcaster = gestionInfo.devolverArtistaSeleccionado();
@@ -82,10 +94,15 @@ public class PanelReproductorPodcasts extends JPanel {
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
+//		System.out.println(podcasts);
+		
 		controladorDePodcast = new ControladorDePodcast(podcasts);
 
 		intinerador = gestionInfo.pasarIndicePodcast();
+//		intinerador = 2;
 
+		
+		
 //		for (int i = 0; i < 5; i++) {
 //			System.out.println(gestionBD.queryAudioPodcast().get(i).getNombre());
 //		}
@@ -93,9 +110,6 @@ public class PanelReproductorPodcasts extends JPanel {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
-
-		JPopupMenu popupMenu = new JPopupMenu();
-		addPopup(this, popupMenu);
 
 		lblIconoGrande = new JLabel("");
 		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));
@@ -122,40 +136,127 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnPerfil.setBounds(500, 36, 90, 35);
 		add(btnPerfil);
 
-		JButton btnCancionAnterior = new JButton("<");
+		btnCancionAnterior = new JButton("<");
 		btnCancionAnterior.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCancionAnterior.setBackground(Color.BLACK);
 		btnCancionAnterior.setForeground(Color.WHITE);
 		btnCancionAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				/* Para que vuelba al inicio de reproduccion sin dar erro */
+//				if (aleatorio = true)
+//					if (aleatorio = true)
+//						if (intinerador == 0) {
+//							intinerador = podcasts.size() - 1;
+//						} else {
+//							intinerador = (intinerador - 1) % podcasts.size();
+//						}
+//				controladorDePodcast.setCancionEnReproduccion(intinerador);
+//				lblImagenPodcast.setIcon(podcasters.get(numeroPodcast).getImagen());
+//				lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 				/* Para que vuelba al inicio de reproduccion sin dar erro */
-				if (aleatorio = true)
-					if (aleatorio = true)
-						if (intinerador == 0) {
-							intinerador = podcasts.size() - 1;
-						} else {
-							intinerador = (intinerador - 1) % podcasts.size();
-						}
-				controladorDePodcast.setCancionEnReproduccion(intinerador);
-				lblImagenPodcast.setIcon(podcasters.get(numeroPodcast).getImagen());
-				lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 
+				if (intinerador == 0) {
+					intinerador = podcasts.size() - 1;
+				} else {
+					intinerador = (intinerador - 1)
+							% podcasts.size();
+				}
+				
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+
+					controladorDePodcast.setCancionEnReproduccion(intinerador);
+					lblImagenPodcast.setIcon(podcasters.get(numeroPodcast).getImagen());
+					lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
+					btnPlay.setVisible(true);
+					btnPlayStop.setVisible(false);
+				} else {
+					if (!anuncio) {
+						btnCancionAnterior.setEnabled(false);
+						btnCancionSiguiente.setEnabled(false);
+						btnPlay.setVisible(false);
+						btnPlayStop.setVisible(false);
+//						btnFavorito.setVisible(false);
+//						btnmMenu.setVisible(false);
+						timerAnuncio.restart();
+						
+						controladorDePodcast.parar();
+						controladorDePodcast.anuncio();
+						lblImagenPodcast.setIcon(new ImageIcon("anuncio/Anuncio.jpg"));
+						lblTitulo.setText("");
+						anuncio = true;
+					} else {
+//						btnmMenu.setVisible(true);
+//						btnFavorito.setVisible(true);
+						
+						intinerador = controladorDePodcast.ramdom();
+						controladorDePodcast.reproducir(intinerador);
+						lblImagenPodcast.setIcon(podcasters.get(0).getImagen());
+						lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
+						btnPlayStop.setVisible(true );	
+						anuncio = false;
+					}
+					
+				}
+				
 			}
 		});
 		btnCancionAnterior.setBounds(165, 265, 70, 30);
 		add(btnCancionAnterior);
 
-		JButton btnCancionSiguiente = new JButton(">");
+		btnCancionSiguiente = new JButton(">");
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				intinerador = (intinerador + 1) % podcasts.size();
+//				intinerador = (intinerador + 1) % podcasts.size();
+//
+//				controladorDePodcast.setCancionEnReproduccion(intinerador);
+//				lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
+//				lblTitulo.setText("<html>" + podcasts.get(numeroPodcast).getNombre() + "</html>");
+//				btnPlay.setVisible(true);
+//				btnPlayStop.setVisible(false);
+//			}
+//		});
+				
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+					intinerador = (intinerador + 1)
+							% podcasts.size();
 
-				controladorDePodcast.setCancionEnReproduccion(intinerador);
-				lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
-				lblTitulo.setText("<html>" + podcasts.get(numeroPodcast).getNombre() + "</html>");
-				btnPlay.setVisible(true);
-				btnPlayStop.setVisible(false);
+					controladorDePodcast.setCancionEnReproduccion(intinerador);
+					lblImagenPodcast.setIcon(podcasters.get(0).getImagen());
+					lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
+					btnPlay.setVisible(true);
+					btnPlayStop.setVisible(false);
+				} else {
+					if (!anuncio) {
+						btnCancionAnterior.setEnabled(false);
+						btnCancionSiguiente.setEnabled(false);
+						btnPlay.setVisible(false);
+						btnPlayStop.setVisible(false);
+//						btnFavorito.setVisible(false);
+//						btnmMenu.setVisible(false);
+						timerAnuncio.restart();
+						
+						
+						controladorDePodcast.parar();
+						controladorDePodcast.anuncio();
+						lblImagenPodcast.setIcon(new ImageIcon("anuncio/Anuncio.jpg"));
+						lblTitulo.setText("");
+						anuncio = true;
+					} else {	
+//						btnmMenu.setVisible(true);
+//						btnFavorito.setVisible(true);
+						
+						intinerador = controladorDePodcast.ramdom();
+						controladorDePodcast.reproducir(intinerador);
+						lblImagenPodcast.setIcon(podcasters.get(0).getImagen());
+						lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
+						btnPlayStop.setVisible(true);	
+						anuncio = false;
+					}
+					
+				}
+				
+				
 			}
 		});
 		btnCancionSiguiente.setBackground(Color.BLACK);
@@ -177,17 +278,6 @@ public class PanelReproductorPodcasts extends JPanel {
 		});
 		btnPlay.setBounds(355, 425, 90, 30);
 		add(btnPlay);
-
-		JButton btnFavorito = new JButton("FAVORITO");
-		btnFavorito.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnFavorito.setBackground(Color.BLACK);
-		btnFavorito.setForeground(Color.WHITE);
-		btnFavorito.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnFavorito.setBounds(230, 470, 150, 30);
-		add(btnFavorito);
 
 		lblImagenPodcast = new JLabel();
 		lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
@@ -214,30 +304,6 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnPlayStop.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnPlayStop.setBounds(355, 425, 90, 30);
 		add(btnPlayStop);
-
-		JButton btnmMenu = new JButton("MENU");
-		btnmMenu.setBackground(Color.BLACK);
-		btnmMenu.setForeground(Color.WHITE);
-		btnmMenu.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnmMenu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnmMenu.setBounds(420, 470, 150, 30);
-		add(btnmMenu);
-
-		JPopupMenu popupMenu_1 = new JPopupMenu();
-		addPopup(btnmMenu, popupMenu_1);
-
-		JMenuItem mntmAñadirAPlayList = new JMenuItem("Añadir  a PalyList");
-		mntmAñadirAPlayList.setForeground(Color.WHITE);
-		mntmAñadirAPlayList.setBackground(Color.BLACK);
-		popupMenu_1.add(mntmAñadirAPlayList);
-
-		JMenuItem mntmExportarPodcast = new JMenuItem("Exportear Podcast");
-		mntmExportarPodcast.setBackground(Color.BLACK);
-		mntmExportarPodcast.setForeground(Color.WHITE);
-		popupMenu_1.add(mntmExportarPodcast);
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
