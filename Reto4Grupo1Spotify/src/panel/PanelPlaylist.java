@@ -82,16 +82,11 @@ public class PanelPlaylist extends JPanel {
 		usuario = gestionInfo.devolverClienteSeleccionado();
 		gestionBD.cargarPlayLists(usuario);
 		playlists = gestionBD.devolverPlayList();
-		for (int i = 0; i < playlists.size(); i++) {
-			System.out.println(playlists.get(i).getTitulo());
-		}
 		
-		idCliente = gestionInfo.devolverIdClienteSeleccionado();
-		gestionBD.queryIdUsuario(idCliente);
+		usuario = gestionInfo.devolverIdClienteSeleccionado();
+		gestionBD.queryIdUsuario(usuario);
 		clientes = gestionBD.devolverIdUsuario();
 		for (int i = 0; i < clientes.size(); i++) {
-			System.out.println(clientes.get(i).getIdCliente());
-			
 		idCliente = clientes.get(i).getIdCliente();
 			
 		}
@@ -161,5 +156,15 @@ public class PanelPlaylist extends JPanel {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton_1.setBounds(429, 313, 336, 81);
 		add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Seleccionar");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				list.getSelectedValue();
+				vp.cambiarDePanel(25);
+			}
+		});
+		btnNewButton_2.setBounds(255, 128, 150, 23);
+		add(btnNewButton_2);
 	}
 }

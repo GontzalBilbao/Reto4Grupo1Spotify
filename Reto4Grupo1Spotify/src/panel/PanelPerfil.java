@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 
 import controlador.GestionBD;
 import controlador.GestionInformacion;
+import modelo.Cliente;
 import modelo.PlayList;
 
 import javax.swing.JScrollBar;
@@ -25,6 +26,7 @@ import java.awt.event.ActionEvent;
 public class PanelPerfil extends JPanel {
 	
 	private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
+	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
 	private static final long serialVersionUID = 1L;
 	private String usuario = null;
@@ -52,15 +54,20 @@ public class PanelPerfil extends JPanel {
 		usuario = gestionInfo.devolverClienteSeleccionado();
 		gestionBD.cargarPlayLists(usuario);
 		playlists = gestionBD.devolverPlayList();
-		for (int i = 0; i < playlists.size(); i++) {
-			System.out.println(playlists.get(i).getTitulo());
-		}
 		
 		DefaultListModel listModel = new DefaultListModel();
-		for (int i = 0; i < playlists.size(); i++){
-		    listModel.addElement(playlists.get(i).getTitulo());
+		for (int i1 = 0; i1 < playlists.size(); i1++){
+		    listModel.addElement(playlists.get(i1).getTitulo());
 		}
 		listaPlaylist.setModel(listModel);
+		
+		usuario = gestionInfo.devolverIdClienteSeleccionado();
+		gestionBD.queryIdUsuario(usuario);
+		clientes = gestionBD.devolverIdUsuario();
+		for (int i = 0; i < clientes.size(); i++) {
+			System.out.println(clientes.get(i).getTipo());
+			
+			tipo = clientes.get(i).getTipo();
 		
 		JLabel lblUsuario = new JLabel("-" + usuario + "-");
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -72,7 +79,7 @@ public class PanelPerfil extends JPanel {
 		JLabel lblTipo = new JLabel(tipo.toUpperCase());
 		lblTipo.setFont(new Font("Lucida Bright", Font.BOLD, 18));
 		lblTipo.setForeground(Color.LIGHT_GRAY);
-		lblTipo.setBounds(90, 432, 80, 30);
+		lblTipo.setBounds(90, 432, 200, 30);
 		add(lblTipo);
 		
 		JPanel panel = new JPanel();
@@ -113,6 +120,8 @@ public class PanelPerfil extends JPanel {
 		});
 		btnNewButton.setBounds(550, 118, 130, 23);
 		add(btnNewButton);
+
+	}
 
 	}
 }

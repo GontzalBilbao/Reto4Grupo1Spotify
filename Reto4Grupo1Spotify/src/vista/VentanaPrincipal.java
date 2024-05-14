@@ -16,6 +16,7 @@ import panel.PanelAñadirPodcaster;
 import panel.PanelBienvenida;
 import panel.PanelDescubrirMusica;
 import panel.PanelDescubrirPodcasts;
+import panel.PanelEdicionPlayList;
 import panel.PanelEstadistica;
 import panel.PanelGestionarAlbum;
 import panel.PanelGestionarCancion;
@@ -127,6 +128,9 @@ public class VentanaPrincipal extends JFrame {
 			break;
 		case 24:
 			setContentPane(new PanelEstadistica(this, gestionBD));
+			break;
+		case 25:
+			setContentPane(new PanelEdicionPlayList(this));
 			break;
 		}
 
