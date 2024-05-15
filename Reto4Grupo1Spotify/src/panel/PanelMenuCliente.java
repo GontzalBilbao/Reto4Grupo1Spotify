@@ -83,6 +83,7 @@ public class PanelMenuCliente extends JPanel {
 		JButton btnPerfil = new JButton("PERFIL");
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				v.nPanel = 3;
 				v.cambiarDePanel(11);
 			}
 		});

@@ -27,6 +27,7 @@ public class PanelReproductorMusica extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+
 	private int intinerador = 0;// Índice de la canción en reproducción
 	private IControladorSonido controladorDeSonido;// Controlador de la reproducción de sonido
 	private JLabel lblIconoGrande;// Etiqueta para mostrar un icono grande
@@ -38,6 +39,8 @@ public class PanelReproductorMusica extends JPanel {
 	private JButton btnCancionSiguiente;// Botón para reproducir la canción siguiente
 	private JButton btnFavorito;// Botón para agregar una canción a favoritos
 	private JButton btnmMenu;// Botón para acceder al menú de la aplicación
+//	private boolean aleatorio = false;
+
 
 	private String tituloAlbumSeleccionado = "";// Título del álbum seleccionado
 	private String nombreCancionSeleccionada = "";// Nombre de la canción seleccionada
@@ -300,7 +303,6 @@ public class PanelReproductorMusica extends JPanel {
 				String playlist = JOptionPane.showInputDialog(f, "Introduzca el nombre de la playlist:");
 
 				
-				
 				if (gestionInfo.capacidadDePlaylist(gestionInfo.devolverIdPlaylist(playlist)) == 3 && !gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
 					JOptionPane.showMessageDialog(null,
 							"Has llegado a la capacidad maxima de la playlist " + playlist + "!!");
@@ -308,17 +310,13 @@ public class PanelReproductorMusica extends JPanel {
 					gestionInfo.añadirCancionAPlaylist(canciones.get(intinerador).getIdAudio(),
 							gestionInfo.devolverIdPlaylist(playlist));
 				}
-				
-				
-				
+							
 				// Llama al método añadirCancionAPlaylist de la clase GestionInformacion para agregar la canción actual a la playlist especificada
 				
-
 			}
 		});
 		btnmMenu.setBounds(420, 470, 150, 30);
 		add(btnmMenu);
 
 	}
-
 }

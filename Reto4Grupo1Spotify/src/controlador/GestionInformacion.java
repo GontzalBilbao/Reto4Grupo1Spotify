@@ -26,40 +26,13 @@ public class GestionInformacion {
 	private int recogerIndiceCancion;
 	private int recogerIndicePodcast;
 	private String idCliente;
-	private String premiun;
-	
-	private final String CLAVE_ENCRIPTADA = "clavecompartidanorevelarnuncamas";
+	private String premium;
+	private String clienteSeleccionado = "";
 
 	public GestionInformacion() {
 		gestionBD = new GestionBD();
 	}
 
-	public String desencriptar(String mensajeEncriptado) throws Exception {
-
-		byte[] mensajeBytes = Base64.getDecoder().decode(mensajeEncriptado);
-
-		Key ClaveaAES = new SecretKeySpec(CLAVE_ENCRIPTADA.getBytes(), "AES");
-
-		Cipher cipher = Cipher.getInstance("AES");
-
-		cipher.init(Cipher.DECRYPT_MODE, ClaveaAES);
-
-		String desencriptado = new String(cipher.doFinal(mensajeBytes));
-
-		return desencriptado;
-	}
-	
-	public String encriptar(String mensaje) throws Exception {
-		Key claveAES = new SecretKeySpec(CLAVE_ENCRIPTADA.getBytes(), "AES");
-		Cipher cipher = Cipher.getInstance("AES");
-		cipher.init(Cipher.ENCRYPT_MODE, claveAES);
-
-		byte[] mensajeEncriptado = cipher.doFinal(mensaje.getBytes());
-
-		return Base64.getEncoder().encodeToString(mensajeEncriptado);
-	}
-	
-	
 	public boolean validarContrasena(boolean campos, String contraseña, String confirmarContraseña) {
 		boolean vuelta = false;
 		Pattern regexContraseña = Pattern
@@ -168,11 +141,11 @@ public class GestionInformacion {
 	}
 
 	public void sacarPremium(String usuario) {
-		this.premiun = gestionBD.sacarPremium(usuario);
+		this.premium = gestionBD.sacarPremium(usuario);
 	}
 
 	public String devolverPremiun() {
-		return premiun;
+		return premium;
 	}
 
 	public void guardarAudioSeleccionado(String audioSeleccionado) {
@@ -187,21 +160,30 @@ public class GestionInformacion {
 	public int devolverIdPlaylist(String titulo) {
 		return gestionBD.idPlaylist(titulo);
 	}
-	
+
 	public void sacarIdCliente(String usuario) {
 		this.idCliente = gestionBD.sacarIdCliente(usuario);
 	}
-	
+
 	public String devolverIdCliente() {
 		return idCliente;
 	}
-	
+
 	public void añadirCancionAPlaylist(String idAudio, int idPlaylist) {
 		gestionBD.insertCancionEnPlaylist(idAudio, idPlaylist);
 	}
-	
+
+	public void guardarClienteSeleccionado(String usuario) {
+		this.clienteSeleccionado = usuario;
+	}
+
 	public int capacidadDePlaylist(int idPlaylist) {
 		return gestionBD.capacidadDePlaylist(idPlaylist);
 	}
-	
+
+	public String devolverClienteSeleccionado() {
+		return clienteSeleccionado;
+
+	}
+
 }
