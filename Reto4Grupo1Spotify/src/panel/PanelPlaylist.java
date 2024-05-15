@@ -17,6 +17,7 @@ import controlador.GestionBD;
 import controlador.GestionFicheros;
 import controlador.GestionInformacion;
 import modelo.Album;
+import modelo.Cancion;
 import modelo.PlayList;
 import vista.VentanaPrincipal;
 import javax.swing.JList;
@@ -28,13 +29,16 @@ public class PanelPlaylist extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNuevaPlayList;
+	private DefaultListModel listModel;
 	private String usuario = null;
 	private String nuevaPlayList = null;
 	private Cliente cliente;
 	private String idCliente = null;
+	private String titulo = null;
 	
 	private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
 	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	private ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 
 	/**
 	 * Create the panel.
@@ -91,7 +95,7 @@ public class PanelPlaylist extends JPanel {
 			
 		}
 		
-		DefaultListModel listModel = new DefaultListModel();
+		listModel = new DefaultListModel();
 		for (int i = 0; i < playlists.size(); i++){
 		    listModel.addElement(playlists.get(i).getTitulo());
 		}
@@ -120,6 +124,13 @@ public class PanelPlaylist extends JPanel {
 					nuevaPlayList = textFieldNuevaPlayList.getText();
 					
 					gestionBD.añadirPlayList(nuevaPlayList, idCliente);
+					
+					DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
+		            model.addElement(nuevaPlayList);
+	
+		            list.revalidate();
+		            list.repaint();
+					
 					JOptionPane.showMessageDialog(null, "PlayList añadida con éxito", "PlayList Guardada",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -135,6 +146,14 @@ public class PanelPlaylist extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				gestionBD.eliminarPlayList(list.getSelectedValue().toString());
+				
+				DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
+	            model.removeElement(list.getSelectedValue());
+	            
+	            // Notificar al JList que se han realizado cambios en el modelo
+	            list.revalidate();
+	            list.repaint();
+				
 				JOptionPane.showMessageDialog(null, "PlayList eliminada con éxito", "PlayList Eliminada",
 						JOptionPane.INFORMATION_MESSAGE);
 				
@@ -160,8 +179,19 @@ public class PanelPlaylist extends JPanel {
 		JButton btnNewButton_2 = new JButton("Seleccionar");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				list.getSelectedValue();
-				vp.cambiarDePanel(25);
+				
+				titulo = list.getSelectedValue().toString();
+				gestionBD.queryCancion(titulo);
+				canciones = gestionBD.devolverCancion();
+				
+				if (canciones.isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "PlayList Vacia", "Error",
+							JOptionPane.ERROR_MESSAGE);
+		            
+		        } else {
+		        	gestionInfo.guardarTituloPlayListSeleccionada(list.getSelectedValue().toString());
+					vp.cambiarDePanel(25);
+		        }
 			}
 		});
 		btnNewButton_2.setBounds(255, 128, 150, 23);

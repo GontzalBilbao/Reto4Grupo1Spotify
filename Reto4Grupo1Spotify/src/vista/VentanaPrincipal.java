@@ -130,7 +130,7 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelEstadistica(this, gestionBD));
 			break;
 		case 25:
-			setContentPane(new PanelEdicionPlayList(this));
+			setContentPane(new PanelEdicionPlayList(this, gestionBD, gestionInfo));
 			break;
 		}
 

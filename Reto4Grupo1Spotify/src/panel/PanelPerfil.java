@@ -11,11 +11,13 @@ import javax.swing.SwingConstants;
 
 import controlador.GestionBD;
 import controlador.GestionInformacion;
+import modelo.Cancion;
 import modelo.Cliente;
 import modelo.PlayList;
 
 import javax.swing.JScrollBar;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -27,10 +29,12 @@ public class PanelPerfil extends JPanel {
 	
 	private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
 	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	private ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 
 	private static final long serialVersionUID = 1L;
 	private String usuario = null;
 	private String tipo = null;
+	private String titulo = null;
 
 	/**
 	 * Create the panel.
@@ -114,8 +118,19 @@ public class PanelPerfil extends JPanel {
 		JButton btnNewButton = new JButton("Seleccionar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listaPlaylist.getSelectedValue();
-				vp.cambiarDePanel(7);
+				
+				titulo = listaPlaylist.getSelectedValue().toString();
+				gestionBD.queryCancion(titulo);
+				canciones = gestionBD.devolverCancion();
+				
+				if (canciones.isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "PlayList Vacia", "Error",
+							JOptionPane.ERROR_MESSAGE);
+		            
+		        } else {
+		        	listaPlaylist.getSelectedValue();
+					vp.cambiarDePanel(7);
+		        }
 			}
 		});
 		btnNewButton.setBounds(550, 118, 130, 23);

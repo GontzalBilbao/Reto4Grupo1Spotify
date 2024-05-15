@@ -410,6 +410,8 @@ public class GestionBD {
 	    }
 	}
 	
+	/*PERFIL DEL CLIENTE*/
+	
 	public void cargarIdCliente(String usuario) {
 		clientes.clear();
 		clientes = queryIdUsuario(usuario);
@@ -437,6 +439,51 @@ public class GestionBD {
 
 	public ArrayList<Cliente> devolverIdUsuario() {
 		return clientes;
+	}
+	
+	/*CANCIONES DE PLAYLIST*/
+	
+	public void cargarCancion(String titulo) {
+		canciones.clear();
+		canciones = queryCancion(titulo);
+	}
+
+	public ArrayList<Cancion> queryCancion(String titulo) {
+		try {
+			String query = "SELECT playlist.titulo, playlist.fechaCreacion, audio.nombre, audio.tipo, audio.duracion, audio.imagen, playlistcanciones.fechaPlayListCancion from playlist join playlistCanciones on playlist.idList = playlistCanciones.idList join cancion on playlistcanciones.idCancion = cancion.idCancion join audio on audio.idaudio = cancion.idCancion where titulo = ?";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, titulo);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+
+			while (resultadoConsulta.next()) {
+				Blob imagenBlob = resultadoConsulta.getBlob(6);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				ImageIcon imagen = new ImageIcon(arrayImagen);
+
+				canciones.add(new Cancion(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4), resultadoConsulta.getString(5),
+						imagen, resultadoConsulta.getString(7)));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return canciones;
+	}
+
+	public ArrayList<Cancion> devolverCancion() {
+		return canciones;
+	}
+	
+	public void eliminarCancionDePlayList(String cancionSeleccionada) {
+	    try {
+	        Statement eliminarDatos = conexion.createStatement();
+	        String delete = "Delete playlistCanciones.idList, playlistCanciones.idCancion, playlistCanciones.fechaPlayListCancion FROM playlistCanciones join cancion on playlistCanciones.idCancion = cancion.idCancion join audio on audio.idAudio = cancion.idCancion WHERE audio.nombre = ?";
+	        eliminarDatos.executeUpdate(delete);
+	        eliminarDatos.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 
 

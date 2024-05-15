@@ -15,6 +15,8 @@ public class GestionInformacion {
 
 	private String clienteSeleccionado = "";
 
+	private String playlistSeleccionada = "";
+
 	public GestionInformacion() {
 
 	}
@@ -84,6 +86,15 @@ public class GestionInformacion {
 	
 	public String devolverIdClienteSeleccionado() {
 		return clienteSeleccionado;
+		
+	}
+	
+	public void guardarTituloPlayListSeleccionada(String titulo) {
+		this.playlistSeleccionada = titulo;
+	}
+	
+	public String devolverTituloPlayListSeleccionada() {
+		return playlistSeleccionada;
 		
 	}
 }
