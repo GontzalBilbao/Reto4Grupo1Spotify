@@ -91,7 +91,7 @@ public class PanelReproductorMusica extends JPanel {
 
 		// Configuración del panel
 		setSize(800, 600);
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.WHITE);
 		setLayout(null);
 
 		// Inicializar el controlador de sonido con la lista de canciones
@@ -107,6 +107,8 @@ public class PanelReproductorMusica extends JPanel {
 
 		// Botón ATRAS
 		JButton btnAtras = new JButton("ATRAS");
+		btnAtras.setForeground(Color.WHITE);
+		btnAtras.setBackground(Color.BLACK);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(6);
@@ -118,6 +120,8 @@ public class PanelReproductorMusica extends JPanel {
 
 		// Botón PERFIL
 		JButton btnPerfil = new JButton("PERFIL");
+		btnPerfil.setBackground(Color.BLACK);
+		btnPerfil.setForeground(Color.WHITE);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(11);

@@ -22,6 +22,7 @@ import controlador.GestionBD;
 import controlador.GestionInformacion;
 import modelo.Podcaster;
 import vista.VentanaPrincipal;
+import javax.swing.SwingConstants;
 
 public class PanelDescubrirPodcasts extends JPanel {
 
@@ -110,36 +111,48 @@ public class PanelDescubrirPodcasts extends JPanel {
 //				scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
 //				scrollPane.setOpaque(false);
 
-		scrollPane.setSize(764, 367);
-		scrollPane.setLocation(10, 131);
+		scrollPane.setSize(765, 370);
+		scrollPane.setLocation(10, 135);
 
 		// Agregar el JScrollPane a la ventana
 
 		add(scrollPane);
 
 		JLabel lblTituloLista = new JLabel("DESCUBRIR PODCASTS");
-		lblTituloLista.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
-		lblTituloLista.setBounds(262, 11, 276, 28);
+		lblTituloLista.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTituloLista.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTituloLista.setBounds(270, 100, 260, 51);
 		add(lblTituloLista);
 
 
-		JButton btnAtrás = new JButton("Atrás");
+		JButton btnAtrás = new JButton("ATRAS");
+		btnAtrás.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnAtrás.setBackground(Color.BLACK);
+		btnAtrás.setForeground(Color.WHITE);
 		btnAtrás.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(3);
 			}
 		});
-		btnAtrás.setBounds(10, 11, 89, 23);
+		btnAtrás.setBounds(200, 36, 90, 35);
 		add(btnAtrás);
 
-		JButton btnPerfil = new JButton("Perfil");
+		JButton btnPerfil = new JButton("PERFIL");
+		btnPerfil.setBackground(Color.BLACK);
+		btnPerfil.setForeground(Color.WHITE);
+		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(11);
 			}
 		});
-		btnPerfil.setBounds(685, 11, 89, 23);
+		btnPerfil.setBounds(500, 36, 90, 35);
 		add(btnPerfil);
+		
+		JLabel lblIconoGrande = new JLabel("");
+		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));
+		lblIconoGrande.setBounds(0, 0, 100, 100);
+		add(lblIconoGrande);
 
 
 	}
