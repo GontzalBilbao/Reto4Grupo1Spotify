@@ -94,7 +94,7 @@ public class PanelReproductorMusica extends JPanel {
 		// Inicializar el controlador de sonido con la lista de canciones
 		controladorDeSonido = new ControladorDeSonido(canciones);
 
-		intinerador = gestionInfo.pasarIndiceCancion();
+		intinerador = numeroCancion;
 
 		// Etiqueta para mostrar un icono grande
 		lblIconoGrande = new JLabel("");
@@ -138,8 +138,7 @@ public class PanelReproductorMusica extends JPanel {
 					intinerador = (intinerador - 1) % canciones.size();// De lo contrario, retrocede al índice de la canción anterior en la lista
 				}
 
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) { // Verifica si el usuario tiene una suscripción "Premium"
-					intinerador = (intinerador + 1) % canciones.size();// Si es Premium, avanza al siguiente índice de canción en la lista
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) { // Verifica si el usuario tiene una suscripción "Premium"
 
 					controladorDeSonido.setCancionEnReproduccion(intinerador);// Actualiza el controlador de sonido con la nueva canción en reproducción
 					// Actualiza la imagen de la canción y el título en la interfaz gráfica
@@ -193,9 +192,8 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
 					intinerador = (intinerador + 1) % canciones.size();
-
 					controladorDeSonido.setCancionEnReproduccion(intinerador);
 					lblImagenCancion.setIcon(canciones.get(0).getImagen());
 					lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
@@ -266,12 +264,12 @@ public class PanelReproductorMusica extends JPanel {
 		add(btnFavorito);
 
 		lblImagenCancion = new JLabel();
-		lblImagenCancion.setIcon(albumes.get(numeroAlbum).getImagen());
+		lblImagenCancion.setIcon(canciones.get(0).getImagen());
 		lblImagenCancion.setBounds(275, 150, 250, 250);
 		add(lblImagenCancion);
 
 		lblTitulo = new JLabel("");
-		lblTitulo.setText(canciones.get(numeroCancion).getNombre());
+		lblTitulo.setText(canciones.get(intinerador).getNombre());
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -301,9 +299,20 @@ public class PanelReproductorMusica extends JPanel {
 				JFrame f = new JFrame();
 				String playlist = JOptionPane.showInputDialog(f, "Introduzca el nombre de la playlist:");
 
+				
+				
+				if (gestionInfo.capacidadDePlaylist(gestionInfo.devolverIdPlaylist(playlist)) == 3 && !gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
+					JOptionPane.showMessageDialog(null,
+							"Has llegado a la capacidad maxima de la playlist " + playlist + "!!");
+				} else {
+					gestionInfo.añadirCancionAPlaylist(canciones.get(intinerador).getIdAudio(),
+							gestionInfo.devolverIdPlaylist(playlist));
+				}
+				
+				
+				
 				// Llama al método añadirCancionAPlaylist de la clase GestionInformacion para agregar la canción actual a la playlist especificada
-				gestionInfo.añadirCancionAPlaylist(canciones.get(intinerador).getIdAudio(),
-						gestionInfo.devolverIdPlaylist(playlist));
+				
 
 			}
 		});

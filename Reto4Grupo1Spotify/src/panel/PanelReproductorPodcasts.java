@@ -142,18 +142,6 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnCancionAnterior.setForeground(Color.WHITE);
 		btnCancionAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				/* Para que vuelba al inicio de reproduccion sin dar erro */
-//				if (aleatorio = true)
-//					if (aleatorio = true)
-//						if (intinerador == 0) {
-//							intinerador = podcasts.size() - 1;
-//						} else {
-//							intinerador = (intinerador - 1) % podcasts.size();
-//						}
-//				controladorDePodcast.setCancionEnReproduccion(intinerador);
-//				lblImagenPodcast.setIcon(podcasters.get(numeroPodcast).getImagen());
-//				lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
-				/* Para que vuelba al inicio de reproduccion sin dar erro */
 
 				if (intinerador == 0) {
 					intinerador = podcasts.size() - 1;
@@ -162,10 +150,10 @@ public class PanelReproductorPodcasts extends JPanel {
 							% podcasts.size();
 				}
 				
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
 
 					controladorDePodcast.setCancionEnReproduccion(intinerador);
-					lblImagenPodcast.setIcon(podcasters.get(numeroPodcast).getImagen());
+					lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
 					lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 					btnPlay.setVisible(true);
 					btnPlayStop.setVisible(false);
@@ -185,12 +173,10 @@ public class PanelReproductorPodcasts extends JPanel {
 						lblTitulo.setText("");
 						anuncio = true;
 					} else {
-//						btnmMenu.setVisible(true);
-//						btnFavorito.setVisible(true);
 						
 						intinerador = controladorDePodcast.ramdom();
 						controladorDePodcast.reproducir(intinerador);
-						lblImagenPodcast.setIcon(podcasters.get(0).getImagen());
+						lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
 						lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 						btnPlayStop.setVisible(true );	
 						anuncio = false;
@@ -206,23 +192,13 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnCancionSiguiente = new JButton(">");
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-//				intinerador = (intinerador + 1) % podcasts.size();
-//
-//				controladorDePodcast.setCancionEnReproduccion(intinerador);
-//				lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
-//				lblTitulo.setText("<html>" + podcasts.get(numeroPodcast).getNombre() + "</html>");
-//				btnPlay.setVisible(true);
-//				btnPlayStop.setVisible(false);
-//			}
-//		});
-				
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+			
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
 					intinerador = (intinerador + 1)
 							% podcasts.size();
 
 					controladorDePodcast.setCancionEnReproduccion(intinerador);
-					lblImagenPodcast.setIcon(podcasters.get(0).getImagen());
+					lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
 					lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 					btnPlay.setVisible(true);
 					btnPlayStop.setVisible(false);
@@ -232,8 +208,6 @@ public class PanelReproductorPodcasts extends JPanel {
 						btnCancionSiguiente.setEnabled(false);
 						btnPlay.setVisible(false);
 						btnPlayStop.setVisible(false);
-//						btnFavorito.setVisible(false);
-//						btnmMenu.setVisible(false);
 						timerAnuncio.restart();
 						
 						
@@ -243,12 +217,10 @@ public class PanelReproductorPodcasts extends JPanel {
 						lblTitulo.setText("");
 						anuncio = true;
 					} else {	
-//						btnmMenu.setVisible(true);
-//						btnFavorito.setVisible(true);
 						
 						intinerador = controladorDePodcast.ramdom();
 						controladorDePodcast.reproducir(intinerador);
-						lblImagenPodcast.setIcon(podcasters.get(0).getImagen());
+						lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
 						lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 						btnPlayStop.setVisible(true);	
 						anuncio = false;
