@@ -1,5 +1,10 @@
 package controlador;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -281,9 +286,6 @@ public class GestionBD {
 	public ArrayList<Cancion> devolverCanciones() {
 		return canciones;
 	}
-//	SELECT audio.idAudio, podcast.idPodcaster, audio.nombre, audio.duracion, podcast.colaboradores, podcast.descripcion, audio.imagen, audio.tipo
-//	FROM audio JOIN podcast audio.idAudio = podcast.idAudio
-//	WHERE podcast.idPodcaster 'NSN03';
 
 	/* ESTADISTICAS */
 
@@ -353,6 +355,123 @@ public class GestionBD {
 			e.printStackTrace();
 		}
 		return topPlaylist;
+	}
+
+	/* INSERTS MENU ADMINISTRADOR */
+
+	public void nuevoMusico(String nomArtistico, String desc, String tipo, File destino) {
+
+		String idMusico = generarIdMusico(nomArtistico);
+
+		try {
+			InputStream img = new FileInputStream(destino);
+
+			Statement consulta = conexion.createStatement();
+			String query = "INSERT INTO Musico VALUES ('" + idMusico + "', '" + nomArtistico + "', " + img + ", '"
+					+ tipo + "', '" + desc + "')";
+
+			consulta.executeUpdate(query);
+			consulta.close();
+
+			img.close();
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public void nuevoAlbum(String nomMusico, String titulo, String fecha, String genero, File destino) {
+		String idMusico = "";
+		for (int i = 0; i < musicos.size(); i++) {
+			if (nomMusico.equals(musicos.get(i).getNombreArtistico())) {
+				idMusico = musicos.get(i).getIdMusico();
+			}
+		}
+		String idAlbum = generarIdAlbum(idMusico, nomMusico);
+		try {
+			PreparedStatement consulta = conexion.prepareStatement(
+					"INSERT INTO album  (IDAlbum, Titulo, Año, Genero, Imagen,IDMusico) VALUES (?,?,?,?,?,?)");
+			consulta.setString(1, idAlbum);
+
+			consulta.setString(2, titulo);
+
+			consulta.setString(3, fecha);
+
+			consulta.setString(4, genero);
+
+			InputStream imagen = new FileInputStream(destino);
+			consulta.setBlob(5, imagen);
+
+			consulta.setString(6, idMusico);
+
+			consulta.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private String generarIdMusico(String nomArtistico) {
+		String codigo = nomArtistico.toUpperCase();
+
+		char[] musico = new char[5];
+
+		if (codigo.contains(" ")) {
+			String[] palabras = codigo.split(" ");
+			palabras[0].getChars(0, 2, musico, 0);
+			palabras[1].getChars(0, 3, musico, 2);
+		} else {
+			codigo.getChars(0, 5, musico, 0);
+		}
+		String idMusico = "";
+		for (int i = 0; i < musico.length; i++) {
+			idMusico += musico[i];
+		}
+		return idMusico;
+	}
+
+	private String generarIdAlbum(String idMusico, String nomArtistico) {
+
+		int cantAlbumes = numeroDeAlbumesPorMusico(nomArtistico);
+
+		char[] album = new char[5];
+
+		idMusico.getChars(0, 3, album, 0);
+
+		String idAlbum = "";
+		for (int i = 0; i < album.length; i++) {
+			idAlbum += album[i];
+		}
+		if (cantAlbumes < 10) {
+			idAlbum += 0;
+			idAlbum += cantAlbumes;
+		} else if (cantAlbumes > 10) {
+			idAlbum += cantAlbumes;
+		}
+		System.out.println(cantAlbumes);
+		return idAlbum;
+	}
+
+	private int numeroDeAlbumesPorMusico(String nombreMusico) {
+
+		int cantidad = 0;
+
+		try {
+			Statement consulta = conexion.createStatement();
+			String query = "select count(al.idAlbum) from album as al join musico as mu ON al.idMusico "
+					+ "= mu.idMusico where mu.nombreArtistico like '" + nombreMusico + "';";
+			ResultSet resultadoConsulta = consulta.executeQuery(query);
+			while (resultadoConsulta.next()) {
+				cantidad = resultadoConsulta.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return cantidad;
 	}
 
 }

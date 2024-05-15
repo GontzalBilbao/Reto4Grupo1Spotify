@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -38,6 +39,14 @@ public class PanelAñadirMusico extends JPanel {
 	private JLabel lblMostrarImagen;
 	private String nombreEscrito;
 
+	private File destino;
+
+	private String insNombre;
+	private String insDesc;
+	private String insTipo;
+
+	private JComboBox<String> comBoxTipoArtista;
+
 	public PanelAñadirMusico(VentanaPrincipal vp, GestionBD gestionBD) {
 		setSize(vp.getSize());
 		setBackground(SystemColor.control);
@@ -50,7 +59,8 @@ public class PanelAñadirMusico extends JPanel {
 				boolean validado = validarCampos(nombreEscrito);
 
 				if (validado != false) {
-					// añadir query de gestionBD de insertar musico
+					gestionBD.nuevoMusico(txtNombre.getText(), txtDescripcion.getText(),
+							comBoxTipoArtista.getSelectedItem().toString(), destino);
 					JOptionPane.showMessageDialog(null, "Se ha agregado el musico.");
 					vp.cambiarDePanel(14);
 				}
@@ -101,7 +111,7 @@ public class PanelAñadirMusico extends JPanel {
 		lblTipoArtista.setBounds(115, 325, 170, 20);
 		add(lblTipoArtista);
 
-		JComboBox<String> comBoxTipoArtista = new JComboBox<String>();
+		comBoxTipoArtista = new JComboBox<String>();
 		comBoxTipoArtista.setModel(new DefaultComboBoxModel<String>(new String[] { "SOLISTA", "GRUPO" }));
 		comBoxTipoArtista.setBounds(115, 360, 90, 25);
 		add(comBoxTipoArtista);
@@ -138,7 +148,7 @@ public class PanelAñadirMusico extends JPanel {
 							carpetaImagenes.mkdir();
 						}
 						// Crea la ruta del archivo para poder mostrarla más adelante
-						File destino = new File("imagenes/" + imagen.getName());
+						destino = new File("imagenes/" + imagen.getName());
 						// Creamos el objeto para leer el archivo a nivel de bytes que traigamos
 						InputStream leerImagen = new FileInputStream(imagen);
 						// Creamos el objeto para poder escribir el archivo en la carpeta
