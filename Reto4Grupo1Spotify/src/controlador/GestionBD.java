@@ -31,18 +31,17 @@ public class GestionBD {
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
 	public ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
-
 	public ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
+
 	public ArrayList<Musico> musicos = new ArrayList<Musico>();
 	public ArrayList<Album> albumes = new ArrayList<Album>();
-
 	public ArrayList<Cancion> canciones = new ArrayList<Cancion>();
+
 	public ArrayList<PlayList> playLists = new ArrayList<PlayList>();
 
 	public ArrayList<CancionesFavoritas> cancionesFav = new ArrayList<CancionesFavoritas>();
 	public ArrayList<PodcastsFavoritos> podcastsFav = new ArrayList<PodcastsFavoritos>();
 	public ArrayList<MasEscuchado> masEscuchado = new ArrayList<MasEscuchado>();
-
 	public ArrayList<TopPlayList> topPlaylist = new ArrayList<TopPlayList>();
 
 	public GestionBD() {
@@ -78,10 +77,10 @@ public class GestionBD {
 
 	/* QUERYS DE LOS CLIENTES */
 
-	public void cargarClientes() {
-		clientes.clear();
-		clientes = queryClientes();
-	}
+//	public void cargarClientes() {
+//		clientes.clear();
+//		clientes = queryClientes();
+//	}
 
 	public ArrayList<Cliente> queryClientes() {
 		try {
@@ -117,10 +116,10 @@ public class GestionBD {
 		}
 	}
 
-	public ArrayList<Cliente> devolverClientes() {
-		return clientes;
-
-	}
+//	public ArrayList<Cliente> devolverClientes() {
+//		return clientes;
+//
+//	}
 
 	public ArrayList<Podcaster> queryPodcasters() {
 		ImageIcon imagen = new ImageIcon();
@@ -144,21 +143,21 @@ public class GestionBD {
 
 	/* QUERYS DE LOS PODCASTERS */
 
-	public void cargarPodcasters() {
-		podcasters.clear();
-		podcasters = queryPodcasters();
-	}
-
-	public ArrayList<Podcaster> devolverPodcasters() {
-		return podcasters;
-	}
+//	public void cargarPodcasters() {
+//		podcasters.clear();
+//		podcasters = queryPodcasters();
+//	}
+//
+//	public ArrayList<Podcaster> devolverPodcasters() {
+//		return podcasters;
+//	}
 
 	/* QUERYS DE LOS PODCASTS POR EL PODCASTER */
 
-	public void cargarPodcastsDelPodcaster(String idPodcaster) {
-		podcasts.clear();
-		podcasts = queryPodcastsDelPodcaster(idPodcaster);
-	}
+//	public void cargarPodcastsDelPodcaster(String idPodcaster) {
+//		podcasts.clear();
+//		podcasts = queryPodcastsDelPodcaster(idPodcaster);
+//	}
 
 	public ArrayList<Podcast> queryPodcastsDelPodcaster(String idPodcaster) {
 		try {
@@ -184,16 +183,16 @@ public class GestionBD {
 		return podcasts;
 	}
 
-	public ArrayList<Podcast> devolverPodcasts() {
-		return podcasts;
-	}
+//	public ArrayList<Podcast> devolverPodcasts() {
+//		return podcasts;
+//	}
 
 	/* QUERYS DE LOS MUSICOS */
 
-	public void cargarMusicos() {
-		musicos.clear();
-		musicos = queryMusicos();
-	}
+//	public void cargarMusicos() {
+//		musicos.clear();
+//		musicos = queryMusicos();
+//	}
 
 	public ArrayList<Musico> queryMusicos() {
 		try {
@@ -218,16 +217,16 @@ public class GestionBD {
 		return musicos;
 	}
 
-	public ArrayList<Musico> devolverMusicos() {
-		return musicos;
-	}
+//	public ArrayList<Musico> devolverMusicos() {
+//		return musicos;
+//	}
 
 	/* QUERYS DE LOS ALBUMES POR EL MUSICO */
 
-	public void cargarAlbumesDelMusico(String idMusico) {
-		albumes.clear();
-		albumes = queryAlbumesDelMusico(idMusico);
-	}
+//	public void cargarAlbumesDelMusico(String idMusico) {
+//		albumes.clear();
+//		albumes = queryAlbumesDelMusico(idMusico);
+//	}
 
 	public ArrayList<Album> queryAlbumesDelMusico(String idMusico) {
 		ArrayList<Album> albumes = new ArrayList<Album>();
@@ -256,16 +255,16 @@ public class GestionBD {
 		return albumes;
 	}
 
-	public ArrayList<Album> devolverAlbumes() {
-		return albumes;
-	}
+//	public ArrayList<Album> devolverAlbumes() {
+//		return albumes;
+//	}
 
 	/* QUERYS DE LOS CANCIONES POR EL ALBUM */
 
-	public void cargarCancionesDelAlbum(String idAlbum) {
-		canciones.clear();
-		canciones = queryCancionesDelAlbum(idAlbum);
-	}
+//	public void cargarCancionesDelAlbum(String idAlbum) {
+//		canciones.clear();
+//		canciones = queryCancionesDelAlbum(idAlbum);
+//	}
 
 	public ArrayList<Cancion> queryCancionesDelAlbum(String idAlbum) {
 		try {
@@ -291,12 +290,12 @@ public class GestionBD {
 		return canciones;
 	}
 
-	public ArrayList<Cancion> devolverCanciones() {
-		return canciones;
-	}
+//	public ArrayList<Cancion> devolverCanciones() {
+//		return canciones;
+//	}
 
 	public String sacarPremium(String usuario) {
-		String premium = null;
+		String premium = "";
 		try {
 			String query = "SELECT `tipo`FROM `cliente` WHERE `usuario` = ?;";
 			PreparedStatement consulta = conexion.prepareStatement(query);
@@ -397,10 +396,10 @@ public class GestionBD {
 
 	/* PLAYLIST */
 
-	public void cargarPlayLists(String cliente) {
-		playLists.clear();
-		playLists = queryPlayListasDelUsuario(cliente);
-	}
+//	public void cargarPlayLists(String cliente) {
+//		playLists.clear();
+//		playLists = queryPlayListasDelUsuario(cliente);
+//	}
 
 	public ArrayList<PlayList> queryPlayListasDelUsuario(String cliente) {
 		try {
@@ -420,9 +419,9 @@ public class GestionBD {
 		return playLists;
 	}
 
-	public ArrayList<PlayList> devolverPlayLists() {
-		return playLists;
-	}
+//	public ArrayList<PlayList> devolverPlayLists() {
+//		return playLists;
+//	}
 
 	public void añadirPlayList(String nuevaPlayList, String idCliente) {
 
@@ -510,6 +509,50 @@ public class GestionBD {
 			e.printStackTrace();
 		}
 		return idCliente;
+	}
+
+	public void agregarCancionAPlaylist(int idPlaylist, String idCancion, String fechaAgregacion) {
+
+		try {
+			Statement insertarDatos = conexion.createStatement();
+			String insert = "INSERT INTO playlistcanciones VALUES ('" + idPlaylist + "','" + idCancion + "','"
+					+ fechaAgregacion + "')";
+			insertarDatos.executeUpdate(insert);
+			insertarDatos.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+//	public void cargarCancionesDePlaylist(String playlistSeleccionada) {
+//		canciones.clear();
+//		canciones = queryCancionesDePlaylist(playlistSeleccionada);
+//
+//	}
+
+	public ArrayList<Cancion> queryCancionesDePlaylist(String playlistSeleccionada) {
+		try {
+			String query = "SELECT audio.idAudio, cancion.idAlbum, audio.nombre, audio.duracion, cancion.artistaInvitado, album.imagen, audio.tipo FROM audio JOIN cancion JOIN playlistcanciones JOIN playlist JOIN album ON audio.idAudio = cancion.idCancion AND cancion.idCancion = playlistcanciones.idCancion AND playlistcanciones.idList = playlist.idList AND cancion.idAlbum = album.idAlbum WHERE playlist.titulo LIKE ?;";
+			PreparedStatement consulta = conexion.prepareStatement(query);
+			consulta.setString(1, playlistSeleccionada);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+
+			while (resultadoConsulta.next()) {
+
+				Blob imagenBlob = resultadoConsulta.getBlob(6);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				ImageIcon imagen = new ImageIcon(arrayImagen);
+
+				canciones.add(new Cancion(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4), resultadoConsulta.getString(5),
+						imagen, resultadoConsulta.getString(7)));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return canciones;
 	}
 
 }

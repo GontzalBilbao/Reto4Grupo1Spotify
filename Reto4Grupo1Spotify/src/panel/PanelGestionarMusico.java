@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import vista.VentanaPrincipal;
 
 public class PanelGestionarMusico extends JPanel {
@@ -22,8 +23,9 @@ public class PanelGestionarMusico extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @param gestionInfo 
 	 */
-	public PanelGestionarMusico(VentanaPrincipal vp, GestionBD gestionBD) {
+	public PanelGestionarMusico(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);

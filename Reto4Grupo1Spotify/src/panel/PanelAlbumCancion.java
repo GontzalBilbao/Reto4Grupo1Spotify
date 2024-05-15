@@ -39,14 +39,14 @@ public class PanelAlbumCancion extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelAlbumCancion(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelAlbumCancion(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.WHITE);
 		setLayout(null);
 
 		idMusico = gestionInfo.devolverIdArtistaSeleccionado();
-		gestionBD.cargarAlbumesDelMusico(idMusico);
-		albumes = gestionBD.devolverAlbumes();
+		gestionInfo.cargarAlbumesDelMusico(idMusico);
+		albumes = gestionInfo.devolverAlbumes();
 //		for (int i = 0; i < albumes.size(); i++) {
 //			System.out.println(albumes.get(i).getTitulo());
 //		}
@@ -56,8 +56,8 @@ public class PanelAlbumCancion extends JPanel {
 				albumSeleccionado = i;
 				año = albumes.get(i).getAño();
 				genero = albumes.get(i).getGenero();
-				gestionBD.cargarCancionesDelAlbum(albumes.get(i).getIdAlbum());
-				canciones = gestionBD.devolverCanciones();
+				gestionInfo.cargarCancionesDelAlbum(albumes.get(i).getIdAlbum());
+				canciones = gestionInfo.devolverCanciones();
 			}
 		}
 		
@@ -150,6 +150,7 @@ public class PanelAlbumCancion extends JPanel {
 					JPanel clickedPanel = (JPanel) e.getSource();
 					gestionInfo.guardarAlbumSeleccionado(tituloAlbum);
 					gestionInfo.guardarCancionSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
+					gestionInfo.guardarPanelAnteriorAlbumCanciones(true);
 					vp.cambiarDePanel(7);
 					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "

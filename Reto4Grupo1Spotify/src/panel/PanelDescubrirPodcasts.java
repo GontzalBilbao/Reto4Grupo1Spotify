@@ -31,14 +31,14 @@ public class PanelDescubrirPodcasts extends JPanel {
 	 * Create the panel.
 	 */
 
-	public PanelDescubrirPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelDescubrirPodcasts(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 
 		setSize(800, 600);
 		setBackground(Color.WHITE);
 		setLayout(null);
 
-		gestionBD.cargarPodcasters();
-		podcasters = gestionBD.devolverPodcasters();
+		gestionInfo.cargarPodcasters();
+		podcasters = gestionInfo.devolverPodcasters();
 		for (int i = 0; i < podcasters.size(); i++) {
 //			System.out.println(podcasters.get(i).getDescripcion());
 		}

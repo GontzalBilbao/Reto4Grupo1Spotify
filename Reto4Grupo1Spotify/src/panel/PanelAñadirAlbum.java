@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import modelo.Musico;
 import vista.VentanaPrincipal;
 
@@ -45,13 +46,13 @@ public class PanelAñadirAlbum extends JPanel {
 
 	private ArrayList<Musico> musicos = new ArrayList<Musico>();
 
-	public PanelAñadirAlbum(VentanaPrincipal vp, GestionBD gestionBD) {
+	public PanelAñadirAlbum(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
-		gestionBD.cargarMusicos();
-		musicos = gestionBD.devolverMusicos();
+		gestionInfo.cargarMusicos();
+		musicos = gestionInfo.devolverMusicos();
 
 		cargarAlbumes();
 

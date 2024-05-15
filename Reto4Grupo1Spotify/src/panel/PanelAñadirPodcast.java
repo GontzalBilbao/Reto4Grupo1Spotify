@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import modelo.Podcaster;
 import vista.VentanaPrincipal;
 
@@ -35,13 +36,13 @@ public class PanelAñadirPodcast extends JPanel {
 
 	private ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
 
-	public PanelAñadirPodcast(VentanaPrincipal vp, GestionBD gestionBD) {
+	public PanelAñadirPodcast(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
-		gestionBD.cargarPodcasters();
-		podcasters = gestionBD.devolverPodcasters();
+		gestionInfo.cargarPodcasters();
+		podcasters = gestionInfo.devolverPodcasters();
 
 		cargarPodcasters();
 

@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import vista.VentanaPrincipal;
 
 public class PanelAñadirPodcaster extends JPanel {
@@ -34,7 +35,7 @@ public class PanelAñadirPodcaster extends JPanel {
 	private JTextField txtDescripcion;
 	JLabel lblMostrarImagen;
 
-	public PanelAñadirPodcaster(VentanaPrincipal vp, GestionBD gestionBD) {
+	public PanelAñadirPodcaster(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);

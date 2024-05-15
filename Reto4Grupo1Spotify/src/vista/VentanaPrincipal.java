@@ -58,83 +58,83 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelBienvenida(this));
 			break;
 		case 1:
-			setContentPane(new PanelLogin(this, gestionBD, gestionInfo));
+			setContentPane(new PanelLogin(this, gestionInfo));
 			break;
 		case 2:
-			setContentPane(new PanelRegistro(this, gestionBD, gestionInfo));
+			setContentPane(new PanelRegistro(this, gestionInfo));
 			break;
 		case 3:
 			setContentPane(new PanelMenuCliente(this));
 			break;
 		case 4:
-			setContentPane(new PanelDescubrirMusica(this, gestionBD, gestionInfo));
+			setContentPane(new PanelDescubrirMusica(this, gestionInfo));
 			break;
 		case 5:
-			setContentPane(new PanelMusicoAlbumes(this, gestionBD, gestionInfo));
+			setContentPane(new PanelMusicoAlbumes(this, gestionInfo));
 			break;
 		case 6:
-			setContentPane(new PanelAlbumCancion(this, gestionBD, gestionInfo));
+			setContentPane(new PanelAlbumCancion(this, gestionInfo));
 			break;
 		case 7:
-			setContentPane(new PanelReproductorMusica(this, gestionBD, gestionInfo));
+			setContentPane(new PanelReproductorMusica(this, gestionInfo));
 			break;
 		case 8:
-			setContentPane(new PanelDescubrirPodcasts(this, gestionBD, gestionInfo));
+			setContentPane(new PanelDescubrirPodcasts(this, gestionInfo));
 			break;
 		case 9:
-			setContentPane(new PanelPodcasterPodcasts(this, gestionBD, gestionInfo));
+			setContentPane(new PanelPodcasterPodcasts(this, gestionInfo));
 			break;
 		case 10:
-			setContentPane(new PanelReproductorPodcasts(this, gestionBD, gestionInfo));
+			setContentPane(new PanelReproductorPodcasts(this, gestionInfo));
 			break;
 		case 11:
-			setContentPane(new PanelPerfil(this, gestionBD, gestionInfo));
+			setContentPane(new PanelPerfil(this, gestionInfo));
 			break;
 		case 12:
-			setContentPane(new PanelPlaylist(this, gestionBD, gestionInfo, gestionFich));
+			setContentPane(new PanelPlaylist(this, gestionInfo, gestionFich));
 			break;
 		case 13:
 			setContentPane(new PanelMenuAdministrador(this));
 			break;
 		case 14:
-			setContentPane(new PanelGestionarMusico(this, gestionBD));
+			setContentPane(new PanelGestionarMusico(this, gestionInfo));
 			break;
 		case 15:
-			setContentPane(new PanelAñadirMusico(this, gestionBD));
+			setContentPane(new PanelAñadirMusico(this, gestionInfo));
 			break;
 		case 16:
-			setContentPane(new PanelAñadirAlbum(this, gestionBD));
+			setContentPane(new PanelAñadirAlbum(this, gestionInfo));
 			break;
 		case 17:
-			setContentPane(new PanelAñadirCancion(this, gestionBD));
+			setContentPane(new PanelAñadirCancion(this, gestionInfo));
 			break;
 		case 18:
-			setContentPane(new PanelGestionarAlbum(this, gestionBD));
+			setContentPane(new PanelGestionarAlbum(this, gestionInfo));
 			break;
 		case 19:
-			setContentPane(new PanelGestionarCancion(this, gestionBD));
+			setContentPane(new PanelGestionarCancion(this, gestionInfo));
 			break;
 		case 20:
-			setContentPane(new PanelGestionarPodcaster(this, gestionBD));
+			setContentPane(new PanelGestionarPodcaster(this, gestionInfo));
 			break;
 		case 21:
-			setContentPane(new PanelAñadirPodcaster(this, gestionBD));
+			setContentPane(new PanelAñadirPodcaster(this, gestionInfo));
 			break;
 		case 22:
-			setContentPane(new PanelGestionarPodcast(this, gestionBD));
+			setContentPane(new PanelGestionarPodcast(this, gestionInfo));
 			break;
 		case 23:
-			setContentPane(new PanelAñadirPodcast(this, gestionBD));
+			setContentPane(new PanelAñadirPodcast(this, gestionInfo));
 			break;
 		case 24:
-			setContentPane(new PanelEstadistica(this, gestionBD));
+			setContentPane(new PanelEstadistica(this, gestionInfo));
 			break;
 		}
 
 	}
 
 	public void lanzarVentana() {
-		this.cambiarDePanel(3);
+		this.cambiarDePanel(1);
 		this.setVisible(true);
 	}
 

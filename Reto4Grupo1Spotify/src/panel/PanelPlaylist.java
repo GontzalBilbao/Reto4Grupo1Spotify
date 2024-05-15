@@ -38,7 +38,7 @@ public class PanelPlaylist extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelPlaylist(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo, GestionFicheros gestionFicheros) {
+	public PanelPlaylist(VentanaPrincipal vp, GestionInformacion gestionInfo, GestionFicheros gestionFicheros) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -79,8 +79,8 @@ public class PanelPlaylist extends JPanel {
 //		list.add(lista);
 //		
 		usuario = gestionInfo.devolverClienteSeleccionado();
-		gestionBD.cargarPlayLists(usuario);
-		playlists = gestionBD.devolverPlayLists();
+		gestionInfo.cargarPlayLists(usuario);
+		playlists = gestionInfo.devolverPlayLists();
 		for (int i = 0; i < playlists.size(); i++) {
 			System.out.println(playlists.get(i).getTitulo());
 		}
@@ -115,7 +115,7 @@ public class PanelPlaylist extends JPanel {
 					
 					idCliente = "123";
 					
-					gestionBD.añadirPlayList(nuevaPlayList, idCliente);
+					gestionInfo.añadirPlayList(nuevaPlayList, idCliente);
 					JOptionPane.showMessageDialog(null, "PlayList añadida con éxito", "PlayList Guardada",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -130,7 +130,7 @@ public class PanelPlaylist extends JPanel {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				gestionBD.eliminarPlayList(list.getSelectedValue().toString());
+				gestionInfo.eliminarPlayList(list.getSelectedValue().toString());
 				JOptionPane.showMessageDialog(null, "PlayList eliminada con éxito", "PlayList Eliminada",
 						JOptionPane.INFORMATION_MESSAGE);
 				

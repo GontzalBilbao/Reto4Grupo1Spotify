@@ -1,7 +1,6 @@
 package controlador;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -34,12 +33,6 @@ public class GestionBDTest {
 	}
 
 	@Test
-	public void testCargarClientes() {
-		gestionBD.cargarClientes();
-
-	}
-
-	@Test
 	public void testQueryClientes() {
 		ArrayList<Cliente> clientes = gestionBD.queryClientes();
 
@@ -60,12 +53,6 @@ public class GestionBDTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testDevolverClientes() {
-		gestionBD.cargarClientes();
-		ArrayList<Cliente> clientes = gestionBD.devolverClientes();
-		assertNotNull(clientes.get(1).getIdCliente());
-	}
 
 	@Test
 	public void testQueryPodcasters() {

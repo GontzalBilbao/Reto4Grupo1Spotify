@@ -5,15 +5,15 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
@@ -49,10 +49,10 @@ public class PanelReproductorMusica extends JPanel {
 	private String tituloAlbumSeleccionado = "";
 	private String nombreCancionSeleccionada = "";
 	private int numeroCancion = 0;
-	private int numeroAlbum = 0;
 	private String idMusico = "";
 	private String idCancionActual = "";
 	private int idPlaylistElegida = 0;
+	private boolean panelAnteriorAlbumCanciones;
 	
 	private ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 	private ArrayList<Album> albumes = new ArrayList<Album>();
@@ -65,7 +65,7 @@ public class PanelReproductorMusica extends JPanel {
 	 * Create the panel.
 	 */
 
-	public PanelReproductorMusica(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelReproductorMusica(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		
 		Timer timerAnuncio = new Timer(20000, new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -74,17 +74,18 @@ public class PanelReproductorMusica extends JPanel {
 		    }
 		});
 		
+		panelAnteriorAlbumCanciones = gestionInfo.devolverPanelAnteriorAlbumCanciones();
 		
+		if (panelAnteriorAlbumCanciones == true) {
 		idMusico = gestionInfo.devolverIdArtistaSeleccionado();
 		tituloAlbumSeleccionado = gestionInfo.devolverAlbumSeleccionado();
 		nombreCancionSeleccionada = gestionInfo.devolverCancionSeleccionado();
-		gestionBD.cargarAlbumesDelMusico(idMusico);
-		albumes = gestionBD.devolverAlbumes();
+		gestionInfo.cargarAlbumesDelMusico(idMusico);
+		albumes = gestionInfo.devolverAlbumes();
 		for (int i = 0; i < albumes.size(); i++) {
 			if(tituloAlbumSeleccionado.equals(albumes.get(i).getTitulo())) {
-				gestionBD.cargarCancionesDelAlbum(albumes.get(i).getIdAlbum());
-				canciones = gestionBD.devolverCanciones();
-				numeroAlbum = i;
+				gestionInfo.cargarCancionesDelAlbum(albumes.get(i).getIdAlbum());
+				canciones = gestionInfo.devolverCanciones();
 				for (int j = 0; j < canciones.size(); j++) {
 					if (nombreCancionSeleccionada.equals(canciones.get(j).getNombre())) {
 						numeroCancion = j;
@@ -93,7 +94,15 @@ public class PanelReproductorMusica extends JPanel {
 			}
 			
 		}
-		
+		for (int i = 0; i < canciones.size(); i++) {
+			System.out.println(canciones.get(i).getNombre());
+		}
+		} else {
+			String playlistSeleccionada = gestionInfo.devolverPlaylistSeleccionada();
+			gestionInfo.cargarCancionesDePlaylist(playlistSeleccionada);
+			canciones = gestionInfo.devolverCanciones();
+			numeroCancion = 0;
+		}
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);	
@@ -110,7 +119,11 @@ public class PanelReproductorMusica extends JPanel {
 		JButton btnAtras = new JButton("ATRAS");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(6);
+				if (panelAnteriorAlbumCanciones == true) {
+					vp.cambiarDePanel(6);
+				} else {
+					vp.cambiarDePanel(11);
+				}
 			}
 		});
 		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -142,12 +155,12 @@ public class PanelReproductorMusica extends JPanel {
 							% canciones.size();
 				}
 				
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("premium")) {
 					intinerador = (intinerador + 1)
 							% canciones.size();
 
 					controladorDeSonido.setCancionEnReproduccion(intinerador);
-					lblImagenCancion.setIcon(canciones.get(0).getImagen());
+					lblImagenCancion.setIcon(canciones.get(intinerador).getImagen());
 					lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
 					btnPlay.setVisible(true);
 					btnPlayStop.setVisible(false);
@@ -172,7 +185,7 @@ public class PanelReproductorMusica extends JPanel {
 						
 						intinerador = controladorDeSonido.ramdom();
 						controladorDeSonido.reproducir(intinerador);
-						lblImagenCancion.setIcon(canciones.get(0).getImagen());
+						lblImagenCancion.setIcon(canciones.get(intinerador).getImagen());
 						lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
 						btnPlayStop.setVisible(true );	
 						anuncio = false;
@@ -190,12 +203,12 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
 					intinerador = (intinerador + 1)
 							% canciones.size();
 
 					controladorDeSonido.setCancionEnReproduccion(intinerador);
-					lblImagenCancion.setIcon(canciones.get(0).getImagen());
+					lblImagenCancion.setIcon(canciones.get(intinerador).getImagen());
 					lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
 					btnPlay.setVisible(true);
 					btnPlayStop.setVisible(false);
@@ -221,7 +234,7 @@ public class PanelReproductorMusica extends JPanel {
 						
 						intinerador = controladorDeSonido.ramdom();
 						controladorDeSonido.reproducir(intinerador);
-						lblImagenCancion.setIcon(canciones.get(0).getImagen());
+						lblImagenCancion.setIcon(canciones.get(intinerador).getImagen());
 						lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
 						btnPlayStop.setVisible(true);	
 						anuncio = false;
@@ -255,7 +268,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnFavorito = new JButton("FAVORITO");
 		btnFavorito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gestionBD.agregarFavorito(gestionInfo.devolverIdCliente() ,canciones.get(intinerador).getIdAudio());
+				gestionInfo.agregarFavorito(gestionInfo.devolverIdCliente() ,canciones.get(intinerador).getIdAudio());
 			}
 		});
 		btnFavorito.setBackground(Color.BLACK);
@@ -265,7 +278,7 @@ public class PanelReproductorMusica extends JPanel {
 		add(btnFavorito);
 
 		lblImagenCancion = new JLabel();
-		lblImagenCancion.setIcon(albumes.get(numeroAlbum).getImagen());
+		lblImagenCancion.setIcon(canciones.get(numeroCancion).getImagen());
 		lblImagenCancion.setBounds(275, 150, 250, 250);
 		add(lblImagenCancion);
 
@@ -297,25 +310,13 @@ public class PanelReproductorMusica extends JPanel {
 		btnmMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showPopupMenu(btnmMenu);
-
-				
-//				JFrame f = new JFrame();
-//				String playlist = JOptionPane.showInputDialog(f, "Introduzca el nombre de la playlist:");
-//
-//				if (gestionInfo.capacidadDePlaylist(gestionInfo.devolverIdPlaylist(playlist)) == 3) {
-//					JOptionPane.showMessageDialog(null,
-//							"Has llegado a la capacidad maxima de la playlist " + playlist + "!!");
-//				} else {
-//					gestionInfo.añadirCancionAPlaylist(canciones.get(intinerador).getIdAudio(),
-//							gestionInfo.devolverIdPlaylist(playlist));
-//				}
 			}
 		});
 		popupMenu = new JPopupMenu();
         JMenu addToPlaylistMenu = new JMenu("Añadir a Playlist");
         
-		gestionBD.cargarPlayLists(gestionInfo.devolverClienteSeleccionado());
-		playlists = gestionBD.devolverPlayLists();
+		gestionInfo.cargarPlayLists(gestionInfo.devolverClienteSeleccionado());
+		playlists = gestionInfo.devolverPlayLists();
 		
         for (int i = 0; i < playlists.size(); i++) {
         	System.out.println(playlists.get(i).getTitulo());
@@ -326,7 +327,10 @@ public class PanelReproductorMusica extends JPanel {
 			        String infoMenuItem = menuItem.getText();
 			        int idPlaylist = cogerIdPlaylistSeleccionada(infoMenuItem);
 			        String idCancion = cogerIdCancionEnReproduccion(lblTitulo.getText());
-//			        String fechaAgregacion = 
+			        LocalDate fechaActual = LocalDate.now();
+			        DateTimeFormatter fechaFormateada = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			        String fechaAgregacion = fechaActual.format(fechaFormateada);
+			        gestionInfo.agregarCancionAPlaylist(idPlaylist, idCancion, fechaAgregacion);
 //					addToPlaylist(e);
 				}
 			});

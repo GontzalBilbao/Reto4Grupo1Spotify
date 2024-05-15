@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import modelo.Album;
 import modelo.Musico;
 import vista.VentanaPrincipal;
@@ -43,15 +44,16 @@ public class PanelAñadirCancion extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @param gestionInfo 
 	 */
-	public PanelAñadirCancion(VentanaPrincipal vp, GestionBD gestionBD) {
+	public PanelAñadirCancion(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
-		gestionBD.cargarMusicos();
-		musicos = gestionBD.devolverMusicos();
-		albumes = gestionBD.devolverAlbumes();
+		gestionInfo.cargarMusicos();
+		musicos = gestionInfo.devolverMusicos();
+		albumes = gestionInfo.devolverAlbumes();
 
 		cargarMusicos();
 		JButton btnFinalizar = new JButton("FINALIZAR");
@@ -152,7 +154,7 @@ public class PanelAñadirCancion extends JPanel {
 		comBoxMusicos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				comBoxAlbumes.removeAllItems();
-				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionBD);
+				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionInfo);
 				for (int i = 0; i < albumes.size(); i++) {
 					comBoxAlbumes.addItem(arrayAlbumes[i]);
 				}
@@ -196,10 +198,10 @@ public class PanelAñadirCancion extends JPanel {
 		return validar;
 	}
 
-	private void cargarAlbumesPorArtista(String nombreArtistico, GestionBD gestion) {
+	private void cargarAlbumesPorArtista(String nombreArtistico, GestionInformacion gestionInfo) {
 		albumes.clear();
-		gestion.cargarAlbumesDelMusico(nombreArtistico);
-		albumes = gestion.devolverAlbumes();
+		gestionInfo.cargarAlbumesDelMusico(nombreArtistico);
+		albumes = gestionInfo.devolverAlbumes();
 		arrayAlbumes = new String[albumes.size()];
 		for (int i = 0; i < albumes.size(); i++) {
 			arrayAlbumes[i] = albumes.get(i).getTitulo();

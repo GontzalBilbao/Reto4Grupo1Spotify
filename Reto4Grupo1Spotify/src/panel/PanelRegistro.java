@@ -46,7 +46,7 @@ public class PanelRegistro extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelRegistro(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelRegistro(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 
 //		generarIdCliente();
 //		for (int i = 0; i < clientes.size(); i++) {
@@ -82,9 +82,9 @@ public class PanelRegistro extends JPanel {
 					JOptionPane.showMessageDialog(null, "Introduzca la fecha", "Error de Registro",
 							JOptionPane.ERROR_MESSAGE);
 				} else if (campos == true && contra == true) {
-					String idCliente = generarIdCliente(gestionBD);
+					String idCliente = generarIdCliente(gestionInfo);
 					String fechaRegistro = generarFechaRegistro();
-					gestionBD.agregarCliente(idCliente, txtNombre.getText(), txtApellido.getText(),
+					gestionInfo.agregarNuevoCliente(idCliente, txtNombre.getText(), txtApellido.getText(),
 							txtUsuario.getText(), txtContrasena.getText(), fechaNac, fechaRegistro,
 							comboBoxSuscripcion.getSelectedItem().toString(),
 							comboBoxIdioma.getSelectedItem().toString());
@@ -220,9 +220,9 @@ public class PanelRegistro extends JPanel {
 		return fechaRegistroString;
 	}
 
-	private String generarIdCliente(GestionBD gestionBD) {
-		gestionBD.cargarClientes();
-		clientes = gestionBD.devolverClientes();
+	private String generarIdCliente(GestionInformacion gestionInfo) {
+		gestionInfo.cargarClientes();
+		clientes = gestionInfo.devolverClientes();
 		String idCliente = "C000";
 		int idClientePuro = clientes.size() + 1;
 		if (idClientePuro < 10) {
@@ -233,6 +233,9 @@ public class PanelRegistro extends JPanel {
 			idCliente = "C0" + Integer.toString(idClientePuro);
 		} else {
 			idCliente = "C" + Integer.toString(idClientePuro);
+		}
+		for (int i = 0; i < clientes.size(); i++) {
+			System.out.println(clientes.get(i).getNombre());
 		}
 		System.out.println(idCliente);
 		return idCliente;

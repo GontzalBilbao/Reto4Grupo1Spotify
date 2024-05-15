@@ -14,13 +14,14 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import vista.VentanaPrincipal;
 
 public class PanelGestionarPodcast extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public PanelGestionarPodcast(VentanaPrincipal vp, GestionBD gestionBD) {
+	public PanelGestionarPodcast(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);

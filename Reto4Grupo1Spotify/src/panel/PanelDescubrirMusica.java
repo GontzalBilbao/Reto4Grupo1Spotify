@@ -33,15 +33,15 @@ public class PanelDescubrirMusica extends JPanel {
 	 * Create the panel.
 	 */
 
-	public PanelDescubrirMusica(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelDescubrirMusica(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 
 		setSize(800, 600);
 		setBackground(Color.WHITE);
 
 		setLayout(null);
 
-		gestionBD.cargarMusicos();
-		musicos = gestionBD.devolverMusicos();
+		gestionInfo.cargarMusicos();
+		musicos = gestionInfo.devolverMusicos();
 		for (int i = 0; i < musicos.size(); i++) {
 //			System.out.println(musicos.get(i).getDescripcion());
 		}

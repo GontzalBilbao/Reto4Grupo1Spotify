@@ -39,13 +39,13 @@ public class PanelMusicoAlbumes extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelMusicoAlbumes(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelMusicoAlbumes(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.WHITE);
 		setLayout(null);
 
-		gestionBD.cargarMusicos();
-		musicos = gestionBD.devolverMusicos();
+		gestionInfo.cargarMusicos();
+		musicos = gestionInfo.devolverMusicos();
 		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
 		for (int i = 0; i < musicos.size(); i++) {
 			if (nombreArtista.equals(musicos.get(i).getNombreArtistico())) {
@@ -53,8 +53,8 @@ public class PanelMusicoAlbumes extends JPanel {
 				idMusico = musicos.get(i).getIdMusico();
 				caracteristica = musicos.get(i).getCaracteristica();
 				descripcion = musicos.get(i).getDescripcion();
-				gestionBD.cargarAlbumesDelMusico(musicos.get(i).getIdMusico());
-				albumes = gestionBD.devolverAlbumes();
+				gestionInfo.cargarAlbumesDelMusico(musicos.get(i).getIdMusico());
+				albumes = gestionInfo.devolverAlbumes();
 			}
 		}
 

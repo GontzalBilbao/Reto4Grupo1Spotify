@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import vista.VentanaPrincipal;
 
 public class PanelAñadirMusico extends JPanel {
@@ -38,7 +39,7 @@ public class PanelAñadirMusico extends JPanel {
 	private JLabel lblMostrarImagen;
 	private String nombreEscrito;
 
-	public PanelAñadirMusico(VentanaPrincipal vp, GestionBD gestionBD) {
+	public PanelAñadirMusico(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(vp.getSize());
 		setBackground(SystemColor.control);
 		setLayout(null);

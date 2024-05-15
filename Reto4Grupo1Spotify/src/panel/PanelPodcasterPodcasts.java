@@ -38,22 +38,22 @@ public class PanelPodcasterPodcasts extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelPodcasterPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelPodcasterPodcasts(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.WHITE);
 
 		setLayout(null);
 
-		gestionBD.cargarPodcasters();
-		podcasters = gestionBD.devolverPodcasters();
+		gestionInfo.cargarPodcasters();
+		podcasters = gestionInfo.devolverPodcasters();
 		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
 		for (int i = 0; i < podcasters.size(); i++) {
 			if (nombreArtista.equals(podcasters.get(i).getNombreArtistico())) {
 				podcasterSeleccionado = i;
 				genero = podcasters.get(i).getGenero();
 				descripcion = podcasters.get(i).getDescripcion();
-				gestionBD.cargarPodcastsDelPodcaster(podcasters.get(i).getIdPodcaster());
-				podcasts = gestionBD.devolverPodcasts();
+				gestionInfo.cargarPodcastsDelPodcaster(podcasters.get(i).getIdPodcaster());
+				podcasts = gestionInfo.devolverPodcasts();
 			}
 		}
 

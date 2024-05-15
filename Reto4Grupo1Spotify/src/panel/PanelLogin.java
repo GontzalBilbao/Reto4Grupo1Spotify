@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -35,11 +34,11 @@ public class PanelLogin extends JPanel {
 	 */
 
 
-	public PanelLogin(VentanaPrincipal v, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelLogin(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 
 
-		gestionBD.cargarClientes();
-		clientes = gestionBD.devolverClientes();
+		gestionInfo.cargarClientes();
+		clientes = gestionInfo.devolverClientes();
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -81,7 +80,7 @@ public class PanelLogin extends JPanel {
 		btnRegistrarse.setForeground(Color.BLACK);
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(2);
+				vp.cambiarDePanel(2);
 			}
 		});
 		btnRegistrarse.setBounds(90, 450, 180, 35);
@@ -94,22 +93,22 @@ public class PanelLogin extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 
-				boolean adminCorrecto = validarAdmin(gestionBD);
+				boolean adminCorrecto = validarAdmin();
 
 
 
-				boolean usuarioCorrecto = validarUsuario(gestionBD, gestionInfo);
+				boolean usuarioCorrecto = validarUsuario(gestionInfo);
 
 				if (adminCorrecto == true) {
 					JOptionPane.showMessageDialog(null, "Bienvenido/a Admin", "Administrador",
 							JOptionPane.INFORMATION_MESSAGE);
-					v.cambiarDePanel(13);
+					vp.cambiarDePanel(13);
 				} else {
 
 					if (usuarioCorrecto == true) {
 						JOptionPane.showMessageDialog(null, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
 						gestionInfo.guardarClienteSeleccionado(txtUsuario.getText());
-						v.cambiarDePanel(3);
+						vp.cambiarDePanel(3);
 					} else {
 						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error de Login",
 								JOptionPane.ERROR_MESSAGE);
@@ -133,10 +132,12 @@ public class PanelLogin extends JPanel {
 
 	}
 
-	private boolean validarUsuario(GestionBD gestionBD, GestionInformacion gestionInfo) {
+	private boolean validarUsuario(GestionInformacion gestionInfo) {
 		boolean usuarioCorrecto = false;
-		gestionBD.queryClientes();
-		clientes = gestionBD.devolverClientes();
+		gestionInfo.cargarClientes();
+		clientes = gestionInfo.devolverClientes();
+//		gestionBD.queryClientes();
+//		clientes = gestionBD.devolverClientes();
 		for (int i = 0; i < clientes.size(); i++) {
 			if (txtUsuario.getText().equals(clientes.get(i).getUsuario())) {
 				if (txtContraseña.getText().equals(clientes.get(i).getContrasena())) {
@@ -153,7 +154,7 @@ public class PanelLogin extends JPanel {
 		return usuarioCorrecto;
 	}
 
-	private boolean validarAdmin(GestionBD gestionBD) {
+	private boolean validarAdmin() {
 		boolean adminCorrecto = false;
 		String usuario = txtUsuario.getText();
 		String contra = txtContraseña.getText();
