@@ -24,4 +24,7 @@ public interface IControladorSonido {
 
 	void anuncio();
 	
+	
+	
+	
 }
