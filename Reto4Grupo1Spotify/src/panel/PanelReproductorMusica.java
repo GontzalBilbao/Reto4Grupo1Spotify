@@ -153,6 +153,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnPerfil.setForeground(Color.WHITE);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				vp.nPanel = 7;
 				vp.cambiarDePanel(11);
 			}
 		});

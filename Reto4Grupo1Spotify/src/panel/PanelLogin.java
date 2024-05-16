@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -11,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -49,7 +53,7 @@ public class PanelLogin extends JPanel {
 		lblUsuario.setBounds(220, 250, 90, 20);
 		add(lblUsuario);
 
-		txtContraseña = new JTextField();
+		txtContraseña = new JPasswordField();
 		txtContraseña.setBounds(330, 300, 200, 20);
 		add(txtContraseña);
 		txtContraseña.setColumns(10);
@@ -87,6 +91,17 @@ public class PanelLogin extends JPanel {
 		add(btnRegistrarse);
 
 
+        KeyListener enterKeyListener = new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    btnLogin.doClick();
+                }
+            }
+        };
+
+        txtUsuario.addKeyListener(enterKeyListener);
+        txtContraseña.addKeyListener(enterKeyListener);
+        
 		btnLogin = new JButton("INICIAR SESIÓN");
 		btnLogin.setBackground(Color.BLACK);
 		btnLogin.addActionListener(new ActionListener() {
@@ -98,17 +113,17 @@ public class PanelLogin extends JPanel {
 				boolean usuarioCorrecto = validarUsuario(gestionInfo);
 
 				if (adminCorrecto == true) {
-					JOptionPane.showMessageDialog(null, "Bienvenido/a Admin", "Administrador",
+					JOptionPane.showMessageDialog(vp, "Bienvenido/a Admin", "Administrador",
 							JOptionPane.INFORMATION_MESSAGE);
 					vp.cambiarDePanel(13);
 				} else {
 
 					if (usuarioCorrecto == true) {
-						JOptionPane.showMessageDialog(null, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(vp, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
 						gestionInfo.guardarUsuarioCliente(txtUsuario.getText());
 						vp.cambiarDePanel(3);
 					} else {
-						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error de Login",
+						JOptionPane.showMessageDialog(vp, "Usuario o contraseña incorrectos", "Error de Login",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}

@@ -526,7 +526,13 @@ public class GestionBD {
 	public void eliminarCancionDePlayList(String cancionSeleccionada) {
 		try {
 			Statement eliminarDatos = conexion.createStatement();
-			String delete = "Delete playlistCanciones.idList, playlistCanciones.idCancion, playlistCanciones.fechaPlayListCancion FROM playlistCanciones join cancion on playlistCanciones.idCancion = cancion.idCancion join audio on audio.idAudio = cancion.idCancion WHERE audio.nombre = '" + cancionSeleccionada + "';";
+			String delete = "delete \r\n"
+					+ "from playlistcanciones\r\n"
+					+ "where idCancion =   (select idCancion\r\n"
+					+ "                from cancion\r\n"
+					+ "                where idCancion =   (select idaudio\r\n"
+					+ "                                    from audio\r\n"
+					+ "                                    where nombre = '" + cancionSeleccionada + "'));";
 			
 			eliminarDatos.executeUpdate(delete);
 			eliminarDatos.close();

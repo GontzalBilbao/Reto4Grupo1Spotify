@@ -14,7 +14,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -59,7 +58,7 @@ public class PanelAlbumCancion extends JPanel {
 				canciones = gestionInfo.devolverCanciones();
 			}
 		}
-		
+
 //		for (int i = 0; i < canciones.size(); i++) {
 //			System.out.println(canciones.get(i).getNombre());
 //		}
@@ -70,12 +69,15 @@ public class PanelAlbumCancion extends JPanel {
 		add(lblTituloLista);
 
 		JButton btnAtrás = new JButton("Atrás");
+		btnAtrás.setBackground(Color.BLACK);
+		btnAtrás.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnAtrás.setForeground(Color.WHITE);
 		btnAtrás.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(5);
 			}
 		});
-		btnAtrás.setBounds(10, 11, 89, 23);
+		btnAtrás.setBounds(10, 0, 90, 35);
 		add(btnAtrás);
 
 		JLabel lblTitulo = new JLabel("Nombre: " + tituloAlbum);
@@ -88,7 +90,7 @@ public class PanelAlbumCancion extends JPanel {
 		ImageIcon ImagenReescalada = new ImageIcon(nuevaImagen);
 		lblImagenAlbum.setIcon(ImagenReescalada);
 		lblImagenAlbum.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		lblImagenAlbum.setBounds(20, 50, 175, 190);
+		lblImagenAlbum.setBounds(10, 50, 175, 190);
 		add(lblImagenAlbum);
 
 		JLabel lblAño = new JLabel("Año publicación: " + año);
@@ -102,12 +104,16 @@ public class PanelAlbumCancion extends JPanel {
 		add(lblGenero);
 
 		JButton btnPerfil = new JButton("Perfil");
+		btnPerfil.setBackground(Color.BLACK);
+		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnPerfil.setForeground(Color.WHITE);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				vp.nPanel = 6;
 				vp.cambiarDePanel(11);
 			}
 		});
-		btnPerfil.setBounds(685, 11, 89, 23);
+		btnPerfil.setBounds(686, 0, 90, 35);
 		add(btnPerfil);
 
 		// Crear un panel para contener los JLabels
@@ -151,8 +157,8 @@ public class PanelAlbumCancion extends JPanel {
 					gestionInfo.guardarCancionSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					gestionInfo.guardarPanelAnteriorAlbumCanciones(true);
 					vp.cambiarDePanel(7);
-					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
-							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
+//					JOptionPane.showMessageDialog(vp, "Has hecho clic en: " + clickedPanel.getName()
+//							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
 //													+ ((JLabel) clickedPanel.getComponent(2)).getText());
 
 				}
@@ -168,7 +174,7 @@ public class PanelAlbumCancion extends JPanel {
 		scrollPaneCanciones.setBorder(null);
 //						scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
 //						scrollPane.setOpaque(false);
-		scrollPaneCanciones.setSize(300, 500);
+		scrollPaneCanciones.setSize(323, 502);
 		scrollPaneCanciones.setLocation(453, 50);
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneCanciones);
@@ -213,8 +219,8 @@ public class PanelAlbumCancion extends JPanel {
 					gestionInfo.guardarAlbumSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					gestionInfo.guardarIdArtistaSeleccionado(idMusico);
 					vp.cambiarDePanel(6);
-					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
-							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
+//					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
+//							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
 //											+ ((JLabel) clickedPanel.getComponent(2)).getText());
 
 				}
@@ -231,7 +237,7 @@ public class PanelAlbumCancion extends JPanel {
 //				scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
 //				scrollPane.setOpaque(false);
 		scrollPaneOtrosAlbumes.setSize(412, 283);
-		scrollPaneOtrosAlbumes.setLocation(20, 267);
+		scrollPaneOtrosAlbumes.setLocation(10, 269);
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneOtrosAlbumes);
 
@@ -242,23 +248,29 @@ public class PanelAlbumCancion extends JPanel {
 		lblNoHayCanciones.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 		lblNoHayCanciones.setBounds(520, 190, 189, 175);
 		add(lblNoHayCanciones);
-		
+
 		String textoLabelOtrosAlbumes = "NO HAY MÁS ÁLBUMES DE ESTE ARTISTA GUARDADOS";
-		JLabel lblNoHayMasAlbumes = new JLabel("<html>	" + textoLabelOtrosAlbumes.replaceAll("\\n", "<br>") + "</html>");
+		JLabel lblNoHayMasAlbumes = new JLabel(
+				"<html>	" + textoLabelOtrosAlbumes.replaceAll("\\n", "<br>") + "</html>");
 		lblNoHayMasAlbumes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNoHayMasAlbumes.setVerticalAlignment(SwingConstants.CENTER);
 		lblNoHayMasAlbumes.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 		lblNoHayMasAlbumes.setBounds(120, 320, 214, 175);
 		add(lblNoHayMasAlbumes);
-		
-		if(canciones.isEmpty()) {
+
+		JLabel lblTituloListaAlbumes = new JLabel("OTROS ALBUMES");
+		lblTituloListaAlbumes.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
+		lblTituloListaAlbumes.setBounds(111, 241, 200, 28);
+		add(lblTituloListaAlbumes);
+
+		if (canciones.isEmpty()) {
 			panelCanciones.setVisible(false);
 			scrollPaneCanciones.setVisible(false);
 		} else {
 			lblNoHayCanciones.setVisible(false);
 		}
-		
-		if(albumes.size()<1) {
+
+		if (albumes.size() < 1) {
 			panelOtrosAlbumes.setVisible(false);
 			scrollPaneOtrosAlbumes.setVisible(false);
 		} else {

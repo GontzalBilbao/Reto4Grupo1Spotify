@@ -14,12 +14,10 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
-import controlador.GestionBD;
 import controlador.GestionInformacion;
 import modelo.Album;
 import modelo.Musico;
@@ -64,12 +62,15 @@ public class PanelMusicoAlbumes extends JPanel {
 		add(lblTituloLista);
 
 		JButton btnAtrás = new JButton("Atrás");
+		btnAtrás.setBackground(Color.BLACK);
+		btnAtrás.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnAtrás.setForeground(Color.WHITE);
 		btnAtrás.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(4);
 			}
 		});
-		btnAtrás.setBounds(10, 11, 89, 23);
+		btnAtrás.setBounds(10, 0, 90, 35);
 		add(btnAtrás);
 
 		JLabel lblNombre = new JLabel("Nombre: " + nombreArtista);
@@ -97,12 +98,16 @@ public class PanelMusicoAlbumes extends JPanel {
 		add(lblDescripcion);
 
 		JButton btnPerfil = new JButton("Perfil");
+		btnPerfil.setBackground(Color.BLACK);
+		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnPerfil.setForeground(Color.WHITE);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				vp.nPanel = 5;
 				vp.cambiarDePanel(11);
 			}
 		});
-		btnPerfil.setBounds(685, 11, 89, 23);
+		btnPerfil.setBounds(686, 0, 90, 35);
 		add(btnPerfil);
 
 		// Crear un panel para contener los JLabels
@@ -144,8 +149,8 @@ public class PanelMusicoAlbumes extends JPanel {
 					gestionInfo.guardarAlbumSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					gestionInfo.guardarIdArtistaSeleccionado(idMusico);
 					vp.cambiarDePanel(6);
-					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
-							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
+//					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
+//							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
 //													+ ((JLabel) clickedPanel.getComponent(2)).getText());
 
 				}
@@ -161,7 +166,7 @@ public class PanelMusicoAlbumes extends JPanel {
 		scrollPaneAlbumes.setBorder(null);
 //						scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
 //						scrollPane.setOpaque(false);
-		scrollPaneAlbumes.setSize(300, 500);
+		scrollPaneAlbumes.setSize(323, 502);
 		scrollPaneAlbumes.setLocation(453, 50);
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneAlbumes);
@@ -205,8 +210,8 @@ public class PanelMusicoAlbumes extends JPanel {
 					JPanel clickedPanel = (JPanel) e.getSource();
 					gestionInfo.guardarArtistaSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					vp.cambiarDePanel(5);
-					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
-							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
+//					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
+//							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
 //											+ ((JLabel) clickedPanel.getComponent(2)).getText());
 
 				}
@@ -223,7 +228,7 @@ public class PanelMusicoAlbumes extends JPanel {
 //				scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
 //				scrollPane.setOpaque(false);
 		scrollPaneOtrosMusicos.setSize(412, 283);
-		scrollPaneOtrosMusicos.setLocation(20, 267);
+		scrollPaneOtrosMusicos.setLocation(10, 269);
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneOtrosMusicos);
 		
@@ -235,6 +240,11 @@ public class PanelMusicoAlbumes extends JPanel {
 		lblNoHayAlbumes.setBounds(520, 190, 189, 175);
 		add(lblNoHayAlbumes);
 
+		JLabel lblTituloListaMusicos = new JLabel("OTROS MUSICOS");
+		lblTituloListaMusicos.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
+		lblTituloListaMusicos.setBounds(111, 241, 200, 28);
+		add(lblTituloListaMusicos);
+		
 		if(albumes.isEmpty()) {
 			panelAlbumes.setVisible(false);
 			scrollPaneAlbumes.setVisible(false);

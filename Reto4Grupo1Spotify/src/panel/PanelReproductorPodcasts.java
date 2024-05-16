@@ -133,6 +133,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnPerfil.setBackground(Color.BLACK);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				vp.nPanel = 10;
 				vp.cambiarDePanel(11);
 			}
 		});
@@ -263,7 +264,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		lblTitulo.setBounds(275, 100, 250, 30);
 		lblTitulo.setBackground(Color.BLACK);
 		lblTitulo.setText(podcasts.get(numeroPodcast).getNombre());
-		lblTitulo.setForeground(Color.WHITE);
+		lblTitulo.setForeground(Color.BLACK);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblTitulo);

@@ -98,8 +98,8 @@ public class PanelEdicionPlayList extends JPanel {
 //					System.out.println(cancionSeleccionada);
 					gestionInfo.eliminarCancionDePlayList(cancionSeleccionada);
 					
-					panel.revalidate();
-					panel.repaint();
+//					panel.removeAll();
+					vp.cambiarDePanel(25);
 					
 					JOptionPane.showMessageDialog(null, cancionSeleccionada + " eliminada con éxito", cancionSeleccionada + " eliminada",
 							JOptionPane.INFORMATION_MESSAGE);
