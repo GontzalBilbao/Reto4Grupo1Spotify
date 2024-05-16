@@ -91,8 +91,7 @@ public class PanelReproductorPodcasts extends JPanel {
 //		podcasts = gestionBD.devolverPodcasts();
 
 		setSize(800, 600);
-		setBackground(Color.DARK_GRAY);
-		setLayout(null);
+		setBackground(Color.WHITE);
 
 //		System.out.println(podcasts);
 		
@@ -108,52 +107,45 @@ public class PanelReproductorPodcasts extends JPanel {
 //		}
 
 		setSize(800, 600);
-		setBackground(Color.DARK_GRAY);
+		setLayout(null);
 		setLayout(null);
 
 		lblIconoGrande = new JLabel("");
-		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));
 		lblIconoGrande.setBounds(0, 0, 100, 100);
+		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));
 		add(lblIconoGrande);
 
 		JButton btnAtras = new JButton("ATRAS");
+		btnAtras.setBounds(200, 36, 90, 35);
+		btnAtras.setForeground(Color.WHITE);
+		btnAtras.setBackground(Color.BLACK);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(9);
 			}
 		});
 		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnAtras.setBounds(200, 36, 90, 35);
 		add(btnAtras);
 
 		JButton btnPerfil = new JButton("PERFIL");
+		btnPerfil.setBounds(500, 36, 90, 35);
+		btnPerfil.setForeground(Color.WHITE);
+		btnPerfil.setBackground(Color.BLACK);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(11);
 			}
 		});
 		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnPerfil.setBounds(500, 36, 90, 35);
 		add(btnPerfil);
 
 		btnCancionAnterior = new JButton("<");
+		btnCancionAnterior.setBounds(165, 265, 70, 30);
 		btnCancionAnterior.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCancionAnterior.setBackground(Color.BLACK);
 		btnCancionAnterior.setForeground(Color.WHITE);
 		btnCancionAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				/* Para que vuelba al inicio de reproduccion sin dar erro */
-//				if (aleatorio = true)
-//					if (aleatorio = true)
-//						if (intinerador == 0) {
-//							intinerador = podcasts.size() - 1;
-//						} else {
-//							intinerador = (intinerador - 1) % podcasts.size();
-//						}
-//				controladorDePodcast.setCancionEnReproduccion(intinerador);
-//				lblImagenPodcast.setIcon(podcasters.get(numeroPodcast).getImagen());
-//				lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
-				/* Para que vuelba al inicio de reproduccion sin dar erro */
 
 				if (intinerador == 0) {
 					intinerador = podcasts.size() - 1;
@@ -162,10 +154,10 @@ public class PanelReproductorPodcasts extends JPanel {
 							% podcasts.size();
 				}
 				
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
 
 					controladorDePodcast.setCancionEnReproduccion(intinerador);
-					lblImagenPodcast.setIcon(podcasters.get(numeroPodcast).getImagen());
+					lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
 					lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 					btnPlay.setVisible(true);
 					btnPlayStop.setVisible(false);
@@ -185,12 +177,10 @@ public class PanelReproductorPodcasts extends JPanel {
 						lblTitulo.setText("");
 						anuncio = true;
 					} else {
-//						btnmMenu.setVisible(true);
-//						btnFavorito.setVisible(true);
 						
 						intinerador = controladorDePodcast.ramdom();
 						controladorDePodcast.reproducir(intinerador);
-						lblImagenPodcast.setIcon(podcasters.get(0).getImagen());
+						lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
 						lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 						btnPlayStop.setVisible(true );	
 						anuncio = false;
@@ -200,29 +190,19 @@ public class PanelReproductorPodcasts extends JPanel {
 				
 			}
 		});
-		btnCancionAnterior.setBounds(165, 265, 70, 30);
 		add(btnCancionAnterior);
 
 		btnCancionSiguiente = new JButton(">");
+		btnCancionSiguiente.setBounds(565, 265, 70, 30);
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-//				intinerador = (intinerador + 1) % podcasts.size();
-//
-//				controladorDePodcast.setCancionEnReproduccion(intinerador);
-//				lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
-//				lblTitulo.setText("<html>" + podcasts.get(numeroPodcast).getNombre() + "</html>");
-//				btnPlay.setVisible(true);
-//				btnPlayStop.setVisible(false);
-//			}
-//		});
-				
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premiun")) {
+			
+				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
 					intinerador = (intinerador + 1)
 							% podcasts.size();
 
 					controladorDePodcast.setCancionEnReproduccion(intinerador);
-					lblImagenPodcast.setIcon(podcasters.get(0).getImagen());
+					lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
 					lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 					btnPlay.setVisible(true);
 					btnPlayStop.setVisible(false);
@@ -232,8 +212,6 @@ public class PanelReproductorPodcasts extends JPanel {
 						btnCancionSiguiente.setEnabled(false);
 						btnPlay.setVisible(false);
 						btnPlayStop.setVisible(false);
-//						btnFavorito.setVisible(false);
-//						btnmMenu.setVisible(false);
 						timerAnuncio.restart();
 						
 						
@@ -243,12 +221,10 @@ public class PanelReproductorPodcasts extends JPanel {
 						lblTitulo.setText("");
 						anuncio = true;
 					} else {	
-//						btnmMenu.setVisible(true);
-//						btnFavorito.setVisible(true);
 						
 						intinerador = controladorDePodcast.ramdom();
 						controladorDePodcast.reproducir(intinerador);
-						lblImagenPodcast.setIcon(podcasters.get(0).getImagen());
+						lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
 						lblTitulo.setText("<html>" + podcasts.get(intinerador).getNombre() + "</html>");
 						btnPlayStop.setVisible(true);	
 						anuncio = false;
@@ -262,10 +238,10 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnCancionSiguiente.setBackground(Color.BLACK);
 		btnCancionSiguiente.setForeground(Color.WHITE);
 		btnCancionSiguiente.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnCancionSiguiente.setBounds(565, 265, 70, 30);
 		add(btnCancionSiguiente);
 
 		btnPlay = new JButton("PLAY");
+		btnPlay.setBounds(355, 425, 90, 30);
 		btnPlay.setForeground(Color.WHITE);
 		btnPlay.setBackground(Color.BLACK);
 		btnPlay.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -276,23 +252,24 @@ public class PanelReproductorPodcasts extends JPanel {
 				btnPlayStop.setVisible(true);
 			}
 		});
-		btnPlay.setBounds(355, 425, 90, 30);
 		add(btnPlay);
 
 		lblImagenPodcast = new JLabel();
-		lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
 		lblImagenPodcast.setBounds(275, 150, 250, 250);
+		lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
 		add(lblImagenPodcast);
 
 		lblTitulo = new JLabel("");
+		lblTitulo.setBounds(275, 100, 250, 30);
+		lblTitulo.setBackground(Color.BLACK);
 		lblTitulo.setText(podcasts.get(numeroPodcast).getNombre());
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setBounds(275, 100, 250, 30);
 		add(lblTitulo);
 
 		btnPlayStop = new JButton("STOP");
+		btnPlayStop.setBounds(355, 425, 90, 30);
 		btnPlayStop.setVisible(false);
 		btnPlayStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -302,7 +279,6 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnPlayStop.setBackground(Color.BLACK);
 		btnPlayStop.setForeground(Color.WHITE);
 		btnPlayStop.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnPlayStop.setBounds(355, 425, 90, 30);
 		add(btnPlayStop);
 	}
 

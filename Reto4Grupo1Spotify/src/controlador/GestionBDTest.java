@@ -16,6 +16,7 @@ import modelo.Album;
 import modelo.Cancion;
 import modelo.Cliente;
 import modelo.Musico;
+import modelo.PlayList;
 import modelo.Podcast;
 import modelo.Podcaster;
 
@@ -145,6 +146,42 @@ public class GestionBDTest {
 		fail("Not yet implemented");
 	}
 
+	public void agregarFavorito(String idCliente, String idAudio) {
+		
+	}
+	
+//	public ArrayList<PlayList> queryPlayListasDelUsuario(String cliente) {
+//		
+//	}
+	
+	public void añadirPlayList(String nuevaPlayList, String idCliente) {
+		
+	}
+	
+	public void eliminarPlayList(String playListSeleccionada) {
+		
+	}
+	
+//	public int idPlaylist(String titulo) {
+//		
+//	}
+	
+	public void insertCancionEnPlaylist(String idAudio, int idPlaylist) {
+		
+	}
+	
+//	public String sacarIdCliente(String usuario) {
+//		
+//	}
+	
+	public void agregarCancionAPlaylist(int idPlaylist, String idCancion, String fechaAgregacion) {
+		
+	}
+	
+//	public ArrayList<Cancion> queryCancionesDePlaylist(String playlistSeleccionada) {
+//		
+//	}
+	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		gestionBD.cerrarConexion();

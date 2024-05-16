@@ -20,14 +20,15 @@ public class ControladorDeSonido implements IControladorSonido {
 	private ArrayList<Cancion> canciones;
 	private int cancionEnReproduccion;
 	private Clip cancionEnCurso;
-	private Random random = new Random();
-	private int numeroAleatorioAnterior = -1;
-	private long continuar = 0;
+	private Random random = new Random();// Generador de números aleatorios
+	private int numeroAleatorioAnterior = -1;// Número aleatorio anterior generado
+	private long continuar = 0;// Posición de reproducción para continuar después de pausar
 	private boolean enReproduccion = true;
 
 	public ControladorDeSonido(ArrayList<Cancion> canciones) {
 		this.canciones = canciones;
 		try {
+			// Inicialización del Clip de la canción en curso
 			cancionEnCurso = AudioSystem.getClip();
 		} catch (LineUnavailableException e) {
 			System.out.println(e.getMessage());
@@ -36,6 +37,7 @@ public class ControladorDeSonido implements IControladorSonido {
 
 	@Override
 	public void setCancionEnReproduccion(int can) {
+		// Detiene la canción en reproducción actual
 		if (canciones.get(cancionEnReproduccion).sonando()) {
 			cancionEnCurso.stop();
 		}
@@ -44,15 +46,17 @@ public class ControladorDeSonido implements IControladorSonido {
 	@Override
 	public void reproducir(int cola) {
 		try {
+			// Detiene y cierra la canción en curso si está reproduciendo otra canción
 			if (canciones.get(cola).sonando()) {
 				cancionEnCurso.stop();
 				cancionEnCurso.close();
 			}
+			// Abre y reproduce la nueva canción
 			cancionEnCurso.open(
 					AudioSystem.getAudioInputStream(new File("cancion/" + canciones.get(cola).getNombre() + ".wav")));
-			
+
 			cancionEnCurso.start();
-			enReproduccion = false;
+			enReproduccion = false;// Marca que la canción está en reproducción
 
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 			e.printStackTrace();
@@ -61,24 +65,26 @@ public class ControladorDeSonido implements IControladorSonido {
 
 	@Override
 	public void pausar() {
+		// Pausa la canción en reproducción
 		cancionEnCurso.stop();
 	}
 
 	@Override
 	public boolean cancionActiva() {
+		// Verifica si la canción en curso está activa (reproduciéndose)
 		return cancionEnCurso.isActive();
 	}
 
 	@Override
 	public void bucle(boolean activo, int cola) {
-
+		// Establece el bucle de reproducción de la canción
 		if (activo == true) {
 			reproducir(cola);
-			cancionEnCurso.loop(100);
+			cancionEnCurso.loop(100);// Bucle continuo
 		} else {
 			reproducir(cola);
-			cancionEnCurso.loop(0);
-			cancionEnCurso.stop();
+			cancionEnCurso.loop(0);// No se repite
+			cancionEnCurso.stop();// Detiene la reproducción
 
 		}
 
@@ -86,6 +92,7 @@ public class ControladorDeSonido implements IControladorSonido {
 
 	@Override
 	public int ramdom() {
+		// Genera un número aleatorio para seleccionar una canción diferente
 		int numeroAleatorioActual;
 
 		do {
@@ -98,6 +105,7 @@ public class ControladorDeSonido implements IControladorSonido {
 
 	@Override
 	public long seguirCancion() {
+		// Detiene la canción en curso y devuelve la posición de reproducción actual
 		cancionEnCurso.stop();
 		return cancionEnCurso.getMicrosecondPosition();
 	}
@@ -105,6 +113,7 @@ public class ControladorDeSonido implements IControladorSonido {
 	@Override
 	public void continuarCancion(JButton btnplay2) {
 
+		// Método para continuar o detener la reproducción de la canción
 		if (!enReproduccion) {
 			continuar = cancionEnCurso.getMicrosecondPosition();
 			cancionEnCurso.stop();
@@ -118,8 +127,9 @@ public class ControladorDeSonido implements IControladorSonido {
 		}
 
 	}
-	
+
 	public void anuncio() {
+		// Reproduce un anuncio
 		try {
 			cancionEnCurso.open(AudioSystem.getAudioInputStream(new File("anuncio/Anuncio.wav")));
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
@@ -129,9 +139,9 @@ public class ControladorDeSonido implements IControladorSonido {
 		cancionEnCurso.start();
 	}
 
-	public void parar() {
+	public void parar() {// Detiene y cierra la canción en curso
 		cancionEnCurso.stop();
 		cancionEnCurso.close();
 	}
-	
+
 }

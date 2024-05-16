@@ -309,6 +309,7 @@ public class GestionBD {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println(premium);
 		return premium;
 	}
 
@@ -510,6 +511,26 @@ public class GestionBD {
 		}
 		return idCliente;
 	}
+	
+	public int capacidadDePlaylist(int idPlaylist) {
+		int capacidad = 0;
+		try {
+			PreparedStatement consulta = conexion
+					.prepareStatement("SELECT COUNT(IDCancion) FROM `playlistcanciones` Where IDlist = ?");
+			consulta.setInt(1, idPlaylist);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				capacidad = resultadoConsulta.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return capacidad;
+
+	}
+	
 
 	public void agregarCancionAPlaylist(int idPlaylist, String idCancion, String fechaAgregacion) {
 

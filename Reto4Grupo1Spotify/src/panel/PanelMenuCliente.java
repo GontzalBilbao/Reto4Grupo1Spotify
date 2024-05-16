@@ -22,18 +22,19 @@ public class PanelMenuCliente extends JPanel {
 	 */
 	public PanelMenuCliente(VentanaPrincipal v) {
 		setSize(800, 600);
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.WHITE);
 		setLayout(null);
 		
 		JLabel lblLogin = new JLabel("MENU CLIENTE");
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogin.setForeground(Color.GREEN);
+		lblLogin.setForeground(Color.BLACK);
 		lblLogin.setFont(new Font("Lucida Bright", Font.BOLD, 20));
 		lblLogin.setBounds(270, 100, 260, 51);
 		add(lblLogin);
 		
 		JButton btnDescubirMusica = new JButton("DESCUBRIR MUSICA");
-		btnDescubirMusica.setHorizontalAlignment(SwingConstants.LEFT);
+		btnDescubirMusica.setBackground(Color.BLACK);
+		btnDescubirMusica.setForeground(Color.WHITE);
 		btnDescubirMusica.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDescubirMusica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -44,23 +45,25 @@ public class PanelMenuCliente extends JPanel {
 		add(btnDescubirMusica);
 		
 		JButton btnDescubirPodcast = new JButton("DESCUBRIR PODCASTS");
+		btnDescubirPodcast.setForeground(Color.WHITE);
+		btnDescubirPodcast.setBackground(Color.BLACK);
 		btnDescubirPodcast.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				v.cambiarDePanel(8);
 			}
 		});
-		btnDescubirPodcast.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDescubirPodcast.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnDescubirPodcast.setBounds(275, 300, 250, 35);
 		add(btnDescubirPodcast);
 		
 		JButton btnMisPlaylist = new JButton("MIS PLAYLISTS");
+		btnMisPlaylist.setForeground(Color.WHITE);
+		btnMisPlaylist.setBackground(Color.BLACK);
 		btnMisPlaylist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				v.cambiarDePanel(12);
 			}
 		});
-		btnMisPlaylist.setHorizontalAlignment(SwingConstants.LEFT);
 		btnMisPlaylist.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnMisPlaylist.setBounds(275, 400, 250, 35);
 		add(btnMisPlaylist);
@@ -71,6 +74,8 @@ public class PanelMenuCliente extends JPanel {
 		add(lblIconoGrande);
 		
 		JButton btnAtras = new JButton("ATRAS");
+		btnAtras.setForeground(Color.WHITE);
+		btnAtras.setBackground(Color.BLACK);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				v.cambiarDePanel(1);
@@ -81,6 +86,8 @@ public class PanelMenuCliente extends JPanel {
 		add(btnAtras);
 		
 		JButton btnPerfil = new JButton("PERFIL");
+		btnPerfil.setBackground(Color.BLACK);
+		btnPerfil.setForeground(Color.WHITE);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				v.nPanel = 3;

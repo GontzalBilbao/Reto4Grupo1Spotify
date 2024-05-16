@@ -17,8 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
-import controlador.GestionBD;
 import controlador.GestionInformacion;
 import modelo.Podcaster;
 import vista.VentanaPrincipal;
@@ -27,6 +27,7 @@ public class PanelDescubrirPodcasts extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
+
 	/**
 	 * Create the panel.
 	 */
@@ -44,12 +45,11 @@ public class PanelDescubrirPodcasts extends JPanel {
 		}
 
 		// Crear un panel para contener los JLabels
-				JPanel panel = new JPanel();
+		JPanel panel = new JPanel();
 //				panel.setBackground(new java.awt.Color(0, 0, 0, 0));
 //				panel.setOpaque(false);
 
 		panel.setLayout(new GridLayout(1, 0));
-
 
 		// Agregar JLabels al panel
 
@@ -61,8 +61,6 @@ public class PanelDescubrirPodcasts extends JPanel {
 //					panelItem.setBackground(new java.awt.Color(0, 0, 0, 0));
 
 			panelItem.setLayout(new GridLayout(0, 1));
-
-
 
 			// Cargar imagen
 			ImageIcon imageIcon = podcasters.get(i).getImagen();
@@ -96,51 +94,61 @@ public class PanelDescubrirPodcasts extends JPanel {
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
 //											+ ((JLabel) clickedPanel.getComponent(2)).getText());
 
-						}
-					});
-		// Agregar panelItem al panel principal
-					panel.add(panelItem);
 				}
+			});
+			// Agregar panelItem al panel principal
+			panel.add(panelItem);
+		}
 
 		// Crear un JScrollPane y agregar el panel
-				JScrollPane scrollPane = new JScrollPane(panel);
-		//Como se mueve muy despacio vamos a darle un poco de velocidad
-				scrollPane.getVerticalScrollBar().setUnitIncrement(30);
-				scrollPane.setBorder(null);
+		JScrollPane scrollPane = new JScrollPane(panel);
+		// Como se mueve muy despacio vamos a darle un poco de velocidad
+		scrollPane.getVerticalScrollBar().setUnitIncrement(30);
+		scrollPane.setBorder(null);
 //				scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
 //				scrollPane.setOpaque(false);
 
-		scrollPane.setSize(764, 367);
-		scrollPane.setLocation(10, 131);
+		scrollPane.setSize(765, 370);
+		scrollPane.setLocation(10, 135);
 
 		// Agregar el JScrollPane a la ventana
 
 		add(scrollPane);
 
 		JLabel lblTituloLista = new JLabel("DESCUBRIR PODCASTS");
-		lblTituloLista.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
-		lblTituloLista.setBounds(262, 11, 276, 28);
+		lblTituloLista.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTituloLista.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTituloLista.setBounds(270, 100, 260, 51);
 		add(lblTituloLista);
 
-
-		JButton btnAtrás = new JButton("Atrás");
+		JButton btnAtrás = new JButton("ATRAS");
+		btnAtrás.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnAtrás.setBackground(Color.BLACK);
+		btnAtrás.setForeground(Color.WHITE);
 		btnAtrás.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(3);
 			}
 		});
-		btnAtrás.setBounds(10, 11, 89, 23);
+		btnAtrás.setBounds(200, 36, 90, 35);
 		add(btnAtrás);
 
-		JButton btnPerfil = new JButton("Perfil");
+		JButton btnPerfil = new JButton("PERFIL");
+		btnPerfil.setBackground(Color.BLACK);
+		btnPerfil.setForeground(Color.WHITE);
+		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(11);
 			}
 		});
-		btnPerfil.setBounds(685, 11, 89, 23);
+		btnPerfil.setBounds(500, 36, 90, 35);
 		add(btnPerfil);
 
+		JLabel lblIconoGrande = new JLabel("");
+		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));
+		lblIconoGrande.setBounds(0, 0, 100, 100);
+		add(lblIconoGrande);
 
 	}
 

@@ -40,11 +40,11 @@ public class PanelLogin extends JPanel {
 		gestionInfo.cargarClientes();
 		clientes = gestionInfo.devolverClientes();
 		setSize(800, 600);
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.WHITE);
 		setLayout(null);
 
 		JLabel lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setForeground(Color.GREEN);
+		lblUsuario.setForeground(Color.BLACK);
 		lblUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUsuario.setBounds(220, 250, 90, 20);
@@ -58,7 +58,7 @@ public class PanelLogin extends JPanel {
 
 		JLabel lblContraseña = new JLabel("Contraseña:");
 		lblContraseña.setHorizontalAlignment(SwingConstants.LEFT);
-		lblContraseña.setForeground(Color.GREEN);
+		lblContraseña.setForeground(Color.BLACK);
 		lblContraseña.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblContraseña.setBounds(220, 300, 90, 20);
 		add(lblContraseña);
@@ -70,14 +70,15 @@ public class PanelLogin extends JPanel {
 
 		JLabel lblLogin = new JLabel("INICIO DE SESION");
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogin.setForeground(Color.GREEN);
+		lblLogin.setForeground(Color.BLACK);
 		lblLogin.setFont(new Font("Lucida Bright", Font.BOLD, 20));
 		lblLogin.setBounds(270, 100, 260, 51);
 		add(lblLogin);
 
 		JButton btnRegistrarse = new JButton("REGISTRARSE");
+		btnRegistrarse.setBackground(Color.BLACK);
 		btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnRegistrarse.setForeground(Color.BLACK);
+		btnRegistrarse.setForeground(Color.WHITE);
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(2);
@@ -88,6 +89,7 @@ public class PanelLogin extends JPanel {
 
 
 		btnLogin = new JButton("INICIAR SESIÓN");
+		btnLogin.setBackground(Color.BLACK);
 		btnLogin.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -119,7 +121,7 @@ public class PanelLogin extends JPanel {
 
 		});
 
-		btnLogin.setForeground(Color.BLACK);
+		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLogin.setBounds(530, 450, 180, 35);
 		add(btnLogin);

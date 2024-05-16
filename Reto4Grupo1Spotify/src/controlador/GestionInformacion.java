@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import modelo.Album;
@@ -109,7 +108,6 @@ public class GestionInformacion {
 
 	public void guardarAlbumSeleccionado(String tituloAlbum) {
 		this.albumSeleccionado = tituloAlbum;
-
 	}
 
 	public String devolverAlbumSeleccionado() {
@@ -118,7 +116,6 @@ public class GestionInformacion {
 
 	public void guardarCancionSeleccionado(String cancionSeleccionada) {
 		this.cancionSeleccionada = cancionSeleccionada;
-
 	}
 
 	public String devolverCancionSeleccionado() {
@@ -175,7 +172,6 @@ public class GestionInformacion {
 
 	public void guardarAudioSeleccionado(String audioSeleccionado) {
 		this.audioSeleccionado = audioSeleccionado;
-
 	}
 
 	public String devolverAudioSeleccionado() {
@@ -204,7 +200,6 @@ public class GestionInformacion {
 
 	public String devolverClienteSeleccionado() {
 		return clienteSeleccionado;
-
 	}
 
 	public void guardarPanelAnteriorAlbumCanciones(boolean panelAnterior) {
@@ -369,6 +364,11 @@ public class GestionInformacion {
 	public void cargarCancionesDePlaylist(String playlistSeleccionada) {
 		canciones.clear();
 		canciones = gestionBD.queryCancionesDePlaylist(playlistSeleccionada);
+	}
+
+	public int capacidadPlaylist(int idPlaylist) {
+		int capacidadPlaylist = gestionBD.capacidadDePlaylist(idPlaylist);
+		return capacidadPlaylist;
 	}
 
 }
