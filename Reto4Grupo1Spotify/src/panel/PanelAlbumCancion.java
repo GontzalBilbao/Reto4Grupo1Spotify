@@ -151,7 +151,7 @@ public class PanelAlbumCancion extends JPanel {
 					gestionInfo.guardarAlbumSeleccionado(tituloAlbum);
 					gestionInfo.guardarCancionSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					vp.cambiarDePanel(7);
-					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
+					JOptionPane.showMessageDialog(vp, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
 //													+ ((JLabel) clickedPanel.getComponent(2)).getText());
 

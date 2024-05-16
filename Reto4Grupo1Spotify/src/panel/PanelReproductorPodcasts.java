@@ -263,9 +263,9 @@ public class PanelReproductorPodcasts extends JPanel {
 
 		lblTitulo = new JLabel("");
 		lblTitulo.setBounds(275, 100, 250, 30);
-		lblTitulo.setBackground(Color.BLACK);
+		lblTitulo.setBackground(Color.WHITE);
 		lblTitulo.setText(podcasts.get(numeroPodcast).getNombre());
-		lblTitulo.setForeground(Color.WHITE);
+		lblTitulo.setForeground(Color.BLACK);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblTitulo);

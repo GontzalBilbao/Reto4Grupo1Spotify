@@ -93,7 +93,7 @@ public class PanelDescubrirPodcasts extends JPanel {
 					JPanel clickedPanel = (JPanel) e.getSource();
 					gestionInfo.guardarArtistaSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					vp.cambiarDePanel(9);
-					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
+					JOptionPane.showMessageDialog(vp, "Has hecho clic en: " + clickedPanel.getName()
 							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
 //											+ ((JLabel) clickedPanel.getComponent(2)).getText());
 

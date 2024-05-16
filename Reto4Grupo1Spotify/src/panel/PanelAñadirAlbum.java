@@ -59,11 +59,11 @@ public class PanelAñadirAlbum extends JPanel {
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nombreEscrito = txtNombre.getText();
-				boolean validado = validarCampos(nombreEscrito);
+				boolean validado = validarCampos(nombreEscrito, vp);
 
 				if (validado != false) {
 					// añadir query de gestionBD de insertar album
-					JOptionPane.showMessageDialog(null, "Se ha agregado el album.");
+					JOptionPane.showMessageDialog(vp, "Se ha agregado el album.");
 					vp.cambiarDePanel(18);
 				}
 			}
@@ -196,10 +196,10 @@ public class PanelAñadirAlbum extends JPanel {
 
 	}
 
-	private boolean validarCampos(String txtNombre) {
+	private boolean validarCampos(String txtNombre, VentanaPrincipal vp) {
 		boolean validar = false;
 		if (txtNombre.equalsIgnoreCase("")) {
-			JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio.");
+			JOptionPane.showMessageDialog(vp, "El nombre no puede estar vacio.");
 			validar = false;
 		} else {
 			validar = true;

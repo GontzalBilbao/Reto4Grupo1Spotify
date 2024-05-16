@@ -278,8 +278,9 @@ public class PanelReproductorMusica extends JPanel {
 		add(lblImagenCancion);
 
 		lblTitulo = new JLabel("");
+		lblTitulo.setBackground(Color.WHITE);
 		lblTitulo.setText(canciones.get(intinerador).getNombre());
-		lblTitulo.setForeground(Color.WHITE);
+		lblTitulo.setForeground(Color.BLACK);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setBounds(275, 100, 250, 30);

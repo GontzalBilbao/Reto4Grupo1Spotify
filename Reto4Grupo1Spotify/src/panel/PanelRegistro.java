@@ -54,7 +54,7 @@ public class PanelRegistro extends JPanel {
 //		}
 
 		setSize(800, 600);
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.WHITE);
 		setLayout(null);
 
 		JLabel lblTituloRegistro = new JLabel("REGISTRARSE");
@@ -76,10 +76,10 @@ public class PanelRegistro extends JPanel {
 				boolean contra = gestionInfo.validarContrasena(campos, txtContrasena.getText(),
 						txtConfContrasena.getText());
 				if (campos == false) {
-					JOptionPane.showMessageDialog(null, "Alguno de los campos está vacío", "Error de Registro",
+					JOptionPane.showMessageDialog(vp, "Alguno de los campos está vacío", "Error de Registro",
 							JOptionPane.ERROR_MESSAGE);
 				} else if (fechaNac.equals("")) {
-					JOptionPane.showMessageDialog(null, "Introduzca la fecha", "Error de Registro",
+					JOptionPane.showMessageDialog(vp, "Introduzca la fecha", "Error de Registro",
 							JOptionPane.ERROR_MESSAGE);
 				} else if (campos == true && contra == true) {
 					String idCliente = generarIdCliente(gestionBD);
@@ -88,7 +88,7 @@ public class PanelRegistro extends JPanel {
 							txtUsuario.getText(), txtContrasena.getText(), fechaNac, fechaRegistro,
 							comboBoxSuscripcion.getSelectedItem().toString(),
 							comboBoxIdioma.getSelectedItem().toString());
-					JOptionPane.showMessageDialog(null, "El Usuario se ha guardado con éxito", "Usuario Guardado",
+					JOptionPane.showMessageDialog(vp, "El Usuario se ha guardado con éxito", "Usuario Guardado",
 							JOptionPane.INFORMATION_MESSAGE);
 					vp.cambiarDePanel(1);
 				}
