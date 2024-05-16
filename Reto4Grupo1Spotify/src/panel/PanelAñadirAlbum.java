@@ -54,13 +54,12 @@ public class PanelAñadirAlbum extends JPanel {
 
 	public PanelAñadirAlbum(VentanaPrincipal vp, GestionBD gestionBD) {
 		setSize(vp.getSize());
-//		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
 		gestionBD.cargarMusicos();
 		musicos = gestionBD.devolverMusicos();
 
-		cargarAlbumes();
+		cargarMusicos();
 
 		JButton btnFinalizar = new JButton("FINALIZAR");
 		btnFinalizar.addActionListener(new ActionListener() {
@@ -231,7 +230,7 @@ public class PanelAñadirAlbum extends JPanel {
 		return validar;
 	}
 
-	private void cargarAlbumes() {
+	private void cargarMusicos() {
 		arrayMusicos = new String[musicos.size()];
 		for (int i = 0; i < musicos.size(); i++) {
 			arrayMusicos[i] = musicos.get(i).getNombreArtistico();
