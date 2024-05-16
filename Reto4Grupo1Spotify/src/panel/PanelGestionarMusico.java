@@ -46,17 +46,13 @@ public class PanelGestionarMusico extends JPanel {
 		panelMusicos.setBorder(new LineBorder(Color.black, 1, true));
 
 		add(panelMusicos);
-
-//		panel.setBackground(new java.awt.Color(0, 0, 0, 0));
-//		panel.setOpaque(false);
 		panelMusicos.setLayout(new GridLayout(0, 1));
 
 // Agregar JLabels al panel
 		for (int i = 0; i < musicos.size(); i++) {
 			JPanel panelItem = new JPanel();
 			panelItem.setBorder(null);
-//			panelItem.setOpaque(false);
-//			panelItem.setBackground(new java.awt.Color(0, 0, 0, 0));
+
 			panelItem.setLayout(new GridLayout());
 
 // Cargar imagen
@@ -136,7 +132,7 @@ public class PanelGestionarMusico extends JPanel {
 		btnAtras.setBounds(650, 25, 100, 35);
 		add(btnAtras);
 
-		lblMusicoActual = new JLabel("Musico Actial: Ninguno");
+		lblMusicoActual = new JLabel("Musico Actual: Ninguno");
 		lblMusicoActual.setBounds(560, 120, 200, 20);
 		add(lblMusicoActual);
 	}

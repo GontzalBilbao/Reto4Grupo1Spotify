@@ -132,6 +132,7 @@ public class PanelGestionarCancion extends JPanel {
 				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionBD);
 				for (int i = 0; i < albumes.size(); i++) {
 					comBoxAlbumes.addItem(arrayAlbumes[i]);
+					System.out.println(arrayAlbumes[i]);
 				}
 				repaint();
 			}
