@@ -175,7 +175,7 @@ public class PanelReproductorMusica extends JPanel {
 					intinerador = (intinerador - 1) % canciones.size();// De lo contrario, retrocede al índice de la
 																		// canción anterior en la lista
 				}
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("premium")) { // Verifica si el usuario tiene una
+				if (gestionInfo.devolverPremium().equalsIgnoreCase("premium")) { // Verifica si el usuario tiene una
 																					// suscripción "Premium"
 					controladorDeSonido.setCancionEnReproduccion(intinerador);// Actualiza el controlador de sonido con
 																				// la nueva canción en reproducción
@@ -231,7 +231,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
+				if (gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) {
 					intinerador = (intinerador + 1) % canciones.size();
 					controladorDeSonido.setCancionEnReproduccion(intinerador);
 					lblImagenCancion.setIcon(canciones.get(intinerador).getImagen());
@@ -342,7 +342,7 @@ public class PanelReproductorMusica extends JPanel {
 		popupMenu = new JPopupMenu();
 		JMenu addToPlaylistMenu = new JMenu("Añadir a Playlist");
 
-		gestionInfo.cargarPlayLists(gestionInfo.devolverClienteSeleccionado());
+		gestionInfo.cargarPlayLists(gestionInfo.devolverUsuarioCliente());
 		playlists = gestionInfo.devolverPlayLists();
 
 		for (int i = 0; i < playlists.size(); i++) {
@@ -353,7 +353,7 @@ public class PanelReproductorMusica extends JPanel {
 					JMenuItem menuItem = (JMenuItem) e.getSource();
 					String infoMenuItem = menuItem.getText();
 					int idPlaylist = cogerIdPlaylistSeleccionada(infoMenuItem);
-					if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
+					if (gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) {
 						añadirCancionAPlaylist(idPlaylist, gestionInfo);
 					} else {
 						if (gestionInfo.capacidadPlaylist(idPlaylist) >= 3) {

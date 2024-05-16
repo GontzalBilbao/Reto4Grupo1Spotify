@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import controlador.GestionBD;
 import controlador.GestionInformacion;
 import modelo.Cliente;
 import vista.VentanaPrincipal;
@@ -96,9 +95,6 @@ public class PanelLogin extends JPanel {
 
 
 				boolean adminCorrecto = validarAdmin();
-
-
-
 				boolean usuarioCorrecto = validarUsuario(gestionInfo);
 
 				if (adminCorrecto == true) {
@@ -109,7 +105,7 @@ public class PanelLogin extends JPanel {
 
 					if (usuarioCorrecto == true) {
 						JOptionPane.showMessageDialog(null, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
-						gestionInfo.guardarClienteSeleccionado(txtUsuario.getText());
+						gestionInfo.guardarUsuarioCliente(txtUsuario.getText());
 						vp.cambiarDePanel(3);
 					} else {
 						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error de Login",

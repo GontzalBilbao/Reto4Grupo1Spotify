@@ -67,7 +67,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		gestionInfo.cargarPodcasters();
 		podcasters = gestionInfo.devolverPodcasters();
 		nombrePodcaster = gestionInfo.devolverArtistaSeleccionado();
-		nombrePodcastSeleccionado = gestionInfo.devolverAudioSeleccionado();
+		nombrePodcastSeleccionado = gestionInfo.devolverNombrePodcastSeleccionado();
 		System.out.println(nombrePodcaster);
 		for (int i = 0; i < podcasters.size(); i++) {
 			if (nombrePodcaster.equals(podcasters.get(i).getNombreArtistico())) {
@@ -154,7 +154,7 @@ public class PanelReproductorPodcasts extends JPanel {
 							% podcasts.size();
 				}
 				
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
+				if (gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) {
 
 					controladorDePodcast.setCancionEnReproduccion(intinerador);
 					lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
@@ -197,7 +197,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
+				if (gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) {
 					intinerador = (intinerador + 1)
 							% podcasts.size();
 

@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
-import controlador.GestionBD;
 import controlador.GestionInformacion;
 import modelo.Album;
 import modelo.Cancion;
@@ -143,7 +142,7 @@ public class PanelAlbumCancion extends JPanel {
 			// Añadir un borde al panelItem
 			panelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			// Añadir escuchador al panel
-			gestionInfo.recogerIndiceCancion(i);
+//			gestionInfo.recogerIndiceCancion(i);
 			panelItem.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {

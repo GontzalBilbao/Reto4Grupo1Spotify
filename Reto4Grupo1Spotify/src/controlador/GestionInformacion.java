@@ -21,19 +21,19 @@ import modelo.TopPlayList;
 public class GestionInformacion {
 
 	private GestionBD gestionBD;
-	private String musico;
-	private String podcaster;
-	private String tipoDePerfil;
+//	private String musico;
+//	private String podcaster;
+//	private String tipoDePerfil;
 	private String artistaSeleccionado = "";
 	private String albumSeleccionado = "";
-	private String audioSeleccionado = "";
+	private String nombrePodcastSeleccionado = "";
 	private String cancionSeleccionada = "";
 	private String idArtista = "";
-	private int recogerIndiceCancion;
+//	private int recogerIndiceCancion;
 	private int recogerIndicePodcast;
 	private String idCliente;
 	private String premium;
-	private String clienteSeleccionado = "";
+	private String usuarioCliente = "";
 	private boolean panelAnterior;
 	private String playlistSeleccionada = "";
 
@@ -90,6 +90,7 @@ public class GestionInformacion {
 		return vuelta;
 	}
 
+	// Guarda el Id del Artista y lo devuelve
 	public void guardarIdArtistaSeleccionado(String idArtista) {
 		this.idArtista = idArtista;
 	}
@@ -98,6 +99,7 @@ public class GestionInformacion {
 		return idArtista;
 	}
 
+	// Guarda el nombre del Artista y lo devuelve
 	public void guardarArtistaSeleccionado(String nombreArtista) {
 		this.artistaSeleccionado = nombreArtista;
 	}
@@ -106,6 +108,7 @@ public class GestionInformacion {
 		return artistaSeleccionado;
 	}
 
+	// Guardael titulo del Album y lo devuelve
 	public void guardarAlbumSeleccionado(String tituloAlbum) {
 		this.albumSeleccionado = tituloAlbum;
 	}
@@ -114,6 +117,7 @@ public class GestionInformacion {
 		return albumSeleccionado;
 	}
 
+	// Guarda el nombre de la Cancion y lo devuelve
 	public void guardarCancionSeleccionado(String cancionSeleccionada) {
 		this.cancionSeleccionada = cancionSeleccionada;
 	}
@@ -122,37 +126,35 @@ public class GestionInformacion {
 		return cancionSeleccionada;
 	}
 
-	public String devolverTipoDePerfil() {
-		return tipoDePerfil;
-	}
+//	public String devolverTipoDePerfil() {
+//		return tipoDePerfil;
+//	}
 
-	public void recogerMusico(String nombreMusico) {
-		this.musico = nombreMusico;
-	}
+//	public void recogerMusico(String nombreMusico) {
+//		this.musico = nombreMusico;
+//	}
 
-	public String pasrverMusico() {
-		return musico;
-	}
+//	public String pasrverMusico() {
+//		return musico;
+//	}
 
-	public ArrayList<Podcaster> devolverPodcaster() {
-		return gestionBD.queryPodcasters();
-	}
+//	public ArrayList<Podcaster> devolverPodcaster() {
+//		return gestionBD.queryPodcasters();
+//	}
 
-	public void recogerPodcaster(String nombrePodcaster) {
-		this.podcaster = nombrePodcaster;
-	}
+//	public void recogerPodcaster(String nombrePodcaster) {
+//		this.podcaster = nombrePodcaster;
+//	}
 
-	public String pasrverPodcaster() {
-		return podcaster;
-	}
+//	public String pasrverPodcaster() {
+//		return podcaster;
+//	}
 
-	public void recogerIndiceCancion(int indice) {
-		this.recogerIndiceCancion = indice;
-	}
 
-	public int pasarIndiceCancion() {
-		return recogerIndiceCancion;
-	}
+
+//	public int pasarIndiceCancion() {
+//		return recogerIndiceCancion;
+//	}
 
 	public void recogerIndicePodcast(int indice) {
 		this.recogerIndicePodcast = indice;
@@ -162,26 +164,30 @@ public class GestionInformacion {
 		return recogerIndicePodcast;
 	}
 
+	// Saca si el Cliente es Premium o no y lo devuelve
 	public void sacarPremium(String usuario) {
 		this.premium = gestionBD.sacarPremium(usuario);
 	}
 
-	public String devolverPremiun() {
+	public String devolverPremium() {
 		return premium;
 	}
 
-	public void guardarAudioSeleccionado(String audioSeleccionado) {
-		this.audioSeleccionado = audioSeleccionado;
+	// Guarda el nombre del Podcast y lo devuelve
+	public void guardarNombrePodcastSeleccionado(String nombrePodcastSeleccionado) {
+		this.nombrePodcastSeleccionado = nombrePodcastSeleccionado;
 	}
 
-	public String devolverAudioSeleccionado() {
-		return audioSeleccionado;
+	public String devolverNombrePodcastSeleccionado() {
+		return nombrePodcastSeleccionado;
 	}
 
+	/**/
 	public int devolverIdPlaylist(String titulo) {
 		return gestionBD.idPlaylist(titulo);
 	}
 
+	// Saca el id del Cliente y lo devuelve
 	public void sacarIdCliente(String usuario) {
 		this.idCliente = gestionBD.sacarIdCliente(usuario);
 	}
@@ -190,18 +196,21 @@ public class GestionInformacion {
 		return idCliente;
 	}
 
+	/**/
 	public void añadirCancionAPlaylist(String idAudio, int idPlaylist) {
 		gestionBD.insertCancionEnPlaylist(idAudio, idPlaylist);
 	}
 
-	public void guardarClienteSeleccionado(String usuario) {
-		this.clienteSeleccionado = usuario;
+	// Guarda el usuario del Cliente
+	public void guardarUsuarioCliente(String usuario) {
+		this.usuarioCliente = usuario;
 	}
 
-	public String devolverClienteSeleccionado() {
-		return clienteSeleccionado;
+	public String devolverUsuarioCliente() {
+		return usuarioCliente;
 	}
 
+	// Guarda si el panel anterior es el PanelAlbumCancion o no y lo devuelve
 	public void guardarPanelAnteriorAlbumCanciones(boolean panelAnterior) {
 		this.panelAnterior = panelAnterior;
 	}
@@ -210,8 +219,9 @@ public class GestionInformacion {
 		return panelAnterior;
 	}
 
-	public void guardarPlaylistSeleccionada(String string) {
-		this.playlistSeleccionada = string;
+	// Guarda el nombre de la Playlist y lo devuelve
+	public void guardarPlaylistSeleccionada(String nombrePlaylist) {
+		this.playlistSeleccionada = nombrePlaylist;
 	}
 
 	public String devolverPlaylistSeleccionada() {
@@ -366,9 +376,19 @@ public class GestionInformacion {
 		canciones = gestionBD.queryCancionesDePlaylist(playlistSeleccionada);
 	}
 
+	// Devuelve la cantidad de canciones que tiene una Playlist
 	public int capacidadPlaylist(int idPlaylist) {
 		int capacidadPlaylist = gestionBD.capacidadDePlaylist(idPlaylist);
 		return capacidadPlaylist;
 	}
+	
+//	public void guardarTituloPlayListSeleccionada(String titulo) {
+//		this.playlistSeleccionada = titulo;
+//	}
+//	
+//	public String devolverTituloPlayListSeleccionada() {
+//		return playlistSeleccionada;
+//		
+//	}
 
 }
