@@ -370,6 +370,11 @@ public class GestionInformacion {
 		gestionBD.agregarCancionAPlaylist(idPlaylist, idCancion, fechaAgregacion);
 	}
 
+	// Elimina la Cancion elegida de la playlist
+	public void eliminarCancionDePlayList(String cancionSeleccionada) {
+		gestionBD.eliminarCancionDePlayList(cancionSeleccionada);	
+	}
+	
 	// Carga las canciones dentro de una playlist
 	public void cargarCancionesDePlaylist(String playlistSeleccionada) {
 		canciones.clear();

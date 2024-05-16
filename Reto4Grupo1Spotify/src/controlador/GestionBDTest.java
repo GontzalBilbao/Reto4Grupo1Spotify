@@ -1,24 +1,26 @@
 package controlador;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import modelo.Album;
 import modelo.Cancion;
+import modelo.CancionesFavoritas;
 import modelo.Cliente;
+import modelo.MasEscuchado;
 import modelo.Musico;
 import modelo.PlayList;
 import modelo.Podcast;
 import modelo.Podcaster;
+import modelo.PodcastsFavoritos;
+import modelo.TopPlayList;
 
 public class GestionBDTest {
 
@@ -27,10 +29,6 @@ public class GestionBDTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		gestionBD = new GestionBD();
-	}
-
-	@Before
-	public void setUp() throws Exception {
 	}
 
 	@Test
@@ -43,17 +41,6 @@ public class GestionBDTest {
 
 		assertEquals(esperado.getUsuario(), cliente1.getUsuario());
 	}
-
-	@Test
-	public void testQueryTipoDePerfil() {
-
-	}
-
-	@Test
-	public void testAgregarCliente() {
-		fail("Not yet implemented");
-	}
-
 
 	@Test
 	public void testQueryPodcasters() {
@@ -112,7 +99,7 @@ public class GestionBDTest {
 		ArrayList<Cancion> canciones = gestionBD.queryCancionesDelAlbum(IdAlbum);
 
 		Cancion cancion1 = canciones.get(0);
-		
+
 		ImageIcon imagen = new ImageIcon("/Reto4Grupo1Spotify/icono/imagen_testJUnit.jpg");
 		Cancion esperado = new Cancion("AVEN01-01", "AVEN01", "Nightmare", "6:14", "null", imagen, "cancion");
 
@@ -128,60 +115,92 @@ public class GestionBDTest {
 
 	@Test
 	public void testTopCancionesFavoritas() {
-		
+		ArrayList<CancionesFavoritas> cancionesFav = gestionBD.topCancionesFavoritas();
+
+		CancionesFavoritas cancionFav1 = cancionesFav.get(0);
+
+		CancionesFavoritas esperado = new CancionesFavoritas("Let It Be", "3:40", "NULL", 309870);
+
+		assertEquals(esperado.getNombreCancion(), cancionFav1.getNombreCancion());
 	}
 
 	@Test
 	public void testTopPodcastsFavoritos() {
-		fail("Not yet implemented");
+		ArrayList<PodcastsFavoritos> podcastsFav = gestionBD.topPodcastsFavoritos();
+
+		PodcastsFavoritos podcastFav1 = podcastsFav.get(0);
+
+		PodcastsFavoritos esperado = new PodcastsFavoritos("Episodio 1 Black Mango", "131", "NULL", 986000);
+		assertEquals(esperado.getNombrePodcast(), podcastFav1.getNombrePodcast());
 	}
 
 	@Test
 	public void testTopMasEscuchado() {
-		fail("Not yet implemented");
+		ArrayList<MasEscuchado> masEscuchados = gestionBD.topMasEscuchado();
+
+		MasEscuchado masEscuchado1 = masEscuchados.get(0);
+
+		MasEscuchado esperado = new MasEscuchado("Episodio 1 Black Mango", "131", "NULL", 986000);
+		assertEquals(esperado.getNombre(), masEscuchado1.getNombre());
+
 	}
 
 	@Test
 	public void testTopPlayList() {
-		fail("Not yet implemented");
+		ArrayList<TopPlayList> topPlaylists = gestionBD.topPlayList();
+
+		TopPlayList topPlaylist1 = topPlaylists.get(0);
+
+		TopPlayList esperado = new TopPlayList("Episodio 1 Nepe", "68", "podcast", 678000, 34656);
+		assertEquals(esperado.getNombreAudio(), topPlaylist1.getNombreAudio());
 	}
 
-	public void agregarFavorito(String idCliente, String idAudio) {
-		
+	@Test
+	public void testQueryPlayListasDelUsuario(String cliente) {
+		String usuario = "BM001";
+		ArrayList<PlayList> playlists = gestionBD.queryPlayListasDelUsuario(usuario);
+
+		PlayList cancion1 = playlists.get(0);
+
+		PlayList esperado = new PlayList(1, "Playlist para Dormir", "2024-04-17", "C0001");
+
+		assertEquals(esperado.getTitulo(), cancion1.getTitulo());
 	}
+
+	@Test
+	public void testIdPlaylist(String titulo) {
+		String nombre = "Playlist para Dormir";
+		int playlist = gestionBD.idPlaylist(nombre);
+
+		int esperado = 1;
 	
-//	public ArrayList<PlayList> queryPlayListasDelUsuario(String cliente) {
-//		
-//	}
-	
-	public void añadirPlayList(String nuevaPlayList, String idCliente) {
-		
+		assertEquals(esperado, playlist);
 	}
-	
-	public void eliminarPlayList(String playListSeleccionada) {
+
+	@Test
+	public void testSacarIdCliente(String usuario) {
+		String usuario1 = "juanito";
+		String idCliente = gestionBD.sacarIdCliente(usuario1);
 		
-	}
-	
-//	public int idPlaylist(String titulo) {
-//		
-//	}
-	
-	public void insertCancionEnPlaylist(String idAudio, int idPlaylist) {
+		String esperado = "C0001";
 		
+		assertEquals(esperado, idCliente);
 	}
-	
-//	public String sacarIdCliente(String usuario) {
-//		
-//	}
-	
-	public void agregarCancionAPlaylist(int idPlaylist, String idCancion, String fechaAgregacion) {
+
+	@Test
+	public void testQueryCancionesDePlaylist(String playlistSeleccionada) {
+		String tituloPlaylist = "Playlist para Dormir";
+		ArrayList<Cancion> canciones = gestionBD.queryCancionesDePlaylist(tituloPlaylist);
+
+		Cancion cancion1 = canciones.get(0);
+
+		ImageIcon imagen = new ImageIcon("/Reto4Grupo1Spotify/icono/imagen_testJUnit.jpg");
+		Cancion esperado = new Cancion("AVEN01-01", "AVEN01", "Nightmare", "6:14", "null", imagen, "cancion");
+
 		
+		assertEquals(esperado.getNombre(), cancion1.getNombre());
 	}
-	
-//	public ArrayList<Cancion> queryCancionesDePlaylist(String playlistSeleccionada) {
-//		
-//	}
-	
+
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		gestionBD.cerrarConexion();

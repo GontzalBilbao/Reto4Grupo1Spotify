@@ -95,8 +95,8 @@ public class PanelEdicionPlayList extends JPanel {
 					JPanel clickedPanel = (JPanel) e.getSource();
 					
 					String cancionSeleccionada = ((JLabel) clickedPanel.getComponent(0)).getText();
-					System.out.println(cancionSeleccionada);
-					gestionBD.eliminarCancionDePlayList(cancionSeleccionada);
+//					System.out.println(cancionSeleccionada);
+					gestionInfo.eliminarCancionDePlayList(cancionSeleccionada);
 					
 					panel.revalidate();
 					panel.repaint();
