@@ -98,34 +98,44 @@ public class VentanaPrincipal extends JFrame {
 			setContentPane(new PanelMenuAdministrador(this));
 			break;
 		case 14:
-			setContentPane(new PanelGestionarMusico(this, gestionInfo));
+
+			setContentPane(new PanelGestionarMusico(this, gestionBD, gestionInfo));
+
 			break;
 		case 15:
-			setContentPane(new PanelAñadirMusico(this, gestionInfo));
+			setContentPane(new PanelAñadirMusico(this, gestionBD));
 			break;
 		case 16:
-			setContentPane(new PanelAñadirAlbum(this, gestionInfo));
+			setContentPane(new PanelAñadirAlbum(this, gestionInfo, gestionBD));
 			break;
 		case 17:
-			setContentPane(new PanelAñadirCancion(this, gestionInfo));
+			setContentPane(new PanelAñadirCancion(this, gestionInfo, gestionBD));
 			break;
 		case 18:
-			setContentPane(new PanelGestionarAlbum(this, gestionInfo));
+
+			setContentPane(new PanelGestionarAlbum(this, gestionBD, gestionInfo));
+
 			break;
 		case 19:
-			setContentPane(new PanelGestionarCancion(this, gestionInfo));
+
+			setContentPane(new PanelGestionarCancion(this, gestionBD, gestionInfo));
+
 			break;
 		case 20:
-			setContentPane(new PanelGestionarPodcaster(this, gestionInfo));
+
+			setContentPane(new PanelGestionarPodcaster(this, gestionBD, gestionInfo));
+
 			break;
 		case 21:
-			setContentPane(new PanelAñadirPodcaster(this, gestionInfo));
+			setContentPane(new PanelAñadirPodcaster(this, gestionInfo, gestionBD));
 			break;
 		case 22:
-			setContentPane(new PanelGestionarPodcast(this, gestionInfo));
+
+			setContentPane(new PanelGestionarPodcast(this, gestionBD, gestionInfo));
+
 			break;
 		case 23:
-			setContentPane(new PanelAñadirPodcast(this, gestionInfo));
+			setContentPane(new PanelAñadirPodcast(this, gestionBD, gestionInfo));
 			break;
 		case 24:
 			setContentPane(new PanelEstadistica(this, gestionInfo));
@@ -138,7 +148,9 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	public void lanzarVentana() {
+
 		this.cambiarDePanel(1);
+
 		this.setVisible(true);
 	}
 

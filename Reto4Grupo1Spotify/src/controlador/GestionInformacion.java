@@ -5,7 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
-
 import modelo.Album;
 import modelo.Cancion;
 import modelo.CancionesFavoritas;
@@ -54,7 +53,9 @@ public class GestionInformacion {
 	public ArrayList<TopPlayList> topPlaylist = new ArrayList<TopPlayList>();
 
 	public GestionInformacion() {
+
 		gestionBD = new GestionBD();
+
 	}
 
 	public boolean validarContrasena(boolean campos, String contraseña, String confirmarContraseña) {

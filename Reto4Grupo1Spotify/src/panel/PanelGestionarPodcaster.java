@@ -21,7 +21,8 @@ public class PanelGestionarPodcaster extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public PanelGestionarPodcaster(VentanaPrincipal vp, GestionInformacion gestionInfo) {
+	public PanelGestionarPodcaster(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+
 		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);

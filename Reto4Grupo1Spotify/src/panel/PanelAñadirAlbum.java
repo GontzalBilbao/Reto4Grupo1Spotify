@@ -11,7 +11,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.toedter.calendar.JDateChooser;
+
 import controlador.GestionBD;
 import controlador.GestionInformacion;
 import modelo.Musico;
@@ -33,12 +37,15 @@ import vista.VentanaPrincipal;
 public class PanelAñadirAlbum extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private JTextField txtNombre;
+	private JTextField txtTitulo;
 	private JTextField txtGenero;
-	private JTextField txtLanzamiento;
 	private String nombreEscrito;
-	JLabel lblMostrarImagen;
+	private JLabel lblMostrarImagen;
+
+	private String lanzamiento = "";
+	private JDateChooser dateChooser;
+
+	private File destino;
 
 	private JComboBox<String> comBoxMusicos;
 
@@ -46,26 +53,32 @@ public class PanelAñadirAlbum extends JPanel {
 
 	private ArrayList<Musico> musicos = new ArrayList<Musico>();
 
-	public PanelAñadirAlbum(VentanaPrincipal vp, GestionInformacion gestionInfo) {
+	public PanelAñadirAlbum(VentanaPrincipal vp, GestionInformacion gestionInfo, GestionBD gestionBD) {
 		setSize(vp.getSize());
-//		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
 		gestionInfo.cargarMusicos();
 		musicos = gestionInfo.devolverMusicos();
 
-		cargarAlbumes();
+		cargarMusicos();
 
 		JButton btnFinalizar = new JButton("FINALIZAR");
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nombreEscrito = txtNombre.getText();
+
+				validarFechaSeleccionada();
+
+				nombreEscrito = txtTitulo.getText();
 				boolean validado = validarCampos(nombreEscrito);
 
 				if (validado != false) {
-					// añadir query de gestionBD de insertar album
-					JOptionPane.showMessageDialog(null, "Se ha agregado el album.");
-					vp.cambiarDePanel(18);
+					boolean añadido = gestionBD.nuevoAlbum(comBoxMusicos.getSelectedItem().toString(), nombreEscrito,
+							lanzamiento, txtGenero.getText(), destino);
+
+					if (añadido != false) {
+						JOptionPane.showMessageDialog(null, "Se ha agregado el album.");
+						vp.cambiarDePanel(18);
+					}
 				}
 			}
 		});
@@ -92,11 +105,11 @@ public class PanelAñadirAlbum extends JPanel {
 		lblComBoxMusico.setBounds(235, 90, 200, 20);
 		add(lblComBoxMusico);
 
-		txtNombre = new JTextField();
-		txtNombre.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		txtNombre.setBounds(115, 220, 200, 25);
-		add(txtNombre);
-		txtNombre.setColumns(10);
+		txtTitulo = new JTextField();
+		txtTitulo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtTitulo.setBounds(115, 220, 200, 25);
+		add(txtTitulo);
+		txtTitulo.setColumns(10);
 
 		JLabel lblGenero = new JLabel("Genero musical:");
 		lblGenero.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -114,11 +127,9 @@ public class PanelAñadirAlbum extends JPanel {
 		lblLanzamiento.setBounds(115, 325, 200, 20);
 		add(lblLanzamiento);
 
-		txtLanzamiento = new JTextField();
-		txtLanzamiento.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		txtLanzamiento.setColumns(10);
-		txtLanzamiento.setBounds(115, 360, 200, 25);
-		add(txtLanzamiento);
+		dateChooser = new JDateChooser();
+		dateChooser.setBounds(115, 360, 200, 25);
+		add(dateChooser);
 
 		JLabel lblImagen = new JLabel("Imagen del album:");
 		lblImagen.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -152,7 +163,7 @@ public class PanelAñadirAlbum extends JPanel {
 							carpetaImagenes.mkdir();
 						}
 						// Crea la ruta del archivo para poder mostrarla más adelante
-						File destino = new File("imagenes/" + imagen.getName());
+						destino = new File("imagenes/" + imagen.getName());
 						// Creamos el objeto para leer el archivo a nivel de bytes que traigamos
 						InputStream leerImagen = new FileInputStream(imagen);
 						// Creamos el objeto para poder escribir el archivo en la carpeta
@@ -195,6 +206,11 @@ public class PanelAñadirAlbum extends JPanel {
 		comBoxMusicos.setBounds(235, 120, 200, 35);
 		add(comBoxMusicos);
 
+		JLabel lblTitulo = new JLabel("Titulo:");
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTitulo.setBounds(115, 185, 200, 20);
+		add(lblTitulo);
+
 	}
 
 	private boolean validarCampos(String txtNombre) {
@@ -202,16 +218,35 @@ public class PanelAñadirAlbum extends JPanel {
 		if (txtNombre.equalsIgnoreCase("")) {
 			JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio.");
 			validar = false;
+		} else if (lanzamiento.equals("")) {
+			JOptionPane.showMessageDialog(null, "Introduzca la fecha", "Fecha no seleccionada",
+					JOptionPane.ERROR_MESSAGE);
+			validar = false;
+		} else if (lblMostrarImagen.getIcon() == null) {
+			JOptionPane.showMessageDialog(null, "La imagen del album es obligatoria..");
+			validar = false;
 		} else {
 			validar = true;
 		}
 		return validar;
 	}
 
-	private void cargarAlbumes() {
+	private void cargarMusicos() {
 		arrayMusicos = new String[musicos.size()];
 		for (int i = 0; i < musicos.size(); i++) {
 			arrayMusicos[i] = musicos.get(i).getNombreArtistico();
+		}
+
+	}
+
+	private void validarFechaSeleccionada() {
+
+		Date fecha = dateChooser.getDate();
+		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+		if (fecha != null) {
+			lanzamiento = formatoFecha.format(fecha);
+		} else {
+			lanzamiento = "";
 		}
 
 	}

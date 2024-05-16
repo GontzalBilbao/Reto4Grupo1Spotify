@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -33,9 +34,13 @@ public class PanelAñadirPodcaster extends JPanel {
 	private JTextField txtNombre;
 	private JTextField txtGenero;
 	private JTextField txtDescripcion;
-	JLabel lblMostrarImagen;
+	private JLabel lblMostrarImagen;
 
-	public PanelAñadirPodcaster(VentanaPrincipal vp, GestionInformacion gestionInfo) {
+	private File destino;
+
+	private String nombreEscrito;
+
+	public PanelAñadirPodcaster(VentanaPrincipal vp, GestionInformacion gestionInfo, GestionBD gestionBD) {
 		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -43,7 +48,21 @@ public class PanelAñadirPodcaster extends JPanel {
 		JButton btnFinalizar = new JButton("FINALIZAR");
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(20);
+
+				nombreEscrito = txtNombre.getText();
+				boolean validado = validarCampos(nombreEscrito);
+
+				if (validado != false) {
+
+					boolean añadido = gestionBD.nuevoPodcaster(nombreEscrito, txtGenero.getText(), destino,
+							txtDescripcion.getText());
+
+					if (añadido != false) {
+						JOptionPane.showMessageDialog(null, "Se ha agregado el podcaster.");
+						vp.cambiarDePanel(20);
+					}
+				}
+
 			}
 		});
 		btnFinalizar.setBounds(560, 450, 200, 50);
@@ -129,7 +148,7 @@ public class PanelAñadirPodcaster extends JPanel {
 							carpetaImagenes.mkdir();
 						}
 						// Crea la ruta del archivo para poder mostrarla más adelante
-						File destino = new File("imagenes/" + imagen.getName());
+						destino = new File("imagenes/" + imagen.getName());
 						// Creamos el objeto para leer el archivo a nivel de bytes que traigamos
 						InputStream leerImagen = new FileInputStream(imagen);
 						// Creamos el objeto para poder escribir el archivo en la carpeta
@@ -168,6 +187,24 @@ public class PanelAñadirPodcaster extends JPanel {
 		lblMostrarImagen.setBounds(560, 185, 200, 200);
 		add(lblMostrarImagen);
 
+	}
+
+	private boolean validarCampos(String txtNombre) {
+		boolean validar = false;
+		if (txtNombre.equalsIgnoreCase("")) {
+			JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio.");
+			validar = false;
+		} else if (txtGenero.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Introduzca el genero", "Genero no seleccionado",
+					JOptionPane.ERROR_MESSAGE);
+			validar = false;
+		} else if (lblMostrarImagen.getIcon() == null) {
+			JOptionPane.showMessageDialog(null, "La imagen del podcaster es obligatoria..");
+			validar = false;
+		} else {
+			validar = true;
+		}
+		return validar;
 	}
 
 }

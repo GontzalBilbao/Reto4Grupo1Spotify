@@ -39,7 +39,12 @@ public class PanelAñadirMusico extends JPanel {
 	private JLabel lblMostrarImagen;
 	private String nombreEscrito;
 
-	public PanelAñadirMusico(VentanaPrincipal vp, GestionInformacion gestionInfo) {
+	private File destino;
+
+	private JComboBox<String> comBoxTipoArtista;
+
+	public PanelAñadirMusico(VentanaPrincipal vp, GestionBD gestionBD) {
+
 		setSize(vp.getSize());
 		setBackground(SystemColor.control);
 		setLayout(null);
@@ -51,10 +56,15 @@ public class PanelAñadirMusico extends JPanel {
 				boolean validado = validarCampos(nombreEscrito);
 
 				if (validado != false) {
-					// añadir query de gestionBD de insertar musico
 
-					JOptionPane.showMessageDialog(null, "Se ha agregado el musico.");
-					vp.cambiarDePanel(14);
+					boolean añadido = gestionBD.nuevoMusico(txtNombre.getText(), txtDescripcion.getText(),
+							comBoxTipoArtista.getSelectedItem().toString(), destino);
+
+					if (añadido != false) {
+						JOptionPane.showMessageDialog(null, "Se ha agregado el musico.");
+						vp.cambiarDePanel(14);
+					}
+
 				}
 			}
 		});
@@ -103,7 +113,7 @@ public class PanelAñadirMusico extends JPanel {
 		lblTipoArtista.setBounds(115, 325, 170, 20);
 		add(lblTipoArtista);
 
-		JComboBox<String> comBoxTipoArtista = new JComboBox<String>();
+		comBoxTipoArtista = new JComboBox<String>();
 		comBoxTipoArtista.setModel(new DefaultComboBoxModel<String>(new String[] { "SOLISTA", "GRUPO" }));
 		comBoxTipoArtista.setBounds(115, 360, 90, 25);
 		add(comBoxTipoArtista);
@@ -140,7 +150,7 @@ public class PanelAñadirMusico extends JPanel {
 							carpetaImagenes.mkdir();
 						}
 						// Crea la ruta del archivo para poder mostrarla más adelante
-						File destino = new File("imagenes/" + imagen.getName());
+						destino = new File("imagenes/" + imagen.getName());
 						// Creamos el objeto para leer el archivo a nivel de bytes que traigamos
 						InputStream leerImagen = new FileInputStream(imagen);
 						// Creamos el objeto para poder escribir el archivo en la carpeta

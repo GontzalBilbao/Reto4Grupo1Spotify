@@ -1,46 +1,98 @@
 package panel;
 
-import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 
 import controlador.GestionBD;
 import controlador.GestionInformacion;
+import modelo.Album;
+import modelo.Musico;
 import vista.VentanaPrincipal;
 
 public class PanelGestionarAlbum extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Create the panel.
-	 * @param gestionInfo 
-	 */
-	public PanelGestionarAlbum(VentanaPrincipal vp, GestionInformacion gestionInfo) {
-		setSize(vp.getSize());
-//		setBackground(Color.DARK_GRAY);
+
+	private ArrayList<Musico> musicos = new ArrayList<Musico>();
+	private ArrayList<Album> albumes = new ArrayList<Album>();
+	private String nombreArtista = "";
+	private String caracteristica = "";
+	private String descripcionArtista = "";
+	private int musicoSeleccionado = 0;
+
+	private JLabel albumActual;
+
+	private JComboBox<String> comBoxMusicos;
+
+	private String[] arrayMusicos;
+
+	public PanelGestionarAlbum(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+		setSize(800, 600);
 		setLayout(null);
-		
+
+		gestionInfo.cargarMusicos();
+		musicos = gestionInfo.devolverMusicos();
+
+		cargarMusicos();
+		gestionInfo.cargarMusicos();
+		musicos = gestionInfo.devolverMusicos();
+		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
+		for (int i = 0; i < musicos.size(); i++) {
+			if (nombreArtista.equals(musicos.get(i).getNombreArtistico())) {
+				musicoSeleccionado = i;
+				caracteristica = musicos.get(i).getCaracteristica();
+				descripcionArtista = musicos.get(i).getDescripcion();
+				gestionInfo.cargarAlbumesDelMusico(nombreArtista);
+				albumes = gestionInfo.devolverAlbumes();
+			}
+		}
 
 		JPanel panelAlbumes = new JPanel();
-		panelAlbumes.setBorder(new LineBorder(Color.black, 1, true));
-		add(panelAlbumes);
+		panelAlbumes.setLayout(new GridLayout(0, 1));
 
-		JScrollPane spPanelAlbumes = new JScrollPane(panelAlbumes);
-		spPanelAlbumes.getVerticalScrollBar();
-		spPanelAlbumes.setBorder(null);
-		spPanelAlbumes.setSize(500, 425);
-		spPanelAlbumes.setLocation(30, 100);
-		add(spPanelAlbumes);
+		JLabel lblComBoxMusicos = new JLabel("Musicos: ");
+		lblComBoxMusicos.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblComBoxMusicos.setBounds(125, 105, 100, 35);
+
+		add(lblComBoxMusicos);
+
+		comBoxMusicos = new JComboBox<String>(arrayMusicos);
+		comBoxMusicos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gestionInfo.cargarAlbumesDelMusico(comBoxMusicos.getSelectedItem().toString());
+				albumes = gestionInfo.devolverAlbumes();
+				nombreArtista = gestionInfo.devolverArtistaSeleccionado();
+
+			}
+		});
+		comBoxMusicos.setBounds(250, 105, 200, 35);
+		add(comBoxMusicos);
+
+		gestionInfo.cargarAlbumesDelMusico(comBoxMusicos.getSelectedItem().toString());
+		albumes = gestionInfo.devolverAlbumes();
+
+		// Crear un JScrollPane y agregar el panel
+		JScrollPane scrollPaneAlbumes = new JScrollPane(panelAlbumes);
+		// Como se mueve muy despacio vamos a darle un poco de velocidad
+		scrollPaneAlbumes.getVerticalScrollBar().setUnitIncrement(30);
+		scrollPaneAlbumes.setBorder(null);
+		scrollPaneAlbumes.setSize(500, 400);
+		scrollPaneAlbumes.setLocation(30, 150);
+		// Agregar el JScrollPane a la ventana
+		add(scrollPaneAlbumes);
 
 		JLabel lblAlbumes = new JLabel("ALBUMES");
 		lblAlbumes.setHorizontalAlignment(SwingConstants.CENTER);
@@ -78,6 +130,17 @@ public class PanelGestionarAlbum extends JPanel {
 		});
 		btnAtras.setBounds(650, 25, 100, 35);
 		add(btnAtras);
+
+		albumActual = new JLabel("Album Seleccionado: Ninguno");
+		albumActual.setBounds(560, 115, 200, 25);
+		add(albumActual);
 	}
 
+	private void cargarMusicos() {
+		arrayMusicos = new String[musicos.size()];
+		for (int i = 0; i < musicos.size(); i++) {
+			arrayMusicos[i] = musicos.get(i).getNombreArtistico();
+		}
+
+	}
 }

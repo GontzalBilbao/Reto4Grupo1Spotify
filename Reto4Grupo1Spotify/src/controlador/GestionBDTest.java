@@ -156,8 +156,8 @@ public class GestionBDTest {
 	}
 
 	@Test
-	public void testQueryPlayListasDelUsuario(String cliente) {
-		String usuario = "BM001";
+	public void testQueryPlayListasDelUsuario() {
+		String usuario = "juanito";
 		ArrayList<PlayList> playlists = gestionBD.queryPlayListasDelUsuario(usuario);
 
 		PlayList cancion1 = playlists.get(0);
@@ -168,7 +168,7 @@ public class GestionBDTest {
 	}
 
 	@Test
-	public void testIdPlaylist(String titulo) {
+	public void testIdPlaylist() {
 		String nombre = "Playlist para Dormir";
 		int playlist = gestionBD.idPlaylist(nombre);
 
@@ -178,7 +178,7 @@ public class GestionBDTest {
 	}
 
 	@Test
-	public void testSacarIdCliente(String usuario) {
+	public void testSacarIdCliente() {
 		String usuario1 = "juanito";
 		String idCliente = gestionBD.sacarIdCliente(usuario1);
 		
@@ -188,7 +188,7 @@ public class GestionBDTest {
 	}
 
 	@Test
-	public void testQueryCancionesDePlaylist(String playlistSeleccionada) {
+	public void testQueryCancionesDePlaylist() {
 		String tituloPlaylist = "Playlist para Dormir";
 		ArrayList<Cancion> canciones = gestionBD.queryCancionesDePlaylist(tituloPlaylist);
 
