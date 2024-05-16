@@ -102,7 +102,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 		});
 		btnPerfil.setBounds(685, 11, 89, 23);
 		add(btnPerfil);
-		
+
 		// Crear un panel para contener los JLabels
 		JPanel panelPodcasts = new JPanel();
 //						panel.setBackground(new java.awt.Color(0, 0, 0, 0));
@@ -128,6 +128,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 			// Agregar JLabels debajo de la imagen
 			JLabel label1 = new JLabel(podcasts.get(i).getNombre()); // podcasts.get(i).getNombre()
 //							JLabel label2 = new JLabel("Autor: " + i);
+			label1.setHorizontalAlignment(SwingConstants.CENTER);
 			panelItem.add(label1);
 //							panelItem.add(label2);
 			// Le damos nombre para identificarlo
@@ -221,8 +222,6 @@ public class PanelPodcasterPodcasts extends JPanel {
 		scrollPaneOtrosPodcasters.setLocation(20, 267);
 		// Agregar el JScrollPane a la ventana
 		add(scrollPaneOtrosPodcasters);
-
-		
 
 	}
 

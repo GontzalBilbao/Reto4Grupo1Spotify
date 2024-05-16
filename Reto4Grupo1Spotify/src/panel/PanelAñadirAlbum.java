@@ -54,13 +54,12 @@ public class PanelAñadirAlbum extends JPanel {
 
 	public PanelAñadirAlbum(VentanaPrincipal vp, GestionBD gestionBD) {
 		setSize(vp.getSize());
-//		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
 		gestionBD.cargarMusicos();
 		musicos = gestionBD.devolverMusicos();
 
-		cargarAlbumes();
+		cargarMusicos();
 
 		JButton btnFinalizar = new JButton("FINALIZAR");
 		btnFinalizar.addActionListener(new ActionListener() {
@@ -72,11 +71,13 @@ public class PanelAñadirAlbum extends JPanel {
 				boolean validado = validarCampos(nombreEscrito);
 
 				if (validado != false) {
-					gestionBD.nuevoAlbum(comBoxMusicos.getSelectedItem().toString(), nombreEscrito, lanzamiento,
-							txtGenero.getText(), destino);
+					boolean añadido = gestionBD.nuevoAlbum(comBoxMusicos.getSelectedItem().toString(), nombreEscrito,
+							lanzamiento, txtGenero.getText(), destino);
 
-					JOptionPane.showMessageDialog(null, "Se ha agregado el album.");
-					vp.cambiarDePanel(18);
+					if (añadido != false) {
+						JOptionPane.showMessageDialog(null, "Se ha agregado el album.");
+						vp.cambiarDePanel(18);
+					}
 				}
 			}
 		});
@@ -221,7 +222,7 @@ public class PanelAñadirAlbum extends JPanel {
 					JOptionPane.ERROR_MESSAGE);
 			validar = false;
 		} else if (lblMostrarImagen.getIcon() == null) {
-			JOptionPane.showMessageDialog(null, "La imagen del musico es obligatoria..");
+			JOptionPane.showMessageDialog(null, "La imagen del album es obligatoria..");
 			validar = false;
 		} else {
 			validar = true;
@@ -229,7 +230,7 @@ public class PanelAñadirAlbum extends JPanel {
 		return validar;
 	}
 
-	private void cargarAlbumes() {
+	private void cargarMusicos() {
 		arrayMusicos = new String[musicos.size()];
 		for (int i = 0; i < musicos.size(); i++) {
 			arrayMusicos[i] = musicos.get(i).getNombreArtistico();

@@ -22,14 +22,14 @@ public class PanelMenuAdministrador extends JPanel {
 		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);
-		
+
 		JButton btnAtras = new JButton("CERRAR SESION");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(1);
 			}
 		});
-		btnAtras.setBounds(620, 25, 130, 35);
+		btnAtras.setBounds(615, 25, 135, 35);
 		add(btnAtras);
 
 		JButton btnArtistas = new JButton("MUSICOS");
