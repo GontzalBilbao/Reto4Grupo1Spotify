@@ -5,8 +5,6 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import vista.VentanaPrincipal;
-
 public class GestionInformacion {
 
 	private String artistaSeleccionado = "";
@@ -14,7 +12,6 @@ public class GestionInformacion {
 	private String albumSeleccionado = "";
 
 	public GestionInformacion() {
-
 	}
 
 	public boolean validarContrasena(boolean campos, String contraseña, String confirmarContraseña) {

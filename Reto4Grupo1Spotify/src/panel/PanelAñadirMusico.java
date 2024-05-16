@@ -12,7 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -41,10 +40,6 @@ public class PanelAñadirMusico extends JPanel {
 
 	private File destino;
 
-	private String insNombre;
-	private String insDesc;
-	private String insTipo;
-
 	private JComboBox<String> comBoxTipoArtista;
 
 	public PanelAñadirMusico(VentanaPrincipal vp, GestionBD gestionBD) {
@@ -59,10 +54,14 @@ public class PanelAñadirMusico extends JPanel {
 				boolean validado = validarCampos(nombreEscrito);
 
 				if (validado != false) {
-					gestionBD.nuevoMusico(txtNombre.getText(), txtDescripcion.getText(),
+
+					boolean añadido = gestionBD.nuevoMusico(txtNombre.getText(), txtDescripcion.getText(),
 							comBoxTipoArtista.getSelectedItem().toString(), destino);
-					JOptionPane.showMessageDialog(null, "Se ha agregado el musico.");
-					vp.cambiarDePanel(14);
+
+					if (añadido != false) {
+						JOptionPane.showMessageDialog(null, "Se ha agregado el musico.");
+						vp.cambiarDePanel(14);
+					}
 				}
 			}
 		});

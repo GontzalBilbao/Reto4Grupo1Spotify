@@ -72,11 +72,13 @@ public class PanelAñadirAlbum extends JPanel {
 				boolean validado = validarCampos(nombreEscrito);
 
 				if (validado != false) {
-					gestionBD.nuevoAlbum(comBoxMusicos.getSelectedItem().toString(), nombreEscrito, lanzamiento,
-							txtGenero.getText(), destino);
+					boolean añadido = gestionBD.nuevoAlbum(comBoxMusicos.getSelectedItem().toString(), nombreEscrito,
+							lanzamiento, txtGenero.getText(), destino);
 
-					JOptionPane.showMessageDialog(null, "Se ha agregado el album.");
-					vp.cambiarDePanel(18);
+					if (añadido != false) {
+						JOptionPane.showMessageDialog(null, "Se ha agregado el album.");
+						vp.cambiarDePanel(18);
+					}
 				}
 			}
 		});
@@ -221,7 +223,7 @@ public class PanelAñadirAlbum extends JPanel {
 					JOptionPane.ERROR_MESSAGE);
 			validar = false;
 		} else if (lblMostrarImagen.getIcon() == null) {
-			JOptionPane.showMessageDialog(null, "La imagen del musico es obligatoria..");
+			JOptionPane.showMessageDialog(null, "La imagen del album es obligatoria..");
 			validar = false;
 		} else {
 			validar = true;
