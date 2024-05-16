@@ -121,6 +121,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnAtras.setBackground(Color.BLACK);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controladorDePodcast.parar();
 				vp.cambiarDePanel(9);
 			}
 		});
@@ -133,6 +134,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnPerfil.setBackground(Color.BLACK);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controladorDePodcast.parar();
 				vp.cambiarDePanel(11);
 			}
 		});

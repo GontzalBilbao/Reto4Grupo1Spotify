@@ -111,6 +111,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnAtras.setBackground(Color.BLACK);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controladorDeSonido.parar();
 				vp.cambiarDePanel(6);
 			}
 		});
@@ -124,6 +125,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnPerfil.setForeground(Color.WHITE);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controladorDeSonido.parar();
 				vp.cambiarDePanel(11);
 			}
 		});
