@@ -311,7 +311,7 @@ public class PanelReproductorMusica extends JPanel {
 
 				
 				if (gestionInfo.capacidadDePlaylist(gestionInfo.devolverIdPlaylist(playlist)) == 3 && !gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
-					JOptionPane.showMessageDialog(null,
+					JOptionPane.showMessageDialog(vp,
 							"Has llegado a la capacidad maxima de la playlist " + playlist + "!!");
 				} else {
 					gestionInfo.añadirCancionAPlaylist(canciones.get(intinerador).getIdAudio(),
