@@ -131,8 +131,9 @@ public class PanelPlaylist extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				gestionBD.eliminarPlayList(list.getSelectedValue().toString());
-				JOptionPane.showMessageDialog(null, "PlayList eliminada con éxito", "PlayList Eliminada",
+				JOptionPane.showMessageDialog(vp, "PlayList eliminada con éxito", "PlayList Eliminada",
 						JOptionPane.INFORMATION_MESSAGE);
+				vp.cambiarDePanel(12);
 				
 			}
 		});
