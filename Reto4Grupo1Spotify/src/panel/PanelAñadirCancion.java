@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import modelo.Album;
 import modelo.Musico;
 import vista.VentanaPrincipal;
@@ -25,12 +26,17 @@ import vista.VentanaPrincipal;
 public class PanelAñadirCancion extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+
+	private String tipo = "Cancion";
+
 	private JTextField txtNombre;
 	private JTextField txtDuracion;
 	private JTextField txtInvitado;
 	private JLabel lblImagenAlbum;
 
 	private String nombreEscrito;
+
+	private ImageIcon ImagenReescalada;
 
 	private String[] arrayMusicos;
 	private String[] arrayAlbumes = new String[1];
@@ -43,22 +49,24 @@ public class PanelAñadirCancion extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * 
+	 * @param gestionInfo
 	 */
-	public PanelAñadirCancion(VentanaPrincipal vp, GestionBD gestionBD) {
+	public PanelAñadirCancion(VentanaPrincipal vp, GestionInformacion gestionInfo, GestionBD gestionBD) {
 		setSize(vp.getSize());
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
-		gestionBD.cargarMusicos();
-		musicos = gestionBD.devolverMusicos();
-		albumes = gestionBD.devolverAlbumes();
+		gestionInfo.cargarMusicos();
+		musicos = gestionInfo.devolverMusicos();
+		albumes = gestionInfo.devolverAlbumes();
 
-		cargarMusicos();
+		gestionBD.cargarMusicos();
 		JButton btnFinalizar = new JButton("FINALIZAR");
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				JOptionPane.showMessageDialog(null, "");
 				vp.cambiarDePanel(19);
+
 			}
 		});
 		btnFinalizar.setBounds(560, 450, 200, 50);
@@ -115,12 +123,28 @@ public class PanelAñadirCancion extends JPanel {
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				nombreEscrito = txtNombre.getText();
+
 				boolean validado = validarCampos(nombreEscrito, vp);
 
 				if (validado == true) {
 					// añadir query de gestionBD de insertar album
 					JOptionPane.showMessageDialog(vp, "Se ha agregado la cancion.");
+					if (validado != false) {
+						boolean audioAñadido = gestionBD.nuevoAudio(comBoxAlbumes.getSelectedItem().toString(),
+								nombreEscrito, txtDuracion.getText(), ImagenReescalada, tipo);
+
+						if (audioAñadido != false) {
+							System.out.println("Audio añadido");
+							boolean cancionAñadida = gestionBD.nuevaCancion(comBoxAlbumes.getSelectedItem().toString(),
+									txtInvitado.getText());
+
+							if (cancionAñadida != false) {
+								JOptionPane.showMessageDialog(null, "Se ha agregado la cancion.");
+							}
+						}
+					}
 				}
 			}
 		});
@@ -138,12 +162,12 @@ public class PanelAñadirCancion extends JPanel {
 		lblImagenAlbum = new JLabel();
 		lblImagenAlbum.setBounds(560, 185, 200, 200);
 		add(lblImagenAlbum);
-		
+
 		JLabel lblComBoxMusico = new JLabel("Musico:");
 		lblComBoxMusico.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblComBoxMusico.setBounds(150, 89, 200, 20);
 		add(lblComBoxMusico);
-		
+
 		JLabel lblComBoxAlbum = new JLabel("Album:");
 		lblComBoxAlbum.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblComBoxAlbum.setBounds(390, 89, 200, 20);
@@ -152,7 +176,7 @@ public class PanelAñadirCancion extends JPanel {
 		comBoxMusicos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				comBoxAlbumes.removeAllItems();
-				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionBD);
+				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionInfo);
 				for (int i = 0; i < albumes.size(); i++) {
 					comBoxAlbumes.addItem(arrayAlbumes[i]);
 				}
@@ -167,7 +191,7 @@ public class PanelAñadirCancion extends JPanel {
 						if (comBoxAlbumes.getSelectedItem().toString().equals(albumes.get(i).getTitulo())) {
 							Image image = albumes.get(i).getImagen().getImage();
 							Image nuevaImagen = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-							ImageIcon ImagenReescalada = new ImageIcon(nuevaImagen);
+							ImagenReescalada = new ImageIcon(nuevaImagen);
 							lblImagenAlbum.setIcon(ImagenReescalada);
 							lblImagenAlbum.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 						}
@@ -196,10 +220,13 @@ public class PanelAñadirCancion extends JPanel {
 		return validar;
 	}
 
-	private void cargarAlbumesPorArtista(String nombreArtistico, GestionBD gestion) {
-		albumes.clear();
-		gestion.cargarAlbumesDelMusico(nombreArtistico);
-		albumes = gestion.devolverAlbumes();
+	private void cargarAlbumesPorArtista(String nombreArtistico, GestionInformacion gestionInfo) {
+//		albumes.clear();
+		gestionInfo.cargarAlbumesDelMusico(nombreArtistico);
+		albumes = gestionInfo.devolverAlbumes();
+//		for (int i = 0; i < albumes.size(); i++) {
+//			System.out.println(albumes.get(i).getTitulo());
+//		}
 		arrayAlbumes = new String[albumes.size()];
 		for (int i = 0; i < albumes.size(); i++) {
 			arrayAlbumes[i] = albumes.get(i).getTitulo();

@@ -1,4 +1,4 @@
-	package panel;
+package panel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -17,12 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
-import controlador.GestionBD;
 import controlador.GestionInformacion;
 import modelo.Musico;
 import vista.VentanaPrincipal;
-import javax.swing.SwingConstants;
 
 public class PanelDescubrirMusica extends JPanel {
 
@@ -34,15 +33,15 @@ public class PanelDescubrirMusica extends JPanel {
 	 * Create the panel.
 	 */
 
-	public PanelDescubrirMusica(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelDescubrirMusica(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 
 		setSize(800, 600);
 		setBackground(Color.WHITE);
 
 		setLayout(null);
 
-		gestionBD.cargarMusicos();
-		musicos = gestionBD.devolverMusicos();
+		gestionInfo.cargarMusicos();
+		musicos = gestionInfo.devolverMusicos();
 		for (int i = 0; i < musicos.size(); i++) {
 //			System.out.println(musicos.get(i).getDescripcion());
 		}
@@ -86,9 +85,6 @@ public class PanelDescubrirMusica extends JPanel {
 					JPanel clickedPanel = (JPanel) e.getSource();
 					gestionInfo.guardarArtistaSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					vp.cambiarDePanel(5);
-					JOptionPane.showMessageDialog(vp, "Has hecho clic en: " + clickedPanel.getName()
-							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
-//											+ ((JLabel) clickedPanel.getComponent(2)).getText());
 
 				}
 			});
@@ -133,12 +129,13 @@ public class PanelDescubrirMusica extends JPanel {
 		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				vp.nPanel = 4;
 				vp.cambiarDePanel(11);
 			}
 		});
 		btnPerfil.setBounds(500, 36, 90, 35);
 		add(btnPerfil);
-		
+
 		JLabel lblIconoGrande = new JLabel("");
 		lblIconoGrande.setIcon(new ImageIcon("icono/spotifyicon.png"));
 		lblIconoGrande.setBounds(0, 0, 100, 100);

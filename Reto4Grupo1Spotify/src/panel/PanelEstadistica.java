@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import controlador.GestionBD;
+import controlador.GestionInformacion;
 import modelo.CancionesFavoritas;
 import modelo.MasEscuchado;
 import modelo.PodcastsFavoritos;
@@ -38,7 +39,7 @@ public class PanelEstadistica extends JPanel {
 	private ArrayList<MasEscuchado> masEscuchado;
 	private ArrayList<TopPlayList> topPlaylist;
 
-	public PanelEstadistica(VentanaPrincipal vp, GestionBD gestionBD) {
+	public PanelEstadistica(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 
 		setSize(vp.getSize());
 		setLayout(null);
@@ -47,11 +48,23 @@ public class PanelEstadistica extends JPanel {
 		listaPodcasts.removeAll();
 		listaMasEscuchado.removeAll();
 		listaTopPlaylist.removeAll();
-
-		topCanciones = gestionBD.topCancionesFavoritas();
-		topPodcasts = gestionBD.topPodcastsFavoritos();
-		masEscuchado = gestionBD.topMasEscuchado();
-		topPlaylist = gestionBD.topPlayList();
+		
+		gestionInfo.cargarTopCancionesFavoritas();
+		topCanciones = gestionInfo.devolverTopCancionesFavoritas();
+		
+		gestionInfo.cargarTopPodcastsFavoritos();
+		topPodcasts = gestionInfo.devolverTopPodcastsFavoritos();
+		
+		gestionInfo.cargarTopMasEscuchado();
+		masEscuchado = gestionInfo.devolverTopMasEscuchado();
+		
+		gestionInfo.cargarTopPlaylist();
+		topPlaylist = gestionInfo.devolverTopPlaylist();
+		
+//		topCanciones = gestionBD.topCancionesFavoritas();
+//		topPodcasts = gestionBD.topPodcastsFavoritos();
+//		masEscuchado = gestionBD.topMasEscuchado();
+//		topPlaylist = gestionBD.topPlayList();
 
 		JMenuBar menuEstadisticas = new JMenuBar();
 		menuEstadisticas.setBounds(0, 0, 800, 30);

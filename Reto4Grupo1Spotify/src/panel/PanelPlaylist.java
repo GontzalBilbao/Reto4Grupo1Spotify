@@ -7,38 +7,37 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.JTextField;
 
 import controlador.GestionBD;
 import controlador.GestionFicheros;
 import controlador.GestionInformacion;
-import modelo.Album;
+import modelo.Cancion;
 import modelo.PlayList;
 import vista.VentanaPrincipal;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import modelo.Cliente;
 
 public class PanelPlaylist extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNuevaPlayList;
+	private DefaultListModel<String> listModel;
 	private String usuario = null;
 	private String nuevaPlayList = null;
-	private Cliente cliente;
 	private String idCliente = null;
+	private String titulo = null;
 	
 	private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
+	private ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelPlaylist(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo, GestionFicheros gestionFicheros) {
+	public PanelPlaylist(VentanaPrincipal vp, GestionInformacion gestionInfo, GestionFicheros gestionFicheros, GestionBD gestionBD) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -78,15 +77,26 @@ public class PanelPlaylist extends JPanel {
 //		JList<String> lista = new JList<String>(playlists.toArray(new String[playlists.size()]));
 //		list.add(lista);
 //		
-		usuario = gestionInfo.devolverClienteSeleccionado();
-		gestionBD.cargarPlayLists(usuario);
-		playlists = gestionBD.devolverPlayLists();
-		for (int i = 0; i < playlists.size(); i++) {
-			System.out.println(playlists.get(i).getTitulo());
-		}
+		usuario = gestionInfo.devolverUsuarioCliente();
+//<<<<<<< HEAD
+		gestionInfo.cargarPlayLists(usuario);
+		playlists = gestionInfo.devolverPlayLists();
 		
+
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		listModel.addElement("Favoritos");
+
+		idCliente = gestionInfo.devolverIdCliente();
+//		gestionBD.queryIdUsuario(usuario);
+//		clientes = gestionBD.devolverIdUsuario();
+//		for (int i = 0; i < clientes.size(); i++) {
+//		idCliente = clientes.get(i).getIdCliente();
+//			
+////>>>>>>> refs/remotes/origin/Isabella
+//		}
+		
+		listModel = new DefaultListModel<String>();
+
 		for (int i = 0; i < playlists.size(); i++){
 		    listModel.addElement(playlists.get(i).getTitulo());
 		}
@@ -113,10 +123,20 @@ public class PanelPlaylist extends JPanel {
 							JOptionPane.ERROR_MESSAGE);
 				}else {
 					nuevaPlayList = textFieldNuevaPlayList.getText();
+				
+					gestionInfo.añadirPlayList(nuevaPlayList, idCliente);
 					
 //					idCliente = "123";
 					
 					gestionBD.añadirPlayList(nuevaPlayList, gestionInfo.devolverIdCliente());
+
+//					DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
+//		            model.addElement(nuevaPlayList);
+//	
+//		            list.revalidate();
+//		            list.repaint();
+
+
 					JOptionPane.showMessageDialog(null, "PlayList añadida con éxito", "PlayList Guardada",
 							JOptionPane.INFORMATION_MESSAGE);
 					vp.cambiarDePanel(12);
@@ -132,9 +152,22 @@ public class PanelPlaylist extends JPanel {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+
 				gestionBD.eliminarPlayList(list.getSelectedValue().toString());
-				JOptionPane.showMessageDialog(vp, "PlayList eliminada con éxito", "PlayList Eliminada",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(vp, "PlayList eliminada con éxito");
+
+//<<<<<<< HEAD
+//				gestionInfo.eliminarPlayList(list.getSelectedValue().toString());
+//=======
+				gestionInfo.eliminarPlayList(list.getSelectedValue().toString());
+				
+				DefaultListModel<String> model = (DefaultListModel<String>) list.getModel();
+	            model.removeElement(list.getSelectedValue());
+	            
+	            // Notificar al JList que se han realizado cambios en el modelo
+	            list.revalidate();
+	            list.repaint();
+				
 				vp.cambiarDePanel(12);
 				
 			}
@@ -156,5 +189,37 @@ public class PanelPlaylist extends JPanel {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton_1.setBounds(429, 313, 336, 81);
 		add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Seleccionar");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+//				titulo = list.getSelectedValue().toString();
+//				gestionBD.queryCancion(titulo);
+//				canciones = gestionBD.devolverCancion();
+//				
+				
+				
+				if (list.getSelectedValue().toString() == null) {
+					JOptionPane.showMessageDialog(vp, "Seleccione una playlist");
+				}else {
+					titulo = list.getSelectedValue().toString();
+					gestionInfo.cargarCancionesDePlaylist(titulo);
+					canciones = gestionInfo.devolverCanciones();
+				}
+
+				
+				if (canciones.isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "PlayList Vacia", "Error",
+							JOptionPane.ERROR_MESSAGE);
+		            
+		        } else {
+		        	gestionInfo.guardarPlaylistSeleccionada(list.getSelectedValue().toString());
+					vp.cambiarDePanel(25);
+		        }
+			}
+		});
+		btnNewButton_2.setBounds(255, 128, 150, 23);
+		add(btnNewButton_2);
 	}
 }

@@ -51,7 +51,7 @@ public class PanelReproductorMusica extends JPanel {
 	private ArrayList<Cancion> canciones = new ArrayList<Cancion>();// Lista de canciones
 	private ArrayList<Album> albumes = new ArrayList<Album>();// Lista de álbumes
 
-	protected boolean anuncio = false;// Indica si se está reproduciendo un anuncio
+	private boolean anuncio = false;// Indica si se está reproduciendo un anuncio
 	
 	/**
      * Constructor de PanelReproductorMusica.
@@ -68,8 +68,6 @@ public class PanelReproductorMusica extends JPanel {
 				btnCancionAnterior.setEnabled(true);
 			}
 		});
-
-		
 		
 		
 		// Cargar información inicial
@@ -150,7 +148,7 @@ public class PanelReproductorMusica extends JPanel {
 					intinerador = (intinerador - 1) % canciones.size();// De lo contrario, retrocede al índice de la canción anterior en la lista
 				}
 
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) { // Verifica si el usuario tiene una suscripción "Premium"
+				if (gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) { // Verifica si el usuario tiene una suscripción "Premium"
 
 					controladorDeSonido.setCancionEnReproduccion(intinerador);// Actualiza el controlador de sonido con la nueva canción en reproducción
 					// Actualiza la imagen de la canción y el título en la interfaz gráfica
@@ -204,7 +202,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
+				if (gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) {
 					intinerador = (intinerador + 1) % canciones.size();
 					controladorDeSonido.setCancionEnReproduccion(intinerador);
 					lblImagenCancion.setIcon(canciones.get(0).getImagen());
@@ -313,7 +311,7 @@ public class PanelReproductorMusica extends JPanel {
 				String playlist = JOptionPane.showInputDialog(f, "Introduzca el nombre de la playlist:");
 
 				
-				if (gestionInfo.capacidadDePlaylist(gestionInfo.devolverIdPlaylist(playlist)) == 3 && !gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
+				if (gestionInfo.capacidadPlaylist(gestionInfo.devolverIdPlaylist(playlist)) == 3 && !gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) {
 					JOptionPane.showMessageDialog(vp,
 							"Has llegado a la capacidad maxima de la playlist " + playlist + "!!");
 				} else {

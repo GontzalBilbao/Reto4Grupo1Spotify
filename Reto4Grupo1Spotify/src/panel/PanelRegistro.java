@@ -46,7 +46,7 @@ public class PanelRegistro extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelRegistro(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelRegistro(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 
 //		generarIdCliente();
 //		for (int i = 0; i < clientes.size(); i++) {
@@ -68,6 +68,9 @@ public class PanelRegistro extends JPanel {
 		txtNombre.setColumns(10);
 
 		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.setBackground(Color.BLACK);
+		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnGuardar.setForeground(Color.WHITE);
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -82,9 +85,9 @@ public class PanelRegistro extends JPanel {
 					JOptionPane.showMessageDialog(vp, "Introduzca la fecha", "Error de Registro",
 							JOptionPane.ERROR_MESSAGE);
 				} else if (campos == true && contra == true) {
-					String idCliente = generarIdCliente(gestionBD);
+					String idCliente = generarIdCliente(gestionInfo);
 					String fechaRegistro = generarFechaRegistro();
-					gestionBD.agregarCliente(idCliente, txtNombre.getText(), txtApellido.getText(),
+					gestionInfo.agregarNuevoCliente(idCliente, txtNombre.getText(), txtApellido.getText(),
 							txtUsuario.getText(), txtContrasena.getText(), fechaNac, fechaRegistro,
 							comboBoxSuscripcion.getSelectedItem().toString(),
 							comboBoxIdioma.getSelectedItem().toString());
@@ -96,7 +99,7 @@ public class PanelRegistro extends JPanel {
 			}
 
 		});
-		btnGuardar.setBounds(685, 527, 89, 23);
+		btnGuardar.setBounds(688, 554, 102, 35);
 		add(btnGuardar);
 
 		JLabel lblNombre = new JLabel("Nombre:");
@@ -156,12 +159,15 @@ public class PanelRegistro extends JPanel {
 		add(comboBoxIdioma);
 
 		JButton btnAtras = new JButton("Atrás");
+		btnAtras.setBackground(Color.BLACK);
+		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnAtras.setForeground(Color.WHITE);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(1);
 			}
 		});
-		btnAtras.setBounds(10, 11, 89, 23);
+		btnAtras.setBounds(10, 11, 90, 35);
 		add(btnAtras);
 
 		JLabel lblFechaNac = new JLabel("Fecha de nacimiento:");
@@ -220,9 +226,9 @@ public class PanelRegistro extends JPanel {
 		return fechaRegistroString;
 	}
 
-	private String generarIdCliente(GestionBD gestionBD) {
-		gestionBD.cargarClientes();
-		clientes = gestionBD.devolverClientes();
+	private String generarIdCliente(GestionInformacion gestionInfo) {
+		gestionInfo.cargarClientes();
+		clientes = gestionInfo.devolverClientes();
 		String idCliente = "C000";
 		int idClientePuro = clientes.size() + 1;
 		if (idClientePuro < 10) {
@@ -234,7 +240,10 @@ public class PanelRegistro extends JPanel {
 		} else {
 			idCliente = "C" + Integer.toString(idClientePuro);
 		}
-		System.out.println(idCliente);
+//		for (int i = 0; i < clientes.size(); i++) {
+//			System.out.println(clientes.get(i).getNombre());
+//		}
+//		System.out.println(idCliente);
 		return idCliente;
 	}
 

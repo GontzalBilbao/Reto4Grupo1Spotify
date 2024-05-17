@@ -54,7 +54,7 @@ public class PanelReproductorPodcasts extends JPanel {
 	 * Create the panel.
 	 */
 
-	public PanelReproductorPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelReproductorPodcasts(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 
 		Timer timerAnuncio = new Timer(20000, new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -64,15 +64,15 @@ public class PanelReproductorPodcasts extends JPanel {
 		});
 		
 		
-		gestionBD.cargarPodcasters();
-		podcasters = gestionBD.devolverPodcasters();
+		gestionInfo.cargarPodcasters();
+		podcasters = gestionInfo.devolverPodcasters();
 		nombrePodcaster = gestionInfo.devolverArtistaSeleccionado();
-		nombrePodcastSeleccionado = gestionInfo.devolverAudioSeleccionado();
+		nombrePodcastSeleccionado = gestionInfo.devolverNombrePodcastSeleccionado();
 		System.out.println(nombrePodcaster);
 		for (int i = 0; i < podcasters.size(); i++) {
 			if (nombrePodcaster.equals(podcasters.get(i).getNombreArtistico())) {
-				gestionBD.cargarPodcastsDelPodcaster(podcasters.get(i).getIdPodcaster());
-				podcasts = gestionBD.devolverPodcasts();
+				gestionInfo.cargarPodcastsDelPodcaster(podcasters.get(i).getIdPodcaster());
+				podcasts = gestionInfo.devolverPodcasts();
 				numeroPodcaster = i;
 				for (int j = 0; j < podcasts.size(); j++) {
 					if (nombrePodcastSeleccionado.equals(podcasts.get(j).getNombre())) {
@@ -133,6 +133,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controladorDePodcast.parar();
+				vp.nPanel = 10;
 				vp.cambiarDePanel(11);
 			}
 		});
@@ -154,7 +155,7 @@ public class PanelReproductorPodcasts extends JPanel {
 							% podcasts.size();
 				}
 				
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
+				if (gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) {
 
 					controladorDePodcast.setCancionEnReproduccion(intinerador);
 					lblImagenPodcast.setIcon(podcasters.get(numeroPodcaster).getImagen());
@@ -197,7 +198,7 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-				if (gestionInfo.devolverPremiun().equalsIgnoreCase("Premium")) {
+				if (gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) {
 					intinerador = (intinerador + 1)
 							% podcasts.size();
 

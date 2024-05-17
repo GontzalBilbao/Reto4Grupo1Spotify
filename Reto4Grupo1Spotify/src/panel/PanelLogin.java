@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -11,11 +14,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import controlador.GestionBD;
 import controlador.GestionInformacion;
 import modelo.Cliente;
 import vista.VentanaPrincipal;
@@ -35,11 +37,11 @@ public class PanelLogin extends JPanel {
 	 */
 
 
-	public PanelLogin(VentanaPrincipal v, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelLogin(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 
 
-		gestionBD.cargarClientes();
-		clientes = gestionBD.devolverClientes();
+		gestionInfo.cargarClientes();
+		clientes = gestionInfo.devolverClientes();
 		setSize(800, 600);
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -51,7 +53,7 @@ public class PanelLogin extends JPanel {
 		lblUsuario.setBounds(220, 250, 90, 20);
 		add(lblUsuario);
 
-		txtContraseña = new JTextField();
+		txtContraseña = new JPasswordField();
 		txtContraseña.setBounds(330, 300, 200, 20);
 		add(txtContraseña);
 		txtContraseña.setColumns(10);
@@ -82,13 +84,24 @@ public class PanelLogin extends JPanel {
 		btnRegistrarse.setForeground(Color.WHITE);
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				v.cambiarDePanel(2);
+				vp.cambiarDePanel(2);
 			}
 		});
 		btnRegistrarse.setBounds(90, 450, 180, 35);
 		add(btnRegistrarse);
 
 
+        KeyListener enterKeyListener = new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    btnLogin.doClick();
+                }
+            }
+        };
+
+        txtUsuario.addKeyListener(enterKeyListener);
+        txtContraseña.addKeyListener(enterKeyListener);
+        
 		btnLogin = new JButton("INICIAR SESIÓN");
 		btnLogin.setBackground(Color.BLACK);
 		btnLogin.addActionListener(new ActionListener() {
@@ -96,24 +109,26 @@ public class PanelLogin extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 
-				boolean adminCorrecto = validarAdmin(gestionBD);
-
-
-
-				boolean usuarioCorrecto = validarUsuario(gestionBD, gestionInfo);
+				boolean adminCorrecto = validarAdmin();
+				boolean usuarioCorrecto = validarUsuario(gestionInfo);
 
 				if (adminCorrecto == true) {
-					JOptionPane.showMessageDialog(null, "Bienvenido/a Admin", "Administrador",
+					JOptionPane.showMessageDialog(vp, "Bienvenido/a Admin", "Administrador",
 							JOptionPane.INFORMATION_MESSAGE);
-					v.cambiarDePanel(13);
+					vp.cambiarDePanel(13);
 				} else {
 
 					if (usuarioCorrecto == true) {
-						JOptionPane.showMessageDialog(v, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
-						gestionInfo.guardarClienteSeleccionado(txtUsuario.getText());
-						v.cambiarDePanel(3);
+//<<<<<<< HEAD
+//						JOptionPane.showMessageDialog(v, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+//						gestionInfo.guardarClienteSeleccionado(txtUsuario.getText());
+//						v.cambiarDePanel(3);
+//=======
+						JOptionPane.showMessageDialog(vp, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+						gestionInfo.guardarUsuarioCliente(txtUsuario.getText());
+						vp.cambiarDePanel(3);
 					} else {
-						JOptionPane.showMessageDialog(v, "Usuario o contraseña incorrectos", "Error de Login",
+						JOptionPane.showMessageDialog(vp, "Usuario o contraseña incorrectos", "Error de Login",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -135,10 +150,12 @@ public class PanelLogin extends JPanel {
 
 	}
 
-	private boolean validarUsuario(GestionBD gestionBD, GestionInformacion gestionInfo) {
+	private boolean validarUsuario(GestionInformacion gestionInfo) {
 		boolean usuarioCorrecto = false;
-		gestionBD.queryClientes();
-		clientes = gestionBD.devolverClientes();
+		gestionInfo.cargarClientes();
+		clientes = gestionInfo.devolverClientes();
+//		gestionBD.queryClientes();
+//		clientes = gestionBD.devolverClientes();
 		for (int i = 0; i < clientes.size(); i++) {
 			if (txtUsuario.getText().equals(clientes.get(i).getUsuario())) {
 				if (txtContraseña.getText().equals(clientes.get(i).getContrasena())) {
@@ -155,7 +172,7 @@ public class PanelLogin extends JPanel {
 		return usuarioCorrecto;
 	}
 
-	private boolean validarAdmin(GestionBD gestionBD) {
+	private boolean validarAdmin() {
 		boolean adminCorrecto = false;
 		String usuario = txtUsuario.getText();
 		String contra = txtContraseña.getText();

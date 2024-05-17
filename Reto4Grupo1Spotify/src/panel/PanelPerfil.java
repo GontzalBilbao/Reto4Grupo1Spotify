@@ -1,39 +1,40 @@
 package panel;
 
 import java.awt.Color;
-
-import javax.swing.JPanel;
-
-import vista.VentanaPrincipal;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.SwingConstants;
-
-import controlador.GestionBD;
-import controlador.GestionInformacion;
-import modelo.PlayList;
-
-import javax.swing.JScrollBar;
-import javax.swing.JList;
-import javax.swing.JTextPane;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.awt.event.ActionEvent;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import controlador.GestionInformacion;
+import modelo.Cancion;
+import modelo.Cliente;
+import modelo.PlayList;
+import vista.VentanaPrincipal;
 
 public class PanelPerfil extends JPanel {
 	
 	private ArrayList<PlayList> playlists = new ArrayList<PlayList>();
+	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	private ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 
 	private static final long serialVersionUID = 1L;
 	private String usuario = null;
 	private String tipo = null;
+	private String titulo = null;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelPerfil(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+	public PanelPerfil(VentanaPrincipal vp, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
@@ -45,22 +46,31 @@ public class PanelPerfil extends JPanel {
 		lblPlaylists.setFont(new Font("Lucida Bright", Font.BOLD, 20));
 		add(lblPlaylists);
 		
-		JList listaPlaylist = new JList();
+		JList<String> listaPlaylist = new JList<String>();
 		listaPlaylist.setBounds(330, 150, 350, 355);
 		add(listaPlaylist);
 		
-		usuario = gestionInfo.devolverClienteSeleccionado();
-		gestionBD.cargarPlayLists(usuario);
-		playlists = gestionBD.devolverPlayLists();
-		for (int i = 0; i < playlists.size(); i++) {
-			System.out.println(playlists.get(i).getTitulo());
-		}
+		usuario = gestionInfo.devolverUsuarioCliente();
 		
-		DefaultListModel listModel = new DefaultListModel();
+		gestionInfo.cargarPlayLists(usuario);
+		playlists = gestionInfo.devolverPlayLists();
+
+		
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		for (int i = 0; i < playlists.size(); i++){
 		    listModel.addElement(playlists.get(i).getTitulo());
 		}
 		listaPlaylist.setModel(listModel);
+		
+		usuario = gestionInfo.devolverUsuarioCliente();
+		gestionInfo.sacarPremium(usuario);
+		tipo = gestionInfo.devolverPremium();
+//		gestionBD.queryIdUsuario(usuario);
+//		clientes = gestionBD.devolverIdUsuario();
+//		for (int i = 0; i < clientes.size(); i++) {
+//			System.out.println(clientes.get(i).getTipo());
+//			
+//			tipo = clientes.get(i).getTipo();
 		
 		JLabel lblUsuario = new JLabel("-" + usuario + "-");
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -69,10 +79,10 @@ public class PanelPerfil extends JPanel {
 		lblUsuario.setBounds(50, 382, 250, 50);
 		add(lblUsuario);
 		
-		JLabel lblTipo = new JLabel("Tipo");
+		JLabel lblTipo = new JLabel(tipo.toUpperCase());
 		lblTipo.setFont(new Font("Lucida Bright", Font.BOLD, 18));
 		lblTipo.setForeground(Color.LIGHT_GRAY);
-		lblTipo.setBounds(90, 432, 80, 30);
+		lblTipo.setBounds(90, 432, 200, 30);
 		add(lblTipo);
 		
 		JPanel panel = new JPanel();
@@ -107,12 +117,26 @@ public class PanelPerfil extends JPanel {
 		JButton btnNewButton = new JButton("Seleccionar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listaPlaylist.getSelectedValue();
-				vp.cambiarDePanel(7);
+
+				
+				gestionInfo.cargarCancionesDePlaylist(listaPlaylist.getSelectedValue().toString());
+				canciones = gestionInfo.devolverCanciones();
+				
+				if (canciones.isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "PlayList Vacia", "Error",
+							JOptionPane.ERROR_MESSAGE);
+		            
+		        } else {
+					gestionInfo.guardarPanelAnteriorAlbumCanciones(false);
+					gestionInfo.guardarPlaylistSeleccionada(listaPlaylist.getSelectedValue().toString());
+					vp.cambiarDePanel(7);
+		        }
 			}
 		});
 		btnNewButton.setBounds(550, 118, 130, 23);
 		add(btnNewButton);
 
 	}
-}
+
+	}
+

@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
-import controlador.GestionBD;
 import controlador.GestionInformacion;
 import modelo.Podcast;
 import modelo.Podcaster;
@@ -35,25 +34,23 @@ public class PanelPodcasterPodcasts extends JPanel {
 	private String descripcion = "";
 	private int podcasterSeleccionado = 0;
 
-	/**
-	 * Create the panel.
-	 */
-	public PanelPodcasterPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
+
+	public PanelPodcasterPodcasts(VentanaPrincipal vp, GestionInformacion gestionInfo) {
+
 		setSize(800, 600);
 		setBackground(Color.WHITE);
-
 		setLayout(null);
 
-		gestionBD.cargarPodcasters();
-		podcasters = gestionBD.devolverPodcasters();
+		gestionInfo.cargarPodcasters();
+		podcasters = gestionInfo.devolverPodcasters();
 		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
 		for (int i = 0; i < podcasters.size(); i++) {
 			if (nombreArtista.equals(podcasters.get(i).getNombreArtistico())) {
 				podcasterSeleccionado = i;
 				genero = podcasters.get(i).getGenero();
 				descripcion = podcasters.get(i).getDescripcion();
-				gestionBD.cargarPodcastsDelPodcaster(podcasters.get(i).getIdPodcaster());
-				podcasts = gestionBD.devolverPodcasts();
+				gestionInfo.cargarPodcastsDelPodcaster(podcasters.get(i).getIdPodcaster());
+				podcasts = gestionInfo.devolverPodcasts();
 			}
 		}
 
@@ -63,12 +60,15 @@ public class PanelPodcasterPodcasts extends JPanel {
 		add(lblTituloLista);
 
 		JButton btnAtrás = new JButton("Atrás");
+		btnAtrás.setBackground(Color.BLACK);
+		btnAtrás.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnAtrás.setForeground(Color.WHITE);
 		btnAtrás.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(8);
 			}
 		});
-		btnAtrás.setBounds(10, 11, 89, 23);
+		btnAtrás.setBounds(10, 0, 90, 35);
 		add(btnAtrás);
 
 		JLabel lblNombre = new JLabel("Nombre: " + nombreArtista);
@@ -96,12 +96,16 @@ public class PanelPodcasterPodcasts extends JPanel {
 		add(lblDescripcion);
 
 		JButton btnPerfil = new JButton("Perfil");
+		btnPerfil.setBackground(Color.BLACK);
+		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnPerfil.setForeground(Color.WHITE);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				vp.nPanel = 9;
 				vp.cambiarDePanel(11);
 			}
 		});
-		btnPerfil.setBounds(685, 11, 89, 23);
+		btnPerfil.setBounds(686, 0, 90, 35);
 		add(btnPerfil);
 
 		// Crear un panel para contener los JLabels
@@ -129,6 +133,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 			// Agregar JLabels debajo de la imagen
 			JLabel label1 = new JLabel(podcasts.get(i).getNombre()); // podcasts.get(i).getNombre()
 //							JLabel label2 = new JLabel("Autor: " + i);
+			label1.setHorizontalAlignment(SwingConstants.CENTER);
 			panelItem.add(label1);
 //							panelItem.add(label2);
 			// Le damos nombre para identificarlo
@@ -141,12 +146,8 @@ public class PanelPodcasterPodcasts extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JPanel clickedPanel = (JPanel) e.getSource();
-					gestionInfo.guardarAudioSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
-					
+					gestionInfo.guardarNombrePodcastSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					vp.cambiarDePanel(10);
-					JOptionPane.showMessageDialog(vp, "Has hecho clic en: " + clickedPanel.getName()
-							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
-//													+ ((JLabel) clickedPanel.getComponent(2)).getText());
 
 				}
 			});
@@ -161,7 +162,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 		scrollPanePodcasts.setBorder(null);
 //						scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
 //						scrollPane.setOpaque(false);
-		scrollPanePodcasts.setSize(300, 500);
+		scrollPanePodcasts.setSize(323, 502);
 		scrollPanePodcasts.setLocation(453, 50);
 		// Agregar el JScrollPane a la ventana
 		add(scrollPanePodcasts);
@@ -223,9 +224,15 @@ public class PanelPodcasterPodcasts extends JPanel {
 //				scrollPane.setBackground(new java.awt.Color(0, 0, 0, 0));
 //				scrollPane.setOpaque(false);
 		scrollPaneOtrosPodcasters.setSize(412, 283);
-		scrollPaneOtrosPodcasters.setLocation(20, 267);
+		scrollPaneOtrosPodcasters.setLocation(10, 269);
 		// Agregar el JScrollPane a la ventana
+
 		add(scrollPaneOtrosPodcasters);
+
+		JLabel lblTituloListaAlbumes = new JLabel("OTROS PODCASTERS");
+		lblTituloListaAlbumes.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
+		lblTituloListaAlbumes.setBounds(91, 241, 246, 28);
+		add(lblTituloListaAlbumes);
 	}
 
 	private void removerPodcasterElegido() {
