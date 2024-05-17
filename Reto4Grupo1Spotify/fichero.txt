@@ -1,11 +1,11 @@
 
 PlayLists: 
-Título: Playlist para Dormir
+Título: Canciones para Entrenar
 Fecha de Creación: 2024-04-17
 
-Título: Canciones Relajantes
+Título: Música para Estudiar
 Fecha de Creación: 2024-04-17
 
-Título: Canciones del Verano
-Fecha de Creación: 2024-05-17
+Título: Playlist de Viaje
+Fecha de Creación: 2024-04-17
 

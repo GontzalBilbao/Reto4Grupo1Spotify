@@ -264,7 +264,8 @@ public class PanelReproductorMusica extends JPanel {
 						controladorDeSonido.reproducir(intinerador);
 						lblImagenCancion.setIcon(canciones.get(intinerador).getImagen());
 						lblTitulo.setText("<html>" + canciones.get(intinerador).getNombre() + "</html>");
-						btnPlayStop.setVisible(true);
+						btnPlayStop.setVisible(false);
+						btnPlay.setVisible(true);
 						anuncio = false;
 					}
 

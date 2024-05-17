@@ -84,7 +84,7 @@ public class PanelLogin extends JPanel {
 		btnRegistrarse.setForeground(Color.WHITE);
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.cambiarDePanel(2);
+				vp.cambiarDePanel(2);  
 			}
 		});
 		btnRegistrarse.setBounds(90, 450, 180, 35);
