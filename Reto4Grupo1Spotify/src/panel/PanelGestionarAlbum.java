@@ -172,7 +172,7 @@ public class PanelGestionarAlbum extends JPanel {
 
 		JLabel lblAlbumes = new JLabel("ALBUMES");
 		lblAlbumes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAlbumes.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblAlbumes.setFont(new Font("Arial", Font.PLAIN, 40));
 		lblAlbumes.setBounds(30, 11, 550, 67);
 		add(lblAlbumes);
 
@@ -192,7 +192,7 @@ public class PanelGestionarAlbum extends JPanel {
 
 				if (albumActual != null) {
 
-					boolean borrado = gestionBD.borrarMusico(albumActual);
+					boolean borrado = gestionBD.borrarAlbum(albumActual);
 					if (borrado != false) {
 						JOptionPane.showMessageDialog(null, "Album borrado!");
 						panelAlbumes.repaint();

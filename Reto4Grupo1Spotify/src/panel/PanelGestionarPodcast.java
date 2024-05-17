@@ -147,7 +147,7 @@ public class PanelGestionarPodcast extends JPanel {
 
 		JLabel lblPodcasts = new JLabel("PODCASTS");
 		lblPodcasts.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPodcasts.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblPodcasts.setFont(new Font("Arial", Font.PLAIN, 40));
 		lblPodcasts.setBounds(30, 11, 550, 67);
 		add(lblPodcasts);
 
@@ -167,7 +167,7 @@ public class PanelGestionarPodcast extends JPanel {
 
 				if (podcastActual != null) {
 
-					boolean borrado = gestionBD.borrarMusico(podcastActual);
+					boolean borrado = gestionBD.borrarAudio(podcastActual);
 					if (borrado != false) {
 						JOptionPane.showMessageDialog(null, "Podcast borrado!");
 						panelPodcasts.repaint();

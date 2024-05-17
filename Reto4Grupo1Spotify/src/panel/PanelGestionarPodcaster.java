@@ -95,7 +95,7 @@ public class PanelGestionarPodcaster extends JPanel {
 
 		JLabel lblPodcasters = new JLabel("PODCASTERS");
 		lblPodcasters.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPodcasters.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblPodcasters.setFont(new Font("Arial", Font.PLAIN, 40));
 		lblPodcasters.setBounds(30, 11, 550, 67);
 		add(lblPodcasters);
 
@@ -115,7 +115,7 @@ public class PanelGestionarPodcaster extends JPanel {
 
 				if (podcasterActual != null) {
 
-					boolean borrado = gestionBD.borrarMusico(podcasterActual);
+					boolean borrado = gestionBD.borrarPodcaster(podcasterActual);
 					if (borrado != false) {
 						JOptionPane.showMessageDialog(null, "Podcaster borrado!");
 						panelPodcasters.repaint();
@@ -128,6 +128,8 @@ public class PanelGestionarPodcaster extends JPanel {
 
 			}
 		});
+		btnEliminar.setBounds(560, 435, 200, 50);
+		add(btnEliminar);
 
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {

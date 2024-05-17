@@ -188,7 +188,7 @@ public class PanelGestionarCancion extends JPanel {
 
 		JLabel lblCanciones = new JLabel("CANCIONES");
 		lblCanciones.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCanciones.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblCanciones.setFont(new Font("Arial", Font.PLAIN, 40));
 		lblCanciones.setBounds(30, 11, 550, 67);
 		add(lblCanciones);
 
@@ -208,7 +208,7 @@ public class PanelGestionarCancion extends JPanel {
 
 				if (cancionActual != null) {
 
-					boolean borrado = gestionBD.borrarMusico(cancionActual);
+					boolean borrado = gestionBD.borrarAudio(cancionActual);
 					if (borrado != false) {
 						JOptionPane.showMessageDialog(null, "Cancion borrada!");
 						panelCanciones.repaint();

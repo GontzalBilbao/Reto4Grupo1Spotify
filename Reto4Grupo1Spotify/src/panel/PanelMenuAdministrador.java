@@ -19,7 +19,7 @@ public class PanelMenuAdministrador extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelMenuAdministrador(VentanaPrincipal vp) {
-		setSize(vp.getSize());
+		setSize(800, 600);
 //		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
@@ -87,7 +87,7 @@ public class PanelMenuAdministrador extends JPanel {
 		add(btnEstadisticas);
 
 		JLabel lblGestionar = new JLabel("GESTIONAR");
-		lblGestionar.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblGestionar.setFont(new Font("Arial", Font.PLAIN, 40));
 		lblGestionar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGestionar.setBounds(215, 50, 350, 70);
 		add(lblGestionar);

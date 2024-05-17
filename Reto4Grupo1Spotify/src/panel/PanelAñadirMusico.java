@@ -74,7 +74,7 @@ public class PanelAñadirMusico extends JPanel {
 		JLabel lblAñadirMusico = new JLabel("AÑADIR MUSICO");
 		lblAñadirMusico.setBounds(125, 15, 550, 65);
 		lblAñadirMusico.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAñadirMusico.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblAñadirMusico.setFont(new Font("Arial", Font.PLAIN, 40));
 		add(lblAñadirMusico);
 
 		JButton btnAtras = new JButton("ATRAS");
