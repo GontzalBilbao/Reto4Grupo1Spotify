@@ -57,6 +57,7 @@ public class PanelPerfil extends JPanel {
 
 		
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		listModel.addElement("Favoritos");		
 		for (int i = 0; i < playlists.size(); i++){
 		    listModel.addElement(playlists.get(i).getTitulo());
 		}
@@ -122,15 +123,25 @@ public class PanelPerfil extends JPanel {
 				gestionInfo.cargarCancionesDePlaylist(listaPlaylist.getSelectedValue().toString());
 				canciones = gestionInfo.devolverCanciones();
 				
-				if (canciones.isEmpty()) {
-		            JOptionPane.showMessageDialog(null, "PlayList Vacia", "Error",
-							JOptionPane.ERROR_MESSAGE);
-		            
-		        } else {
-					gestionInfo.guardarPanelAnteriorAlbumCanciones(false);
-					gestionInfo.guardarPlaylistSeleccionada(listaPlaylist.getSelectedValue().toString());
-					vp.cambiarDePanel(7);
-		        }
+//				if (canciones.isEmpty()) {
+//		            JOptionPane.showMessageDialog(null, "PlayList Vacia", "Error",
+//							JOptionPane.ERROR_MESSAGE);
+//		            
+//		        } else {
+		        	
+		        	if (listaPlaylist.getSelectedValue().equalsIgnoreCase("Favoritos")) {
+		        		gestionInfo.guardarPanelAnteriorAlbumCanciones(false);
+		        		gestionInfo.playlistFavoritos((gestionInfo.devolverIdCliente()));
+		        		gestionInfo.guardarPlaylistSeleccionada(listaPlaylist.getSelectedValue().toString());
+						vp.cambiarDePanel(7);
+					} else {
+						gestionInfo.guardarPanelAnteriorAlbumCanciones(false);
+						gestionInfo.guardarPlaylistSeleccionada(listaPlaylist.getSelectedValue().toString());
+						vp.cambiarDePanel(7);
+					}
+		        
+					
+//		        }
 			}
 		});
 		btnNewButton.setBounds(550, 118, 130, 23);

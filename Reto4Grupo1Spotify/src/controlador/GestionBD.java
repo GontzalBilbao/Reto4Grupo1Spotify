@@ -1141,5 +1141,29 @@ public class GestionBD {
 		return borrado;
 
 	}
+	
+	public ArrayList<Cancion> cancionesDeFavoritos(String idCliente) {
+		ImageIcon imagen = new ImageIcon();
+		ArrayList<Cancion> favoritos = new ArrayList<Cancion>();
+		try {
+			PreparedStatement consulta = conexion.prepareStatement(
+					"SELECT Au.IDAudio,Ca.IDAlbum, Au.Nombre, Au.Duracion, Ca.artistaInvitado, Al.imagen, Au.Tipo FROM `gustos` Gu join audio Au on Gu.IDAudio = AU.IDAudio join Cancion Ca on Au.IDAudio = CA.idCancion join album Al on Ca.idAlbum = Al.idAlbum WHERE IDCliente = ?;");
+			consulta.setString(1, idCliente);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				Blob imagenBlob = resultadoConsulta.getBlob(6);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				imagen = new ImageIcon(arrayImagen);
+				favoritos.add(new Cancion(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4), resultadoConsulta.getString(5),
+						imagen, resultadoConsulta.getString(7)));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return favoritos;
+	}
 
 }

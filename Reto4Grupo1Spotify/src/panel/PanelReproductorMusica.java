@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import javax.swing.text.html.HTMLDocument.HTMLReader.CharacterAction;
 
 import controlador.ControladorDeSonido;
 import controlador.GestionBD;
@@ -47,7 +48,8 @@ public class PanelReproductorMusica extends JPanel {
 	private int numeroCancion = 0;// Índice de la canción seleccionada en el álbum
 	private int numeroAlbum = 0;// Índice del álbum seleccionado
 	private String idMusico = "";// ID del músico
-
+	private boolean panelAnteriorAlbumCanciones;
+	
 	private ArrayList<Cancion> canciones = new ArrayList<Cancion>();// Lista de canciones
 	private ArrayList<Album> albumes = new ArrayList<Album>();// Lista de álbumes
 
@@ -70,24 +72,50 @@ public class PanelReproductorMusica extends JPanel {
 		});
 		
 		
-		// Cargar información inicial
-		idMusico = gestionInfo.devolverIdArtistaSeleccionado();// Obtener el ID del artista seleccionado
-		tituloAlbumSeleccionado = gestionInfo.devolverAlbumSeleccionado();// Obtener el título del álbum seleccionado
-		nombreCancionSeleccionada = gestionInfo.devolverCancionSeleccionado();// Obtener el nombre de la canción seleccionada
-		gestionBD.cargarAlbumesDelMusico(idMusico);// Cargar los álbumes del músico desde la base de datos
-		albumes = gestionBD.devolverAlbumes();// Obtener la lista de álbumes
-		for (int i = 0; i < albumes.size(); i++) {
-			if (tituloAlbumSeleccionado.equals(albumes.get(i).getTitulo())) {// Buscar el álbum seleccionado
-				gestionBD.cargarCancionesDelAlbum(albumes.get(i).getIdAlbum());// Cargar las canciones del álbum desde la base de datos
-				canciones = gestionBD.devolverCanciones();// Obtener la lista de canciones
-				numeroAlbum = i;// Establecer el índice del álbum seleccionado
-				for (int j = 0; j < canciones.size(); j++) {
-					if (nombreCancionSeleccionada.equals(canciones.get(j).getNombre())) {
-						numeroCancion = j;// Establecer el índice de la canción seleccionada en el álbum
+		panelAnteriorAlbumCanciones = gestionInfo.devolverPanelAnteriorAlbumCanciones();
+		System.out.println(panelAnteriorAlbumCanciones);
+		
+		if (panelAnteriorAlbumCanciones == true) {
+
+			// Cargar información inicial
+			idMusico = gestionInfo.devolverIdArtistaSeleccionado();// Obtener el ID del artista seleccionado
+			tituloAlbumSeleccionado = gestionInfo.devolverAlbumSeleccionado();// Obtener el título del álbum
+																				// seleccionado
+			nombreCancionSeleccionada = gestionInfo.devolverCancionSeleccionado();// Obtener el nombre de la canción
+																					// seleccionada
+			gestionInfo.cargarAlbumesDelMusico(idMusico);// Cargar los álbumes del músico desde la base de datos
+			albumes = gestionInfo.devolverAlbumes();// Obtener la lista de álbumes
+
+			for (int i = 0; i < albumes.size(); i++) {
+
+				if (tituloAlbumSeleccionado.equals(albumes.get(i).getTitulo())) {// Buscar el álbum seleccionado
+					gestionInfo.cargarCancionesDelAlbum(albumes.get(i).getIdAlbum());// Cargar las canciones del álbum
+																						// desde la base de datos
+					canciones = gestionInfo.devolverCanciones();// Obtener la lista de canciones
+
+					for (int j = 0; j < canciones.size(); j++) {
+						if (nombreCancionSeleccionada.equals(canciones.get(j).getNombre())) {
+							numeroCancion = j;// Establecer el índice de la canción seleccionada en el álbum
+						}
 					}
 				}
-			}
 
+			}
+		} else {
+			
+			if (gestionInfo.devolverPlaylistSeleccionada().equalsIgnoreCase("Favoritos")) {
+				canciones = gestionInfo.cancionesDePlaylistFavoritos();
+				numeroCancion = 0;
+		
+			} else {
+				String playlistSeleccionada = gestionInfo.devolverPlaylistSeleccionada();
+				gestionInfo.cargarCancionesDePlaylist(playlistSeleccionada);
+				canciones = gestionInfo.devolverCanciones();
+				numeroCancion = 0;
+				
+			}
+			
+	
 		}
 
 		// Configuración del panel
@@ -112,8 +140,16 @@ public class PanelReproductorMusica extends JPanel {
 		btnAtras.setBackground(Color.BLACK);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controladorDeSonido.parar();
-				vp.cambiarDePanel(6);
+				
+				if (panelAnteriorAlbumCanciones == true) {
+					controladorDeSonido.parar();
+					vp.cambiarDePanel(6);
+				} else {
+					controladorDeSonido.parar();
+					vp.cambiarDePanel(11);
+				}
+				
+				
 			}
 		});
 		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -265,6 +301,7 @@ public class PanelReproductorMusica extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// Llama al método agregarFavorito de la clase GestionBD para agregar la canción actual a la lista de favoritos
 				gestionBD.agregarFavorito(gestionInfo.devolverIdCliente(), canciones.get(intinerador).getIdAudio());
+				JOptionPane.showMessageDialog(vp, "Cancion añadida a favoritos");
 			}
 		});
 		btnFavorito.setBackground(Color.BLACK);
@@ -274,7 +311,7 @@ public class PanelReproductorMusica extends JPanel {
 		add(btnFavorito);
 
 		lblImagenCancion = new JLabel();
-		lblImagenCancion.setIcon(canciones.get(0).getImagen());
+		lblImagenCancion.setIcon(canciones.get(intinerador).getImagen());
 		lblImagenCancion.setBounds(275, 150, 250, 250);
 		add(lblImagenCancion);
 

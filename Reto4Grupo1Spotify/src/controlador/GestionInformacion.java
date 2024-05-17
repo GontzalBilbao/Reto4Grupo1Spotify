@@ -36,6 +36,8 @@ public class GestionInformacion {
 	private boolean panelAnterior;
 	private String playlistSeleccionada = "";
 
+	private Cliente cliente;
+	
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
 	public ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
@@ -55,7 +57,7 @@ public class GestionInformacion {
 	public GestionInformacion() {
 
 		gestionBD = new GestionBD();
-
+		cliente = new Cliente();
 	}
 
 	public boolean validarContrasena(boolean campos, String contraseña, String confirmarContraseña) {
@@ -387,6 +389,15 @@ public class GestionInformacion {
 		int capacidadPlaylist = gestionBD.capacidadDePlaylist(idPlaylist);
 		return capacidadPlaylist;
 	}
+	
+	public void playlistFavoritos(String idCliente) {
+		cliente.setFavoritos(gestionBD.cancionesDeFavoritos(idCliente));
+	}
+	
+	public ArrayList<Cancion> cancionesDePlaylistFavoritos() {
+		return cliente.getFavoritos();
+	}
+	
 	
 //	public void guardarTituloPlayListSeleccionada(String titulo) {
 //		this.playlistSeleccionada = titulo;

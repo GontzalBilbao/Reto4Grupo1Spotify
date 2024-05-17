@@ -96,7 +96,7 @@ public class PanelPlaylist extends JPanel {
 //		}
 		
 		listModel = new DefaultListModel<String>();
-
+		listModel.addElement("Favoritos");
 		for (int i = 0; i < playlists.size(); i++){
 		    listModel.addElement(playlists.get(i).getTitulo());
 		}
