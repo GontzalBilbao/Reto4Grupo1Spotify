@@ -50,7 +50,7 @@ public class PanelLogin extends JPanel {
 		lblUsuario.setForeground(Color.BLACK);
 		lblUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblUsuario.setBounds(220, 250, 90, 20);
+		lblUsuario.setBounds(207, 250, 113, 20);
 		add(lblUsuario);
 
 		txtContraseña = new JPasswordField();
@@ -63,7 +63,7 @@ public class PanelLogin extends JPanel {
 		lblContraseña.setHorizontalAlignment(SwingConstants.LEFT);
 		lblContraseña.setForeground(Color.BLACK);
 		lblContraseña.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblContraseña.setBounds(220, 300, 90, 20);
+		lblContraseña.setBounds(207, 300, 113, 20);
 		add(lblContraseña);
 
 		txtUsuario = new JTextField();

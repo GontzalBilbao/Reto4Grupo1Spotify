@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+//github.com/GontzalBilbao/Reto4Grupo1Spotify.git
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+//github.com/GontzalBilbao/Reto4Grupo1Spotify.git
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -34,6 +36,8 @@ public class PanelGestionarAlbum extends JPanel {
 	private ArrayList<Musico> musicos = new ArrayList<Musico>();
 	private ArrayList<Album> albumes = new ArrayList<Album>();
 	private String nombreArtista = "";
+	private String tipo = "";
+	private String descripcion = "";
 
 	private String albumActual;
 	private JLabel lblAlbumActual;
@@ -49,6 +53,16 @@ public class PanelGestionarAlbum extends JPanel {
 
 		gestionInfo.cargarMusicos();
 		musicos = gestionInfo.devolverMusicos();
+		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
+		for (int i = 0; i < musicos.size(); i++) {
+			if (nombreArtista.equals(musicos.get(i).getNombreArtistico())) {
+				tipo = musicos.get(i).getCaracteristica();
+				descripcion = musicos.get(i).getDescripcion();
+				gestionInfo.cargarAlbumesDelMusico(nombreArtista);
+				albumes = gestionInfo.devolverAlbumes();
+			}
+		}
+
 
 //<<<<<<< HEAD
 //		cargarMusicos();
@@ -77,6 +91,7 @@ public class PanelGestionarAlbum extends JPanel {
 		JLabel lblComBoxMusicos = new JLabel("Musicos: ");
 		lblComBoxMusicos.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblComBoxMusicos.setBounds(125, 105, 100, 35);
+
 		add(lblComBoxMusicos);
 
 		comBoxMusicos = new JComboBox<String>(arrayMusicos);
@@ -95,6 +110,7 @@ public class PanelGestionarAlbum extends JPanel {
 						albumes = gestionInfo.devolverAlbumes();
 					}
 				}
+
 				if (panelAlbumes != null) {
 					panelAlbumes.removeAll();
 					panelAlbumes.repaint();
@@ -169,9 +185,28 @@ public class PanelGestionarAlbum extends JPanel {
 		btnModificar.setBounds(560, 145, 200, 50);
 		add(btnModificar);
 
-		JButton btnBorrar = new JButton("BORRAR");
-		btnBorrar.setBounds(560, 435, 200, 50);
-		add(btnBorrar);
+		JButton btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				if (albumActual != null) {
+
+					boolean borrado = gestionBD.borrarMusico(albumActual);
+					if (borrado != false) {
+						JOptionPane.showMessageDialog(null, "Album borrado!");
+						panelAlbumes.repaint();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecciona un album para eliminarlo");
+				}
+				repaint();
+				panelAlbumes.repaint();
+
+			}
+		});
+		btnEliminar.setBounds(560, 435, 200, 50);
+		add(btnEliminar);
 
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {

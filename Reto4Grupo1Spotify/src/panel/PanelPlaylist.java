@@ -13,6 +13,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import controlador.GestionFicheros;
 import controlador.GestionInformacion;
@@ -38,34 +39,38 @@ public class PanelPlaylist extends JPanel {
 	 */
 	public PanelPlaylist(VentanaPrincipal vp, GestionInformacion gestionInfo, GestionFicheros gestionFicheros) {
 		setSize(800, 600);
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.WHITE);
 		setLayout(null);
 		
 		
 		JLabel lblLogin = new JLabel("MIS PLAYLISTS");
-		lblLogin.setForeground(Color.GREEN);
+		lblLogin.setForeground(Color.BLACK);
 		lblLogin.setFont(new Font("Lucida Bright", Font.BOLD, 20));
 		lblLogin.setBounds(42, 110, 260, 51);
 		add(lblLogin);
 		
 		JButton btnAtras = new JButton("ATRAS");
+		btnAtras.setBackground(Color.BLACK);
+		btnAtras.setForeground(Color.WHITE);
+		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.cambiarDePanel(3);
 			}
 		});
-		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnAtras.setBounds(42, 43, 90, 35);
 		add(btnAtras);
 		
 		JButton btnPerfil = new JButton("PERFIL");
+		btnPerfil.setBackground(Color.BLACK);
+		btnPerfil.setForeground(Color.WHITE);
+		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.nPanel = 12;
 				vp.cambiarDePanel(11);
 			}
 		});
-		btnPerfil.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnPerfil.setBounds(675, 43, 90, 35);
 		add(btnPerfil);
 		
@@ -91,6 +96,7 @@ public class PanelPlaylist extends JPanel {
 //		}
 		
 		listModel = new DefaultListModel<String>();
+		list.setBorder(new LineBorder(Color.black,1,true));
 		for (int i = 0; i < playlists.size(); i++){
 		    listModel.addElement(playlists.get(i).getTitulo());
 		}
@@ -102,18 +108,21 @@ public class PanelPlaylist extends JPanel {
 		textFieldNuevaPlayList.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nueva PlayList");
-		lblNewLabel.setForeground(Color.GREEN);
+		lblNewLabel.setForeground(Color.BLACK);
 		lblNewLabel.setFont(new Font("Lucida Bright", Font.BOLD, 16));
 		lblNewLabel.setBounds(429, 182, 336, 35);
 		add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("INSERTAR");
+		btnNewButton.setBackground(Color.BLACK);
+		btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if("".equals(textFieldNuevaPlayList.getText())) {
 					
-					JOptionPane.showMessageDialog(null, "Introduzca una nueva PlayList", "Error",
+					JOptionPane.showMessageDialog(vp, "Introduzca una nueva PlayList", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}else {
 					nuevaPlayList = textFieldNuevaPlayList.getText();
@@ -126,17 +135,19 @@ public class PanelPlaylist extends JPanel {
 		            list.revalidate();
 		            list.repaint();
 
-					JOptionPane.showMessageDialog(null, "PlayList añadida con éxito", "PlayList Guardada",
+					JOptionPane.showMessageDialog(vp, "PlayList añadida con éxito", "PlayList Guardada",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 				
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton.setBounds(429, 258, 163, 45);
 		add(btnNewButton);
 		
 		JButton btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.setBackground(Color.BLACK);
+		btnEliminar.setForeground(Color.WHITE);
+		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -153,29 +164,33 @@ public class PanelPlaylist extends JPanel {
 	            list.repaint();
 				
 //>>>>>>> refs/remotes/origin/Isabella
-				JOptionPane.showMessageDialog(null, "PlayList eliminada con éxito", "PlayList Eliminada",
+				JOptionPane.showMessageDialog(vp, "PlayList eliminada con éxito", "PlayList Eliminada",
 						JOptionPane.INFORMATION_MESSAGE);
 				
 			}
 		});
-		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnEliminar.setBounds(602, 258, 163, 45);
 		add(btnEliminar);
 		
 		JButton btnNewButton_1 = new JButton("EXPORTAR");
+		btnNewButton_1.setBackground(Color.BLACK);
+		btnNewButton_1.setForeground(Color.WHITE);
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				gestionFicheros.imprimirInformacion(playlists);
-				JOptionPane.showMessageDialog(null, "PlayList exportada con éxito", "PlayList Exportada",
+				JOptionPane.showMessageDialog(vp, "PlayList exportada con éxito", "PlayList Exportada",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton_1.setBounds(429, 313, 336, 81);
 		add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Seleccionar");
+		btnNewButton_2.setBackground(Color.BLACK);
+		btnNewButton_2.setForeground(Color.WHITE);
+		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -188,7 +203,7 @@ public class PanelPlaylist extends JPanel {
 				canciones = gestionInfo.devolverCanciones();
 				
 				if (canciones.isEmpty()) {
-		            JOptionPane.showMessageDialog(null, "PlayList Vacia", "Error",
+		            JOptionPane.showMessageDialog(vp, "PlayList Vacia", "Error",
 							JOptionPane.ERROR_MESSAGE);
 		            
 		        } else {

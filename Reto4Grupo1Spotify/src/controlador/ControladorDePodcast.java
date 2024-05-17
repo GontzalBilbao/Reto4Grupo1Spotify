@@ -130,13 +130,21 @@ public class ControladorDePodcast implements IControladorSonido {
 
 	@Override
 	public void parar() {
-		// TODO Auto-generated method stub
 
+		cancionEnCurso.stop();
+		cancionEnCurso.close();
 	}
 
 	@Override
 	public void anuncio() {
-		// TODO Auto-generated method stub
+		// Reproduce un anuncio
+		try {
+			cancionEnCurso.open(AudioSystem.getAudioInputStream(new File("anuncio/Anuncio.wav")));
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cancionEnCurso.start();
 
 	}
 

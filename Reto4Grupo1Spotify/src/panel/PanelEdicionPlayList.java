@@ -101,7 +101,7 @@ public class PanelEdicionPlayList extends JPanel {
 //					panel.removeAll();
 					vp.cambiarDePanel(25);
 					
-					JOptionPane.showMessageDialog(null, cancionSeleccionada + " eliminada con éxito", cancionSeleccionada + " eliminada",
+					JOptionPane.showMessageDialog(vp, cancionSeleccionada + " eliminada con éxito", cancionSeleccionada + " eliminada",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 			});

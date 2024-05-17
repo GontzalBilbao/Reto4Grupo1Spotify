@@ -128,7 +128,8 @@ public class PanelAñadirCancion extends JPanel {
 				boolean validado = validarCampos(nombreEscrito);
 
 				if (validado != false) {
-					boolean audioAñadido = gestionBD.nuevoAudio(comBoxAlbumes.getSelectedItem().toString(), nombreEscrito, txtDuracion.getText(), ImagenReescalada, tipo);
+					boolean audioAñadido = gestionBD.nuevoAudio(comBoxAlbumes.getSelectedItem().toString(),
+							nombreEscrito, txtDuracion.getText(), ImagenReescalada, tipo);
 
 					if (audioAñadido != false) {
 						System.out.println("Audio añadido");

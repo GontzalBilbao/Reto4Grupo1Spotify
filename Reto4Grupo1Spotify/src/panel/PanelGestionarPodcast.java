@@ -22,8 +22,10 @@ import javax.swing.SwingConstants;
 
 import controlador.GestionBD;
 import controlador.GestionInformacion;
+
 import modelo.Podcast;
 import modelo.Podcaster;
+
 import vista.VentanaPrincipal;
 
 public class PanelGestionarPodcast extends JPanel {
@@ -33,8 +35,10 @@ public class PanelGestionarPodcast extends JPanel {
 	private ArrayList<Podcaster> podcasters = new ArrayList<Podcaster>();
 	private ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
 
-	private JLabel lblPodcasterActual;
-	private String podcasterActual;
+	private JLabel lblPodcastActual;
+	private String podcastActual;
+
+	private int podcasterSeleccionado = 0;
 
 	private JPanel panelPodcasts;
 
@@ -73,13 +77,12 @@ public class PanelGestionarPodcast extends JPanel {
 				for (int i = 0; i < podcasters.size(); i++) {
 					String codPodcaster = podcasters.get(i).getIdPodcaster();
 					if (nombrePodcaster.equals(podcasters.get(i).getNombreArtistico())) {
+
+						podcasterSeleccionado = i;
 						gestionInfo.cargarPodcastsDelPodcaster(codPodcaster);
 						podcasts = gestionInfo.devolverPodcasts();
 					}
 				}
-				System.out.println();
-
-				System.out.println(podcasts);
 
 				if (panelPodcasts != null) {
 					panelPodcasts.removeAll();
@@ -91,7 +94,7 @@ public class PanelGestionarPodcast extends JPanel {
 					panelItem.setLayout(new GridLayout());
 
 					// Cargar imagen
-					ImageIcon imageIcon = podcasts.get(i).getImagen();
+					ImageIcon imageIcon = podcasters.get(podcasterSeleccionado).getImagen();
 					Image image1 = imageIcon.getImage();
 					Image newImage = image1.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 					ImageIcon newImageIcon = new ImageIcon(newImage);
@@ -111,8 +114,8 @@ public class PanelGestionarPodcast extends JPanel {
 						@Override
 						public void mouseClicked(MouseEvent e) {
 							JPanel clickedPanel = (JPanel) e.getSource();
-							podcasterActual = ((JLabel) clickedPanel.getComponent(1)).getText();
-							lblPodcasterActual.setText("Podcast: " + podcasterActual);
+							podcastActual = ((JLabel) clickedPanel.getComponent(1)).getText();
+							lblPodcastActual.setText("Podcast: " + podcastActual);
 						}
 					});
 					// Agregar panelItem al panel principal
@@ -151,9 +154,28 @@ public class PanelGestionarPodcast extends JPanel {
 		btnModificar.setBounds(560, 145, 200, 50);
 		add(btnModificar);
 
-		JButton btnBorrar = new JButton("BORRAR");
-		btnBorrar.setBounds(560, 435, 200, 50);
-		add(btnBorrar);
+		JButton btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				if (podcastActual != null) {
+
+					boolean borrado = gestionBD.borrarMusico(podcastActual);
+					if (borrado != false) {
+						JOptionPane.showMessageDialog(null, "Podcast borrado!");
+						panelPodcasts.repaint();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecciona un podcast para eliminarlo");
+				}
+				repaint();
+				panelPodcasts.repaint();
+
+			}
+		});
+		btnEliminar.setBounds(560, 435, 200, 50);
+		add(btnEliminar);
 
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {
@@ -173,9 +195,9 @@ public class PanelGestionarPodcast extends JPanel {
 		btnAtras.setBounds(650, 25, 100, 35);
 		add(btnAtras);
 
-		lblPodcasterActual = new JLabel("Podcast: Ninguno");
-		lblPodcasterActual.setBounds(560, 115, 200, 25);
-		add(lblPodcasterActual);
+		lblPodcastActual = new JLabel("Podcast: Ninguno");
+		lblPodcastActual.setBounds(560, 115, 200, 25);
+		add(lblPodcastActual);
 
 	}
 

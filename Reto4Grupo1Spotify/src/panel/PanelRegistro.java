@@ -99,7 +99,7 @@ public class PanelRegistro extends JPanel {
 			}
 
 		});
-		btnGuardar.setBounds(688, 554, 102, 35);
+		btnGuardar.setBounds(677, 520, 102, 35);
 		add(btnGuardar);
 
 		JLabel lblNombre = new JLabel("Nombre:");
@@ -181,7 +181,7 @@ public class PanelRegistro extends JPanel {
 		JLabel lblCondicionesContra1 = new JLabel(
 				"<html>" + condicionesContrasena1.replaceAll("\\n", "<br>") + "</html>");
 		lblCondicionesContra1.setVisible(false);
-		lblCondicionesContra1.setBounds(563, 241, 115, 56);
+		lblCondicionesContra1.setBounds(563, 241, 110, 56);
 		add(lblCondicionesContra1);
 
 		JLabel lblCondicionesContra2 = new JLabel(

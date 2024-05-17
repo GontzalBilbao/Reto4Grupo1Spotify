@@ -136,6 +136,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnAtras.setBackground(Color.BLACK);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controladorDeSonido.parar();
 				if (panelAnteriorAlbumCanciones == true) {
 					vp.cambiarDePanel(6);
 				} else {
@@ -167,6 +168,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionAnterior.setForeground(Color.WHITE);
 		btnCancionAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controladorDeSonido.parar();
 				/* Para que vuelba al inicio de reproduccion sin dar erro */
 
 				if (intinerador == 0) {// Verifica si el índice de la canción actual es 0 (primera canción)
@@ -231,7 +233,7 @@ public class PanelReproductorMusica extends JPanel {
 		btnCancionSiguiente = new JButton(">");
 		btnCancionSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				controladorDeSonido.parar();
 				if (gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) {
 					intinerador = (intinerador + 1) % canciones.size();
 					controladorDeSonido.setCancionEnReproduccion(intinerador);
@@ -356,9 +358,10 @@ public class PanelReproductorMusica extends JPanel {
 					int idPlaylist = cogerIdPlaylistSeleccionada(infoMenuItem);
 					if (gestionInfo.devolverPremium().equalsIgnoreCase("Premium")) {
 						añadirCancionAPlaylist(idPlaylist, gestionInfo);
+						JOptionPane.showMessageDialog(vp, lblTitulo.getText() + " añadida a " + infoMenuItem, "Canción añadida", JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						if (gestionInfo.capacidadPlaylist(idPlaylist) >= 3) {
-							JOptionPane.showMessageDialog(null, "Hágase Premium para añadir más canciones a la playlist!", "Límite Alcanzado", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(vp, "Hágase Premium para añadir más canciones a la playlist!", "Límite Alcanzado", JOptionPane.INFORMATION_MESSAGE);
 						} else {
 							añadirCancionAPlaylist(idPlaylist, gestionInfo);
 						}
