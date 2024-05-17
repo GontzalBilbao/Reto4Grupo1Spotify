@@ -35,9 +35,6 @@ public class PanelPodcasterPodcasts extends JPanel {
 	private String descripcion = "";
 	private int podcasterSeleccionado = 0;
 
-	/**
-	 * Create the panel.
-	 */
 	public PanelPodcasterPodcasts(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
 		setBackground(Color.WHITE);

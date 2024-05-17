@@ -785,4 +785,69 @@ public class GestionBD {
 
 	}
 
+	public boolean borrarMusico(String idMusico) {
+
+		boolean borrado = false;
+
+		try {
+
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Musico WHERE idMusico = ? ;");
+			consulta.setString(1, idMusico);
+
+			consulta.executeUpdate();
+
+			borrado = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(borrado);
+		return borrado;
+
+	}
+
+	public boolean borrarAlbum(String tituloAlbum) {
+
+		boolean borrado = false;
+
+		try {
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Album WHERE titulo = ?");
+			consulta.setString(1, tituloAlbum);
+			borrado = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return borrado;
+
+	}
+
+	public boolean borrarAudio(String nombreAudio) {
+
+		boolean borrado = false;
+
+		try {
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Audio WHERE nombre = ?");
+			consulta.setString(1, nombreAudio);
+			borrado = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return borrado;
+
+	}
+
+	public boolean borrarPodcaster(String nombrePodcaster) {
+
+		boolean borrado = false;
+
+		try {
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Podcaster WHERE nombre = ?");
+			consulta.setString(1, nombrePodcaster);
+			borrado = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return borrado;
+
+	}
+
 }
