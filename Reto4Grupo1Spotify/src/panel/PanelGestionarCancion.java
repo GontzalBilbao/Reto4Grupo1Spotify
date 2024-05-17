@@ -131,7 +131,11 @@ public class PanelGestionarCancion extends JPanel {
 				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionInfo);
 				for (int i = 0; i < albumes.size(); i++) {
 					comBoxAlbumes.addItem(arrayAlbumes[i]);
-					System.out.println(arrayAlbumes[i].toString());
+//<<<<<<< HEAD
+//					System.out.println(arrayAlbumes[i].toString());
+//=======
+//					System.out.println(arrayAlbumes[i]);
+//>>>>>>> refs/remotes/origin/Dani
 				}
 				repaint();
 			}
