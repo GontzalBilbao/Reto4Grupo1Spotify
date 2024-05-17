@@ -69,6 +69,9 @@ public class PanelReproductorMusica extends JPanel {
 			}
 		});
 
+		
+		
+		
 		// Cargar información inicial
 		idMusico = gestionInfo.devolverIdArtistaSeleccionado();// Obtener el ID del artista seleccionado
 		tituloAlbumSeleccionado = gestionInfo.devolverAlbumSeleccionado();// Obtener el título del álbum seleccionado
