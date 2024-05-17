@@ -168,7 +168,7 @@ public class PanelGestionarAlbum extends JPanel {
 
 				if (albumActual != null) {
 
-					boolean borrado = gestionBD.borrarMusico(albumActual);
+					boolean borrado = gestionBD.borrarAlbum(albumActual);
 					if (borrado != false) {
 						JOptionPane.showMessageDialog(null, "Album borrado!");
 						panelAlbumes.repaint();

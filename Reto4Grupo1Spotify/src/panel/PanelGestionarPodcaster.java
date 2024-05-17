@@ -114,7 +114,7 @@ public class PanelGestionarPodcaster extends JPanel {
 
 				if (podcasterActual != null) {
 
-					boolean borrado = gestionBD.borrarMusico(podcasterActual);
+					boolean borrado = gestionBD.borrarPodcaster(podcasterActual);
 					if (borrado != false) {
 						JOptionPane.showMessageDialog(null, "Podcaster borrado!");
 						panelPodcasters.repaint();
@@ -127,6 +127,8 @@ public class PanelGestionarPodcaster extends JPanel {
 
 			}
 		});
+		btnEliminar.setBounds(560, 435, 200, 50);
+		add(btnEliminar);
 
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {

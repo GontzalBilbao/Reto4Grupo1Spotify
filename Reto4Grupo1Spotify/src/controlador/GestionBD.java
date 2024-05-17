@@ -851,7 +851,7 @@ public class GestionBD {
 		boolean borrado = false;
 
 		try {
-			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Podcaster WHERE nombre = ?;");
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Podcaster WHERE nombreArtistico = ?;");
 			consulta.setString(1, nombrePodcaster);
 
 			consulta.executeUpdate();
@@ -866,12 +866,6 @@ public class GestionBD {
 
 	public boolean modificarMusico(String nombre, String tipo, String desc, String idMusico) {
 		boolean editado = false;
-
-		System.out.println(nombre);
-		System.out.println(tipo);
-		System.out.println(desc);
-		System.out.println(idMusico);
-
 		try {
 			PreparedStatement consulta = conexion.prepareStatement(
 					"UPDATE Musico SET nombreArtistico = ?, caracteristica = ?, descripcion = ? WHERE idMusico = ? ;");

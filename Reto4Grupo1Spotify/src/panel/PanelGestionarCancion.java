@@ -202,7 +202,7 @@ public class PanelGestionarCancion extends JPanel {
 
 				if (cancionActual != null) {
 
-					boolean borrado = gestionBD.borrarMusico(cancionActual);
+					boolean borrado = gestionBD.borrarAudio(cancionActual);
 					if (borrado != false) {
 						JOptionPane.showMessageDialog(null, "Cancion borrada!");
 						panelCanciones.repaint();

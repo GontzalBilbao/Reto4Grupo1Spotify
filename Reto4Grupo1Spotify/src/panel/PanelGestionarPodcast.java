@@ -159,7 +159,7 @@ public class PanelGestionarPodcast extends JPanel {
 
 				if (podcastActual != null) {
 
-					boolean borrado = gestionBD.borrarMusico(podcastActual);
+					boolean borrado = gestionBD.borrarAudio(podcastActual);
 					if (borrado != false) {
 						JOptionPane.showMessageDialog(null, "Podcast borrado!");
 						panelPodcasts.repaint();
