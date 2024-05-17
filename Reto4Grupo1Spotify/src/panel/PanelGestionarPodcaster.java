@@ -22,7 +22,9 @@ import javax.swing.border.LineBorder;
 
 import controlador.GestionBD;
 import controlador.GestionInformacion;
+
 import modelo.Podcaster;
+
 import vista.VentanaPrincipal;
 
 public class PanelGestionarPodcaster extends JPanel {
@@ -106,9 +108,26 @@ public class PanelGestionarPodcaster extends JPanel {
 		btnModificar.setBounds(560, 145, 200, 50);
 		add(btnModificar);
 
-		JButton btnBorrar = new JButton("BORRAR");
-		btnBorrar.setBounds(560, 435, 200, 50);
-		add(btnBorrar);
+		JButton btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				if (podcasterActual != null) {
+
+					boolean borrado = gestionBD.borrarMusico(podcasterActual);
+					if (borrado != false) {
+						JOptionPane.showMessageDialog(null, "Podcaster borrado!");
+						panelPodcasters.repaint();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecciona un podcaster para eliminarlo");
+				}
+				repaint();
+				panelPodcasters.repaint();
+
+			}
+		});
 
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {

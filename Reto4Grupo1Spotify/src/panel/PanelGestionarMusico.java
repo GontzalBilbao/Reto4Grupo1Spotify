@@ -34,6 +34,9 @@ public class PanelGestionarMusico extends JPanel {
 
 	private JLabel lblMusicoActual;
 	private String musicoActual;
+	private String idMusico;
+
+	private JPanel panelItem;
 
 	public PanelGestionarMusico(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
@@ -47,14 +50,12 @@ public class PanelGestionarMusico extends JPanel {
 		JPanel panelMusicos = new JPanel();
 		panelMusicos.setBorder(new LineBorder(Color.black, 1, true));
 
-		add(panelMusicos);
 		panelMusicos.setLayout(new GridLayout(0, 1));
 
 // Agregar JLabels al panel
 		for (int i = 0; i < musicos.size(); i++) {
-			JPanel panelItem = new JPanel();
+			panelItem = new JPanel();
 			panelItem.setBorder(null);
-
 			panelItem.setLayout(new GridLayout());
 
 // Cargar imagen
@@ -111,10 +112,28 @@ public class PanelGestionarMusico extends JPanel {
 		btnModificar.setBounds(560, 145, 200, 50);
 		add(btnModificar);
 
-		JButton btnBorrar = new JButton("BORRAR");
-		btnBorrar.setBounds(560, 435, 200, 50);
+		JButton btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.addActionListener(new ActionListener() {
 
-		add(btnBorrar);
+			public void actionPerformed(ActionEvent e) {
+
+				if (musicoActual != null) {
+
+					boolean borrado = gestionBD.borrarMusico(musicoActual);
+					if (borrado != false) {
+						JOptionPane.showMessageDialog(null, "Musico borrado!");
+						panelMusicos.repaint();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecciona un artista para eliminarlo");
+				}
+				panelMusicos.repaint();
+
+			}
+		});
+
+		btnEliminar.setBounds(560, 435, 200, 50);
+		add(btnEliminar);
 
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {

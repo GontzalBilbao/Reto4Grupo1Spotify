@@ -42,11 +42,13 @@ public class PanelGestionarCancion extends JPanel {
 	private String[] arrayAlbumes = new String[1];
 
 	private String nombreArtista = "";
-	private String caracteristica = "";
+	private String tipo = "";
 	private String descripcionArtista = "";
-	private int musicoSeleccionado = 0;
 
-	private int albumSeleccionado = 0;
+	private JLabel lblAlbumActual;
+	private String cancionActual = "";
+
+	private String nombreAlbum = "";
 	private String titulo = "";
 	private String año = "";
 	private String genero = "";
@@ -60,14 +62,18 @@ public class PanelGestionarCancion extends JPanel {
 		nombreArtista = gestionInfo.devolverArtistaSeleccionado();
 		for (int i = 0; i < musicos.size(); i++) {
 			if (nombreArtista.equals(musicos.get(i).getNombreArtistico())) {
-				musicoSeleccionado = i;
-				caracteristica = musicos.get(i).getCaracteristica();
+				tipo = musicos.get(i).getCaracteristica();
 				descripcionArtista = musicos.get(i).getDescripcion();
+
 				gestionInfo.cargarAlbumesDelMusico(nombreArtista);
 				albumes = gestionInfo.devolverAlbumes();
+
+				gestionBD.cargarAlbumesDelMusico(nombreArtista);
+				albumes = gestionBD.devolverAlbumes();
+				nombreAlbum = gestionInfo.devolverAlbumSeleccionado();
+
 				for (int j = 0; j < albumes.size(); j++) {
-					if (titulo.equals(albumes.get(j).getTitulo())) {
-						albumSeleccionado = j;
+					if (titulo.equals(nombreAlbum)) {
 						titulo = albumes.get(j).getTitulo();
 						año = albumes.get(j).getAño();
 						genero = albumes.get(j).getGenero();
@@ -80,7 +86,104 @@ public class PanelGestionarCancion extends JPanel {
 
 		cargarMusicos();
 
-		crearPanelCanciones();
+		JPanel panelCanciones = new JPanel();
+		panelCanciones.setLayout(new GridLayout(0, 1));
+
+		comBoxMusicos = new JComboBox<String>(arrayMusicos);
+		comBoxMusicos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				for (int i = 0; i < musicos.size(); i++) {
+					if (nombreArtista.equals(musicos.get(i).getNombreArtistico())) {
+						gestionBD.cargarAlbumesDelMusico(nombreArtista);
+						albumes = gestionBD.devolverAlbumes();
+					}
+				}
+
+				if (comBoxAlbumes != null) {
+					comBoxAlbumes.removeAllItems();
+				}
+
+				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionBD);
+
+				for (int i = 0; i < albumes.size(); i++) {
+					comBoxAlbumes.addItem(arrayAlbumes[i]);
+				}
+				repaint();
+				comBoxAlbumes.repaint();
+			}
+		});
+		comBoxMusicos.setBounds(115, 110, 150, 30);
+		add(comBoxMusicos);
+
+		comBoxAlbumes = new JComboBox<String>(arrayAlbumes);
+		comBoxAlbumes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (comBoxAlbumes.getSelectedItem() != null) {
+					nombreAlbum = comBoxAlbumes.getSelectedItem().toString();
+				}
+
+				for (int i = 0; i < albumes.size(); i++) {
+					String codAlbum = albumes.get(i).getIdAlbum();
+					if (nombreAlbum.equals(albumes.get(i).getTitulo())) {
+						gestionBD.cargarCancionesDelAlbum(codAlbum);
+						canciones = gestionBD.devolverCanciones();
+					}
+				}
+
+				if (nombreAlbum != null) {
+
+					if (panelCanciones != null) {
+						panelCanciones.removeAll();
+					}
+					for (int i = 0; i < canciones.size(); i++) {
+
+						JPanel panelItem = new JPanel();
+						panelItem.setBorder(null);
+						panelItem.setLayout(new GridLayout());
+
+						// Cargar imagen
+						ImageIcon imageIcon = canciones.get(i).getImagen();
+						Image image1 = imageIcon.getImage();
+						Image newImage = image1.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+						ImageIcon newImageIcon = new ImageIcon(newImage);
+						JLabel imageLabel = new JLabel(newImageIcon);
+						panelItem.add(imageLabel);
+
+						// Agregar JLabels debajo de la imagen
+						JLabel label1 = new JLabel(canciones.get(i).getNombre());
+						panelItem.add(label1);
+//						panelItem.add(label2);
+						// Le damos nombre para identificarlo
+						panelItem.setName("panel " + i);
+						// Añadir un borde al panelItem
+						panelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+						// Añadir escuchador al panel
+						panelItem.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								JPanel clickedPanel = (JPanel) e.getSource();
+								cancionActual = ((JLabel) clickedPanel.getComponent(1)).getText();
+								lblAlbumActual.setText("Cancion: " + cancionActual);
+							}
+						});
+						// Agregar panelItem al panel principal
+						panelCanciones.add(panelItem);
+					}
+					panelCanciones.repaint();
+				}
+			}
+		});
+		comBoxAlbumes.setBounds(360, 110, 150, 30);
+		add(comBoxAlbumes);
+
+		JScrollPane scrollPaneCanciones = new JScrollPane(panelCanciones);
+		scrollPaneCanciones.getVerticalScrollBar().setUnitIncrement(30);
+		scrollPaneCanciones.setBorder(null);
+		scrollPaneCanciones.setSize(500, 375);
+		scrollPaneCanciones.setLocation(30, 150);
+		add(scrollPaneCanciones);
 
 		JLabel lblCanciones = new JLabel("CANCIONES");
 		lblCanciones.setHorizontalAlignment(SwingConstants.CENTER);
@@ -97,9 +200,28 @@ public class PanelGestionarCancion extends JPanel {
 		btnModificar.setBounds(560, 145, 200, 50);
 		add(btnModificar);
 
-		JButton btnBorrar = new JButton("BORRAR");
-		btnBorrar.setBounds(560, 435, 200, 50);
-		add(btnBorrar);
+		JButton btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				if (cancionActual != null) {
+
+					boolean borrado = gestionBD.borrarMusico(cancionActual);
+					if (borrado != false) {
+						JOptionPane.showMessageDialog(null, "Cancion borrada!");
+						panelCanciones.repaint();
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecciona una cancion para eliminarla");
+				}
+				repaint();
+				panelCanciones.repaint();
+
+			}
+		});
+		btnEliminar.setBounds(560, 435, 200, 50);
+		add(btnEliminar);
 
 		JButton btnAñadir = new JButton("AÑADIR");
 		btnAñadir.addActionListener(new ActionListener() {
@@ -124,11 +246,12 @@ public class PanelGestionarCancion extends JPanel {
 		lblMusico.setBounds(30, 110, 75, 30);
 		add(lblMusico);
 
+
 		comBoxMusicos = new JComboBox<String>(arrayMusicos);
 		comBoxMusicos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				comBoxAlbumes.removeAllItems();
-				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionInfo);
+				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionBD);
 				for (int i = 0; i < albumes.size(); i++) {
 					comBoxAlbumes.addItem(arrayAlbumes[i]);
 //<<<<<<< HEAD
@@ -143,15 +266,15 @@ public class PanelGestionarCancion extends JPanel {
 		comBoxMusicos.setBounds(115, 110, 150, 30);
 		add(comBoxMusicos);
 
+
 		JLabel lblAlbum = new JLabel("Album: ");
 		lblAlbum.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAlbum.setBounds(275, 110, 75, 30);
 		add(lblAlbum);
 
-		comBoxAlbumes = new JComboBox<String>();
-
-		comBoxAlbumes.setBounds(360, 110, 150, 30);
-		add(comBoxAlbumes);
+		lblAlbumActual = new JLabel("Cancion: Ninguna");
+		lblAlbumActual.setBounds(560, 115, 200, 25);
+		add(lblAlbumActual);
 
 	}
 
@@ -162,10 +285,10 @@ public class PanelGestionarCancion extends JPanel {
 		}
 	}
 
-	private void cargarAlbumesPorArtista(String nombreArtistico, GestionInformacion gestionInfo) {
+	private void cargarAlbumesPorArtista(String nombreArtistico, GestionBD gestionBD) {
 //		albumes.clear();
-		gestionInfo.cargarAlbumesDelMusico(nombreArtistico);
-		albumes = gestionInfo.devolverAlbumes();
+		gestionBD.cargarAlbumesDelMusico(nombreArtistico);
+		albumes = gestionBD.devolverAlbumes();
 //		for (int i = 0; i < albumes.size(); i++) {
 //		System.out.println(albumes.get(i).getTitulo());
 //	}
@@ -174,56 +297,6 @@ public class PanelGestionarCancion extends JPanel {
 			arrayAlbumes[i] = albumes.get(i).getTitulo();
 		}
 
-	}
-
-	private void crearPanelCanciones() {
-
-		JPanel panelCanciones = new JPanel();
-		panelCanciones.setLayout(new GridLayout(0, 1));
-
-		for (int i = 0; i < albumes.size(); i++) {
-			JPanel panelItem = new JPanel();
-			panelItem.setBorder(null);
-			panelItem.setLayout(new GridLayout());
-
-// Cargar imagen
-			ImageIcon imageIcon = albumes.get(albumSeleccionado).getImagen();
-			Image image1 = imageIcon.getImage();
-			Image newImage = image1.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-			ImageIcon newImageIcon = new ImageIcon(newImage);
-			JLabel imageLabel = new JLabel(newImageIcon);
-			panelItem.add(imageLabel);
-
-// Agregar JLabels debajo de la imagen
-			JLabel label1 = new JLabel(albumes.get(i).getTitulo()); // podcasts.get(i).getNombre()
-//			JLabel label2 = new JLabel("Autor: " + i);
-			label1.setHorizontalAlignment(SwingConstants.CENTER);
-			panelItem.add(label1);
-//			panelItem.add(label2);
-// Le damos nombre para identificarlo
-			panelItem.setName("panel " + i);
-// Añadir un borde al panelItem
-			panelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-// Añadir escuchador al panel
-			panelItem.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					JPanel clickedPanel = (JPanel) e.getSource();
-					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
-							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
-//									+ ((JLabel) clickedPanel.getComponent(2)).getText());
-
-				}
-			});
-			panelCanciones.add(panelItem);
-		}
-
-		JScrollPane scrollPaneCanciones = new JScrollPane(panelCanciones);
-		scrollPaneCanciones.getVerticalScrollBar().setUnitIncrement(30);
-		scrollPaneCanciones.setBorder(null);
-		scrollPaneCanciones.setSize(500, 375);
-		scrollPaneCanciones.setLocation(30, 150);
-		add(scrollPaneCanciones);
 	}
 
 }

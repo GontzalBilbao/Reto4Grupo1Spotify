@@ -1096,18 +1096,23 @@ public class GestionBD {
 
 	}
 
-
-	public boolean borrarMusico(String nombreMusico) {
+	
+	public boolean borrarMusico(String idMusico) {
 
 		boolean borrado = false;
 
 		try {
-			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Musico WHERE nombreArtistico = ?");
-			consulta.setString(1, nombreMusico);
+
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Musico WHERE idMusico = ? ;");
+			consulta.setString(1, idMusico);
+
+			consulta.executeUpdate();
+
 			borrado = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println(borrado);
 		return borrado;
 
 	}
@@ -1127,7 +1132,7 @@ public class GestionBD {
 
 	}
 
-	public boolean borrarCancion(String nombreAudio) {
+	public boolean borrarAudio(String nombreAudio) {
 
 		boolean borrado = false;
 
@@ -1166,4 +1171,20 @@ public class GestionBD {
 		return favoritos;
 	}
 
+	public boolean borrarPodcaster(String nombrePodcaster) {
+
+		boolean borrado = false;
+
+		try {
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Podcaster WHERE nombre = ?");
+			consulta.setString(1, nombrePodcaster);
+			borrado = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return borrado;
+
+	}
+
 }
+
