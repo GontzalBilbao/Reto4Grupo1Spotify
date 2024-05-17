@@ -197,10 +197,10 @@ public class GestionBD {
 
 	/* QUERYS DE LOS MUSICOS */
 
-//	public void cargarMusicos() {
-//		musicos.clear();
-//		musicos = queryMusicos();
-//	}
+	public void cargarMusicos() {
+		musicos.clear();
+		musicos = queryMusicos();
+	}
 
 	public ArrayList<Musico> queryMusicos() {
 		try {
@@ -231,10 +231,10 @@ public class GestionBD {
 
 	/* QUERYS DE LOS ALBUMES POR EL MUSICO */
 
-//	public void cargarAlbumesDelMusico(String idMusico) {
-//		albumes.clear();
-//		albumes = queryAlbumesDelMusico(idMusico);
-//	}
+	public void cargarAlbumesDelMusico(String idMusico) {
+		albumes.clear();
+		albumes = queryAlbumesDelMusico(idMusico);
+	}
 
 	public ArrayList<Album> queryAlbumesDelMusico(String idMusico) {
 		ArrayList<Album> albumes = new ArrayList<Album>();
@@ -263,16 +263,16 @@ public class GestionBD {
 		return albumes;
 	}
 
-//	public ArrayList<Album> devolverAlbumes() {
-//		return albumes;
-//	}
+	public ArrayList<Album> devolverAlbumes() {
+		return albumes;
+	}
 
 	/* QUERYS DE LOS CANCIONES POR EL ALBUM */
 
-//	public void cargarCancionesDelAlbum(String idAlbum) {
-//		canciones.clear();
-//		canciones = queryCancionesDelAlbum(idAlbum);
-//	}
+	public void cargarCancionesDelAlbum(String idAlbum) {
+		canciones.clear();
+		canciones = queryCancionesDelAlbum(idAlbum);
+	}
 
 	public ArrayList<Cancion> queryCancionesDelAlbum(String idAlbum) {
 		try {
@@ -298,9 +298,9 @@ public class GestionBD {
 		return canciones;
 	}
 
-//	public ArrayList<Cancion> devolverCanciones() {
-//		return canciones;
-//	}
+	public ArrayList<Cancion> devolverCanciones() {
+		return canciones;
+	}
 
 	public String sacarPremium(String usuario) {
 		String premium = "";
@@ -436,11 +436,16 @@ public class GestionBD {
 	public void añadirPlayList(String nuevaPlayList, String idCliente) {
 
 		try {
-			Statement insertarDatos = conexion.createStatement();
-			String insert = "INSERT INTO playList (titulo, fechaCreacion, idCliente) VALUES ('" + nuevaPlayList
-					+ "', CURRENT_TIMESTAMP, '" + idCliente + "')";
-			insertarDatos.executeUpdate(insert);
-			insertarDatos.close();
+			PreparedStatement consulta = conexion.prepareStatement("INSERT INTO `playlist`(`idList`, `titulo`, `fechaCreacion`, `idCliente`) VALUES (?,?,?,?);");
+			consulta.setString(1, null);
+			consulta.setString(2, nuevaPlayList);
+			LocalDate fechaSinFormato = LocalDate.now();
+			DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String fechaCreacion = formato.format(fechaSinFormato);
+			consulta.setString(3, fechaCreacion);
+			consulta.setString(4, idCliente);
+			consulta.executeUpdate();
+			consulta.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1090,10 +1095,8 @@ public class GestionBD {
 		return cantidad;
 
 	}
-
-
+	
 	public boolean borrarMusico(String idMusico) {
-
 
 		boolean borrado = false;
 
@@ -1143,6 +1146,30 @@ public class GestionBD {
 
 	}
 
+	
+	public ArrayList<Cancion> cancionesDeFavoritos(String idCliente) {
+		ImageIcon imagen = new ImageIcon();
+		ArrayList<Cancion> favoritos = new ArrayList<Cancion>();
+		try {
+			PreparedStatement consulta = conexion.prepareStatement(
+					"SELECT Au.IDAudio,Ca.IDAlbum, Au.Nombre, Au.Duracion, Ca.artistaInvitado, Al.imagen, Au.Tipo FROM `gustos` Gu join audio Au on Gu.IDAudio = AU.IDAudio join Cancion Ca on Au.IDAudio = CA.idCancion join album Al on Ca.idAlbum = Al.idAlbum WHERE IDCliente = ?;");
+			consulta.setString(1, idCliente);
+			ResultSet resultadoConsulta = consulta.executeQuery();
+			while (resultadoConsulta.next()) {
+				Blob imagenBlob = resultadoConsulta.getBlob(6);
+				byte[] arrayImagen = imagenBlob.getBytes(1, (int) imagenBlob.length());
+				imagen = new ImageIcon(arrayImagen);
+				favoritos.add(new Cancion(resultadoConsulta.getString(1), resultadoConsulta.getString(2),
+						resultadoConsulta.getString(3), resultadoConsulta.getString(4), resultadoConsulta.getString(5),
+						imagen, resultadoConsulta.getString(7)));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return favoritos;
+	}
 
 	public boolean borrarPodcaster(String nombrePodcaster) {
 

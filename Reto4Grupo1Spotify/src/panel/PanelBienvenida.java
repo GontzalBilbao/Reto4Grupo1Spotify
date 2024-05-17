@@ -25,6 +25,7 @@ public class PanelBienvenida extends JPanel{
 		setLayout(null);
 		
 		JLabel lblBienvenida = new JLabel("BIENVENIDO A SPOTIFY");
+		lblBienvenida.setBackground(Color.WHITE);
 		lblBienvenida.setFont(new Font("Lucida Bright", Font.BOLD, 20));
 		lblBienvenida.setForeground(Color.GREEN);
 		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);

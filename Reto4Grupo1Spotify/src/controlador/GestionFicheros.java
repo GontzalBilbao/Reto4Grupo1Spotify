@@ -13,9 +13,9 @@ import modelo.PlayList;
 public class GestionFicheros {
 
 
-	public void imprimirInformacion(ArrayList<PlayList> playlists) {
+	public void imprimirInformacion(ArrayList<PlayList> playlists, String nombrePlaylist) {
 	    try {
-	        BufferedWriter escribir = new BufferedWriter(new FileWriter("fichero.txt"));
+	        BufferedWriter escribir = new BufferedWriter(new FileWriter("ficheros/" + nombrePlaylist + ".txt"));
 	        escribir.write("\nPlayLists: \n");
 	        for(int i = 0; i < playlists.size(); i++) {
 	            PlayList playlist = playlists.get(i);
@@ -34,7 +34,7 @@ public class GestionFicheros {
 private void leerInformacionEnConsola() {
 	
 	try {
-		BufferedReader imprimir = new BufferedReader(new FileReader("fichero.txt"));
+		BufferedReader imprimir = new BufferedReader(new FileReader("ficheros/fichero.txt"));
 		String line = null;
 		try {
 			while((line = imprimir.readLine()) != null){

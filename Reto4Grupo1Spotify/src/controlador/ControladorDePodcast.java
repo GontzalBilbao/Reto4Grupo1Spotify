@@ -36,7 +36,7 @@ public class ControladorDePodcast implements IControladorSonido {
 
 	@Override
 	public void setCancionEnReproduccion(int can) {
-		 // Detiene la canción en reproducción actual
+		// Detiene la canción en reproducción actual
 		if (canciones.get(cancionEnReproduccion).sonando()) {
 			cancionEnCurso.stop();
 		}
@@ -138,6 +138,15 @@ public class ControladorDePodcast implements IControladorSonido {
 	@Override
 	public void anuncio() {
 		// Reproduce un anuncio
+
+		try {
+			cancionEnCurso.open(AudioSystem.getAudioInputStream(new File("anuncio/Anuncio.wav")));
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cancionEnCurso.start();
+
 		try {
 			cancionEnCurso.open(AudioSystem.getAudioInputStream(new File("anuncio/Anuncio.wav")));
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {

@@ -67,6 +67,10 @@ public class PanelGestionarCancion extends JPanel {
 
 				gestionInfo.cargarAlbumesDelMusico(nombreArtista);
 				albumes = gestionInfo.devolverAlbumes();
+
+				gestionBD.cargarAlbumesDelMusico(nombreArtista);
+				albumes = gestionBD.devolverAlbumes();
+
 				nombreAlbum = gestionInfo.devolverAlbumSeleccionado();
 
 				for (int j = 0; j < albumes.size(); j++) {
@@ -101,7 +105,7 @@ public class PanelGestionarCancion extends JPanel {
 					comBoxAlbumes.removeAllItems();
 				}
 
-				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionInfo);
+				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionBD);
 
 				for (int i = 0; i < albumes.size(); i++) {
 					comBoxAlbumes.addItem(arrayAlbumes[i]);
@@ -243,6 +247,24 @@ public class PanelGestionarCancion extends JPanel {
 		lblMusico.setBounds(30, 110, 75, 30);
 		add(lblMusico);
 
+		comBoxMusicos = new JComboBox<String>(arrayMusicos);
+		comBoxMusicos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				comBoxAlbumes.removeAllItems();
+				cargarAlbumesPorArtista(comBoxMusicos.getSelectedItem().toString(), gestionBD);
+				for (int i = 0; i < albumes.size(); i++) {
+					comBoxAlbumes.addItem(arrayAlbumes[i]);
+//<<<<<<< HEAD
+//					System.out.println(arrayAlbumes[i].toString());
+//=======
+//					System.out.println(arrayAlbumes[i]);
+//>>>>>>> refs/remotes/origin/Dani
+				}
+				repaint();
+			}
+		});
+		comBoxMusicos.setBounds(115, 110, 150, 30);
+		add(comBoxMusicos);
 
 		JLabel lblAlbum = new JLabel("Album: ");
 		lblAlbum.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -262,10 +284,10 @@ public class PanelGestionarCancion extends JPanel {
 		}
 	}
 
-	private void cargarAlbumesPorArtista(String nombreArtistico, GestionInformacion gestionInfo) {
+	private void cargarAlbumesPorArtista(String nombreArtistico, GestionBD gestionBD) {
 //		albumes.clear();
-		gestionInfo.cargarAlbumesDelMusico(nombreArtistico);
-		albumes = gestionInfo.devolverAlbumes();
+		gestionBD.cargarAlbumesDelMusico(nombreArtistico);
+		albumes = gestionBD.devolverAlbumes();
 //		for (int i = 0; i < albumes.size(); i++) {
 //		System.out.println(albumes.get(i).getTitulo());
 //	}

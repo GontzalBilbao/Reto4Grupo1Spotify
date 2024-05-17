@@ -49,7 +49,8 @@ public class PanelAñadirCancion extends JPanel {
 
 	/**
 	 * Create the panel.
-	 * @param gestionInfo 
+	 * 
+	 * @param gestionInfo
 	 */
 	public PanelAñadirCancion(VentanaPrincipal vp, GestionInformacion gestionInfo, GestionBD gestionBD) {
 		setSize(vp.getSize());
@@ -60,7 +61,7 @@ public class PanelAñadirCancion extends JPanel {
 		musicos = gestionInfo.devolverMusicos();
 		albumes = gestionInfo.devolverAlbumes();
 
-		cargarMusicos();
+		gestionBD.cargarMusicos();
 		JButton btnFinalizar = new JButton("FINALIZAR");
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,19 +126,23 @@ public class PanelAñadirCancion extends JPanel {
 
 				nombreEscrito = txtNombre.getText();
 
-				boolean validado = validarCampos(nombreEscrito);
+				boolean validado = validarCampos(nombreEscrito, vp);
 
-				if (validado != false) {
-					boolean audioAñadido = gestionBD.nuevoAudio(comBoxAlbumes.getSelectedItem().toString(),
-							nombreEscrito, txtDuracion.getText(), ImagenReescalada, tipo);
+				if (validado == true) {
+					// añadir query de gestionBD de insertar album
+					JOptionPane.showMessageDialog(vp, "Se ha agregado la cancion.");
+					if (validado != false) {
+						boolean audioAñadido = gestionBD.nuevoAudio(comBoxAlbumes.getSelectedItem().toString(),
+								nombreEscrito, txtDuracion.getText(), ImagenReescalada, tipo);
 
-					if (audioAñadido != false) {
-						System.out.println("Audio añadido");
-						boolean cancionAñadida = gestionBD.nuevaCancion(comBoxAlbumes.getSelectedItem().toString(),
-								txtInvitado.getText());
+						if (audioAñadido != false) {
+							System.out.println("Audio añadido");
+							boolean cancionAñadida = gestionBD.nuevaCancion(comBoxAlbumes.getSelectedItem().toString(),
+									txtInvitado.getText());
 
-						if (cancionAñadida != false) {
-							JOptionPane.showMessageDialog(null, "Se ha agregado la cancion.");
+							if (cancionAñadida != false) {
+								JOptionPane.showMessageDialog(null, "Se ha agregado la cancion.");
+							}
 						}
 					}
 				}
@@ -204,10 +209,10 @@ public class PanelAñadirCancion extends JPanel {
 		}
 	}
 
-	private boolean validarCampos(String txtNombre) {
+	private boolean validarCampos(String txtNombre, VentanaPrincipal vp) {
 		boolean validar = false;
 		if (txtNombre.equalsIgnoreCase("")) {
-			JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio.");
+			JOptionPane.showMessageDialog(vp, "El nombre no puede estar vacio.");
 			validar = false;
 		} else {
 			validar = true;

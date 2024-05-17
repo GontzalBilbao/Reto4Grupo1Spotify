@@ -119,6 +119,11 @@ public class PanelLogin extends JPanel {
 				} else {
 
 					if (usuarioCorrecto == true) {
+//<<<<<<< HEAD
+//						JOptionPane.showMessageDialog(v, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+//						gestionInfo.guardarClienteSeleccionado(txtUsuario.getText());
+//						v.cambiarDePanel(3);
+//=======
 						JOptionPane.showMessageDialog(vp, "Bienvenido/a", "Cliente", JOptionPane.INFORMATION_MESSAGE);
 						gestionInfo.guardarUsuarioCliente(txtUsuario.getText());
 						vp.cambiarDePanel(3);

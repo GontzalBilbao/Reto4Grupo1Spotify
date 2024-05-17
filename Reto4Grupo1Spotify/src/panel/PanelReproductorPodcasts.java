@@ -92,8 +92,6 @@ public class PanelReproductorPodcasts extends JPanel {
 		setSize(800, 600);
 		setBackground(Color.WHITE);
 
-//		System.out.println(podcasts);
-
 		controladorDePodcast = new ControladorDePodcast(podcasts);
 
 		intinerador = numeroPodcast;
@@ -257,7 +255,7 @@ public class PanelReproductorPodcasts extends JPanel {
 
 		lblTitulo = new JLabel("");
 		lblTitulo.setBounds(275, 100, 250, 30);
-		lblTitulo.setBackground(Color.BLACK);
+		lblTitulo.setBackground(Color.WHITE);
 		lblTitulo.setText(podcasts.get(numeroPodcast).getNombre());
 		lblTitulo.setForeground(Color.BLACK);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -276,25 +274,5 @@ public class PanelReproductorPodcasts extends JPanel {
 		btnPlayStop.setForeground(Color.WHITE);
 		btnPlayStop.setFont(new Font("Tahoma", Font.BOLD, 20));
 		add(btnPlayStop);
-	}
-
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
 	}
 }

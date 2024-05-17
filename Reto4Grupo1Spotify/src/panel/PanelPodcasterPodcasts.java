@@ -140,7 +140,7 @@ public class PanelPodcasterPodcasts extends JPanel {
 			panelItem.setName("panel " + i);
 			// Añadir un borde al panelItem
 			panelItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
+			gestionInfo.recogerIndicePodcast(i);
 			// Añadir escuchador al panel
 			panelItem.addMouseListener(new MouseAdapter() {
 				@Override
@@ -148,9 +148,6 @@ public class PanelPodcasterPodcasts extends JPanel {
 					JPanel clickedPanel = (JPanel) e.getSource();
 					gestionInfo.guardarNombrePodcastSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					vp.cambiarDePanel(10);
-//					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
-//							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
-//													+ ((JLabel) clickedPanel.getComponent(2)).getText());
 
 				}
 			});

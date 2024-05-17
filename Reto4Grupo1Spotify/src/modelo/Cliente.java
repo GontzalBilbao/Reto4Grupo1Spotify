@@ -1,11 +1,18 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Cliente {
 
 	private String idCliente, nombre, apellido, usuario, contrasena, fechaNac, fechaRegistro, tipo, idIdioma;
+	private ArrayList<Cancion> favoritos;
 
+	
+	public Cliente() {
+		
+	}
+	
 	public Cliente(String idCliente, String nombre, String apellido, String usuario, String contrasena, String fechaNac,
 			String fechaRegistro, String tipo, String idIdioma) {
 		super();
@@ -18,6 +25,7 @@ public class Cliente {
 		this.fechaRegistro = fechaRegistro;
 		this.tipo = tipo;
 		this.idIdioma = idIdioma;
+		favoritos = new ArrayList<Cancion>();
 	}
 
 	public String getIdCliente() {
@@ -90,6 +98,14 @@ public class Cliente {
 
 	public void setIdIdioma(String idIdioma) {
 		this.idIdioma = idIdioma;
+	}
+	
+	public ArrayList<Cancion> getFavoritos() {
+		return favoritos;
+	}
+
+	public void setFavoritos(ArrayList<Cancion> favoritos) {
+		this.favoritos = favoritos;
 	}
 
 	@Override

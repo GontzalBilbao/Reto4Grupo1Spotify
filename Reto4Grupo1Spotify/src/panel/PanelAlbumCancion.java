@@ -157,9 +157,6 @@ public class PanelAlbumCancion extends JPanel {
 					gestionInfo.guardarCancionSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					gestionInfo.guardarPanelAnteriorAlbumCanciones(true);
 					vp.cambiarDePanel(7);
-//					JOptionPane.showMessageDialog(vp, "Has hecho clic en: " + clickedPanel.getName()
-//							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
-//													+ ((JLabel) clickedPanel.getComponent(2)).getText());
 
 				}
 			});
@@ -219,9 +216,6 @@ public class PanelAlbumCancion extends JPanel {
 					gestionInfo.guardarAlbumSeleccionado(((JLabel) clickedPanel.getComponent(1)).getText());
 					gestionInfo.guardarIdArtistaSeleccionado(idMusico);
 					vp.cambiarDePanel(6);
-//					JOptionPane.showMessageDialog(null, "Has hecho clic en: " + clickedPanel.getName()
-//							+ " que tiene los labels:" + ((JLabel) clickedPanel.getComponent(1)).getText()); // + " y "
-//											+ ((JLabel) clickedPanel.getComponent(2)).getText());
 
 				}
 			});

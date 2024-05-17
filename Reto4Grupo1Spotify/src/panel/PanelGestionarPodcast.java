@@ -77,10 +77,16 @@ public class PanelGestionarPodcast extends JPanel {
 				for (int i = 0; i < podcasters.size(); i++) {
 					String codPodcaster = podcasters.get(i).getIdPodcaster();
 					if (nombrePodcaster.equals(podcasters.get(i).getNombreArtistico())) {
-
 						podcasterSeleccionado = i;
+
 						gestionInfo.cargarPodcastsDelPodcaster(codPodcaster);
 						podcasts = gestionInfo.devolverPodcasts();
+
+
+						podcasterSeleccionado = i;
+//						gestionBD.cargarPodcastsDelPodcaster(codPodcaster);
+//						podcasts = gestionBD.devolverPodcasts();
+
 					}
 				}
 

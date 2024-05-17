@@ -67,11 +67,16 @@ public class PanelAñadirAlbum extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				validarFechaSeleccionada();
-
+//
 				nombreEscrito = txtTitulo.getText();
-				boolean validado = validarCampos(nombreEscrito);
+				boolean validado = validarCampos(nombreEscrito, vp);
+//				boolean validado = validarCampos(nombreEscrito);
 
 				if (validado != false) {
+					// añadir query de gestionBD de insertar album
+					JOptionPane.showMessageDialog(vp, "Se ha agregado el album.");
+					vp.cambiarDePanel(18);
+
 					boolean añadido = gestionBD.nuevoAlbum(comBoxMusicos.getSelectedItem().toString(), nombreEscrito,
 							lanzamiento, txtGenero.getText(), destino);
 
@@ -79,6 +84,7 @@ public class PanelAñadirAlbum extends JPanel {
 						JOptionPane.showMessageDialog(null, "Se ha agregado el album.");
 						vp.cambiarDePanel(18);
 					}
+
 				}
 			}
 		});
@@ -213,10 +219,10 @@ public class PanelAñadirAlbum extends JPanel {
 
 	}
 
-	private boolean validarCampos(String txtNombre) {
+	private boolean validarCampos(String txtNombre, VentanaPrincipal vp) {
 		boolean validar = false;
 		if (txtNombre.equalsIgnoreCase("")) {
-			JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio.");
+			JOptionPane.showMessageDialog(vp, "El nombre no puede estar vacio.");
 			validar = false;
 		} else if (lanzamiento.equals("")) {
 			JOptionPane.showMessageDialog(null, "Introduzca la fecha", "Fecha no seleccionada",
