@@ -94,7 +94,7 @@ public class PanelGestionarPodcaster extends JPanel {
 
 		JLabel lblPodcasters = new JLabel("PODCASTERS");
 		lblPodcasters.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPodcasters.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblPodcasters.setFont(new Font("Arial", Font.PLAIN, 40));
 		lblPodcasters.setBounds(30, 11, 550, 67);
 		add(lblPodcasters);
 

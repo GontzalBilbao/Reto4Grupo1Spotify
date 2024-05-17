@@ -32,10 +32,19 @@ public class PanelGestionarMusico extends JPanel {
 	private ArrayList<Musico> musicos = new ArrayList<Musico>();
 
 	private JLabel lblMusicoActual;
-	private String musicoActual;
-	private String idMusico;
+	private String musicoActual = "";
 
 	private JPanel panelItem;
+
+	private String caracteristica = "";
+	private String descripcion = "";
+
+	private String idMusico = "";
+	private String nuevoNombre = "";
+	private String nuevaCaracteristica = "";
+	private String nuevaDescripcion = "";
+
+	private int musicoSeleccionado = 0;
 
 	public PanelGestionarMusico(VentanaPrincipal vp, GestionBD gestionBD, GestionInformacion gestionInfo) {
 		setSize(800, 600);
@@ -52,6 +61,7 @@ public class PanelGestionarMusico extends JPanel {
 
 // Agregar JLabels al panel
 		for (int i = 0; i < musicos.size(); i++) {
+			musicoSeleccionado = i;
 			panelItem = new JPanel();
 			panelItem.setBorder(null);
 			panelItem.setLayout(new GridLayout());
@@ -80,6 +90,23 @@ public class PanelGestionarMusico extends JPanel {
 					JPanel clickedPanel = (JPanel) e.getSource();
 					musicoActual = ((JLabel) clickedPanel.getComponent(1)).getText();
 					lblMusicoActual.setText("Musico Actual: " + musicoActual);
+
+					for (int i = 0; i < musicos.size(); i++) {
+						musicoSeleccionado = i;
+						if (musicoActual.equals(musicos.get(i).getNombreArtistico())) {
+							idMusico = musicos.get(musicoSeleccionado).getIdMusico();
+							nuevoNombre = musicos.get(musicoSeleccionado).getNombreArtistico();
+							caracteristica = musicos.get(musicoSeleccionado).getCaracteristica();
+							descripcion = musicos.get(musicoSeleccionado).getDescripcion();
+						}
+
+					}
+
+					System.out.println(idMusico);
+					System.out.println(nuevoNombre);
+					System.out.println(caracteristica);
+					System.out.println(descripcion);
+
 				}
 			});
 // Agregar panelItem al panel principal
@@ -96,7 +123,7 @@ public class PanelGestionarMusico extends JPanel {
 
 		JLabel lblMusicos = new JLabel("MUSICOS");
 		lblMusicos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMusicos.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblMusicos.setFont(new Font("Arial", Font.PLAIN, 40));
 		lblMusicos.setBounds(30, 11, 550, 67);
 		add(lblMusicos);
 
@@ -104,7 +131,39 @@ public class PanelGestionarMusico extends JPanel {
 		btnModificar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showInputDialog("Nombre del artista?");
+				String opcionSeleccionada = JOptionPane.showInputDialog(null,
+						"Selecciona una opción \n [1] Nombre del artista \n [2] tipo (Solista/Grupo) \n [3] Descripcion",
+						"Modificar Musico");
+				int opcion = 0;
+
+				try {
+					opcion = Integer.parseInt(opcionSeleccionada);
+				} catch (NumberFormatException nfe) {
+					JOptionPane.showMessageDialog(null, "No es un valor numerico");
+				}
+				switch (opcion) {
+				case 1:
+					nuevoNombre = JOptionPane.showInputDialog(null, "Nuevo nombre para el Musico " + musicoActual,
+							"Modificar nombre");
+
+					gestionBD.modificarMusico(musicoActual, caracteristica, descripcion, idMusico);
+					break;
+				case 2:
+					nuevaCaracteristica = JOptionPane.showInputDialog(null, "Nuevo tipo para el Musico " + musicoActual,
+							"Modificar tipo");
+					gestionBD.modificarMusico(musicoActual, caracteristica, descripcion, idMusico);
+					break;
+				case 3:
+					nuevaDescripcion = JOptionPane.showInputDialog(null,
+							"Nueva descripcion para el Musico " + musicoActual, "Modificar descripcion");
+					System.out.println(musicoActual + caracteristica + nuevaDescripcion);
+					gestionBD.modificarMusico(musicoActual, caracteristica, descripcion, idMusico);
+					break;
+				default:
+					JOptionPane.showMessageDialog(null, "No es una opcion valida");
+					break;
+				}
+
 			}
 		});
 		btnModificar.setBounds(560, 145, 200, 50);

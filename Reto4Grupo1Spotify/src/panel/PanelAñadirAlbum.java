@@ -96,7 +96,7 @@ public class PanelAñadirAlbum extends JPanel {
 		JLabel lblAñadirAlbum = new JLabel("AÑADIR ALBUM");
 		lblAñadirAlbum.setBounds(125, 15, 500, 60);
 		lblAñadirAlbum.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAñadirAlbum.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		lblAñadirAlbum.setFont(new Font("Arial", Font.PLAIN, 40));
 		add(lblAñadirAlbum);
 
 		JLabel lblComBoxMusico = new JLabel("Musico");

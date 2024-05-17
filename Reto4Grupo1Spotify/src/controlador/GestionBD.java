@@ -20,6 +20,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import modelo.Album;
 import modelo.Cancion;
 import modelo.CancionesFavoritas;
@@ -785,14 +787,16 @@ public class GestionBD {
 
 	}
 
-	public boolean borrarMusico(String idMusico) {
+	/* BORRADOS DE LA TABLA DE DATOS ADMIN */
+
+	public boolean borrarMusico(String nombreMusico) {
 
 		boolean borrado = false;
 
 		try {
 
-			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Musico WHERE idMusico = ? ;");
-			consulta.setString(1, idMusico);
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Musico WHERE nombreArtistico = ? ;");
+			consulta.setString(1, nombreMusico);
 
 			consulta.executeUpdate();
 
@@ -808,10 +812,14 @@ public class GestionBD {
 	public boolean borrarAlbum(String tituloAlbum) {
 
 		boolean borrado = false;
+		System.out.println(tituloAlbum);
 
 		try {
-			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Album WHERE titulo = ?");
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Album WHERE titulo = ?;");
 			consulta.setString(1, tituloAlbum);
+
+			consulta.executeUpdate();
+
 			borrado = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -825,8 +833,11 @@ public class GestionBD {
 		boolean borrado = false;
 
 		try {
-			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Audio WHERE nombre = ?");
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Audio WHERE nombre = ?;");
 			consulta.setString(1, nombreAudio);
+
+			consulta.executeUpdate();
+
 			borrado = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -840,13 +851,42 @@ public class GestionBD {
 		boolean borrado = false;
 
 		try {
-			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Podcaster WHERE nombre = ?");
+			PreparedStatement consulta = conexion.prepareStatement("DELETE FROM Podcaster WHERE nombre = ?;");
 			consulta.setString(1, nombrePodcaster);
+
+			consulta.executeUpdate();
+
 			borrado = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return borrado;
+
+	}
+
+	public boolean modificarMusico(String nombre, String tipo, String desc, String idMusico) {
+		boolean editado = false;
+
+		System.out.println(nombre);
+		System.out.println(tipo);
+		System.out.println(desc);
+		System.out.println(idMusico);
+
+		try {
+			PreparedStatement consulta = conexion.prepareStatement(
+					"UPDATE Musico SET nombreArtistico = ?, caracteristica = ?, descripcion = ? WHERE idMusico = ? ;");
+			consulta.setString(1, nombre);
+			consulta.setString(2, tipo);
+			consulta.setString(3, desc);
+			consulta.setString(4, idMusico);
+
+			consulta.executeUpdate();
+
+			editado = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return editado;
 
 	}
 

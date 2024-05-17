@@ -60,13 +60,13 @@ public class PanelAlbumCancion extends JPanel {
 				canciones = gestionBD.devolverCanciones();
 			}
 		}
-		
+
 		for (int i = 0; i < canciones.size(); i++) {
 			System.out.println(canciones.get(i).getNombre());
 		}
 
 		JLabel lblTituloLista = new JLabel("CANCIONES");
-		lblTituloLista.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
+		lblTituloLista.setFont(new Font("Arial", Font.PLAIN, 40));
 		lblTituloLista.setBounds(540, 11, 130, 28);
 		add(lblTituloLista);
 
