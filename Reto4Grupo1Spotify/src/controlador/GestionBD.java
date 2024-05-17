@@ -428,11 +428,16 @@ public class GestionBD {
 	public void añadirPlayList(String nuevaPlayList, String idCliente) {
 
 		try {
-			Statement insertarDatos = conexion.createStatement();
-			String insert = "INSERT INTO playList (titulo, fechaCreacion, idCliente) VALUES ('" + nuevaPlayList
-					+ "', CURRENT_TIMESTAMP, '" + idCliente + "')";
-			insertarDatos.executeUpdate(insert);
-			insertarDatos.close();
+			PreparedStatement consulta = conexion.prepareStatement("INSERT INTO `playlist`(`idList`, `titulo`, `fechaCreacion`, `idCliente`) VALUES (?,?,?,?);");
+			consulta.setString(1, null);
+			consulta.setString(2, nuevaPlayList);
+			LocalDate fechaSinFormato = LocalDate.now();
+			DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String fechaCreacion = formato.format(fechaSinFormato);
+			consulta.setString(3, fechaCreacion);
+			consulta.setString(4, idCliente);
+			consulta.executeUpdate();
+			consulta.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

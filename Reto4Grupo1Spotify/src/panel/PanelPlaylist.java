@@ -71,7 +71,7 @@ public class PanelPlaylist extends JPanel {
 		btnPerfil.setBounds(675, 43, 90, 35);
 		add(btnPerfil);
 		
-		JList list = new JList();
+		JList<String> list = new JList<String>();
 		list.setBounds(42, 163, 363, 354);
 		add(list);
 		
@@ -85,7 +85,7 @@ public class PanelPlaylist extends JPanel {
 			System.out.println(playlists.get(i).getTitulo());
 		}
 		
-		DefaultListModel listModel = new DefaultListModel();
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		for (int i = 0; i < playlists.size(); i++){
 		    listModel.addElement(playlists.get(i).getTitulo());
 		}
@@ -113,11 +113,12 @@ public class PanelPlaylist extends JPanel {
 				}else {
 					nuevaPlayList = textFieldNuevaPlayList.getText();
 					
-					idCliente = "123";
+//					idCliente = "123";
 					
-					gestionBD.añadirPlayList(nuevaPlayList, idCliente);
+					gestionBD.añadirPlayList(nuevaPlayList, gestionInfo.devolverIdCliente());
 					JOptionPane.showMessageDialog(null, "PlayList añadida con éxito", "PlayList Guardada",
 							JOptionPane.INFORMATION_MESSAGE);
+					vp.cambiarDePanel(12);
 				}
 				
 			}
@@ -145,7 +146,8 @@ public class PanelPlaylist extends JPanel {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				gestionFicheros.imprimirInformacion(playlists);
+				//El array que hay que pasarle es de canciones no de playlist!!!
+				gestionFicheros.imprimirInformacion(playlists, list.getSelectedValue());
 				JOptionPane.showMessageDialog(null, "PlayList exportada con éxito", "PlayList Exportada",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
